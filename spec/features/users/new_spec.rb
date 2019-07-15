@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe 'New User Creation' do
   describe 'As a Visitor' do
     it 'I can link to register from the nav bar' do
+      visit root_path
       click_link 'Register'
 
-      expect(current_path).to eq('/users/new')
+      expect(current_path).to eq(register_path)
     end
 
     it 'I can use the new user form to create a new user' do
@@ -33,7 +34,7 @@ RSpec.describe 'New User Creation' do
       expect(current_path).to eq(profile_path)
       expect(User.last.name).to eq(name)
       expect(page).to have_content('You are now registered and logged in.')
-      expect(page).to_not have_content('Register')
+      expect(page).to_not have_button('Register')
       expect(page).to have_content('Log Out')
     end
 

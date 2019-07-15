@@ -24,4 +24,6 @@ Rails.application.routes.draw do
   get '/register', to: 'users#new', as: :register
   post '/users', to: 'users#create', as: :users
   get '/profile', to: 'users#show', as: :profile
+
+  get '/login', to: 'sessions#new'
 end

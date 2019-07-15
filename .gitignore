@@ -18,4 +18,10 @@
 /public/assets
 
 .byebug_history
+<<<<<<< HEAD
 coverage
+=======
+
+/public/assets
+/coverage
+>>>>>>> c665f3f8731a61ef8590eaa8942fc238d43c9dcd
