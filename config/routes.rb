@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   delete '/cart/:item_id', to: 'cart#remove_item'
 
   resources :orders, only: [:new, :create, :show]
+
+  get '/login', to: 'sessions#new'
 end
