@@ -1,4 +1,4 @@
-<h1>Profile</h1>
+<h2>Profile</h2>
 
 <p> Name: <%= @user.name %> </p>
 <p> Address: <%= @user.address %> </p>
@@ -6,3 +6,5 @@
 <p> State: <%= @user.state %> </p>
 <p> Zip: <%= @user.zip %> </p>
 <p> Email: <%= @user.email %> </p>
+
+<p><%= link_to 'Edit Profile', "/users/#{@user.id}/edit" %></p>

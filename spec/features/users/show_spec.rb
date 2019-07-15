@@ -15,6 +15,7 @@ RSpec.describe 'Visitor' do
       expect(page).to have_content(@alex.state)
       expect(page).to have_content(@alex.zip)
       expect(page).to have_content(@alex.email)
+      expect(page).to have_link('Edit Profile')
     end
   end
 end
