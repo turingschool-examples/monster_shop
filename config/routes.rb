@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :reviews, only: [:edit, :update, :destroy]
 
-  get '/cart', to: 'cart#show', as: :cart_path
+  get '/cart', to: 'cart#show', as: :cart
   post '/cart/:item_id', to: 'cart#add_item'
   delete '/cart', to: 'cart#empty'
   patch '/cart/:change/:item_id', to: 'cart#update_quantity'
@@ -21,6 +21,6 @@ Rails.application.routes.draw do
 
   resources :orders, only: [:new, :create, :show]
 
-  get '/login', to: 'user#login', as: :login
-  get '/register', to: 'user#register', as: :register
+  get '/login', to: 'users#login', as: :login
+  get '/register', to: 'users#register', as: :register
 end
