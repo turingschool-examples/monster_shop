@@ -22,4 +22,5 @@ Rails.application.routes.draw do
   resources :orders, only: [:new, :create, :show]
 
   get '/login', to: 'sessions#new'
+  resources :users, only: [:new, :create]
 end
