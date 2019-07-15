@@ -40,10 +40,9 @@ RSpec.describe 'New User Creation' do
 
     it 'I can not create a user with an incomplete form' do
       visit register_path
-      name = 'Megan'
-      fill_in 'Name', with: name
       click_button 'Register'
 
+      expect(page).to have_content("name: [\"can't be blank\"]")
       expect(page).to have_content("address: [\"can't be blank\"]")
       expect(page).to have_content("city: [\"can't be blank\"]")
       expect(page).to have_content("state: [\"can't be blank\"]")
