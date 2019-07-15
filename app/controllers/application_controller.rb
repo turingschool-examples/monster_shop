@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
     @cart ||= Cart.new(session[:cart])
   end
 
-
   def generate_flash(resource)
     resource.errors.messages.each do |validation, message|
       flash[validation] = "#{validation}: #{message}"

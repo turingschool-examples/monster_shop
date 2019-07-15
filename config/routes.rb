@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  get '/', to: 'welcome#index', as: :root
+
   resources :merchants do
     resources :items, only: [:index, :new, :create]
   end
@@ -19,6 +21,7 @@ Rails.application.routes.draw do
 
   resources :orders, only: [:new, :create, :show]
 
-  get 'register', to: 'users#new', as: :register
-  post 'users', to: 'users#create', as: :users
+  get '/register', to: 'users#new', as: :register
+  post '/users', to: 'users#create', as: :users
+  get '/profile', to: 'users#show', as: :profile
 end

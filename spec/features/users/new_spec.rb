@@ -31,26 +31,25 @@ RSpec.describe 'New User Creation' do
       click_button 'Register'
 
       expect(current_path).to eq(profile_path)
+      expect(User.last.name).to eq(name)
       expect(page).to have_content('You are now registered and logged in.')
       expect(page).to_not have_content('Register')
       expect(page).to have_content('Log Out')
-      expect(User.last.name).to eq(name)
     end
 
     it 'I can not create a user with an incomplete form' do
       visit register_path
-
       name = 'Megan'
-
       fill_in 'Name', with: name
-
       click_button 'Register'
 
       expect(page).to have_content("address: [\"can't be blank\"]")
       expect(page).to have_content("city: [\"can't be blank\"]")
       expect(page).to have_content("state: [\"can't be blank\"]")
       expect(page).to have_content("zip: [\"can't be blank\"]")
-      expect(page).to have_button('Create Merchant')
+      expect(page).to have_content("email: [\"can't be blank\"]")
+      expect(page).to have_content("password: [\"can't be blank\"]")
+      expect(page).to have_button('Register')
     end
   end
 end
