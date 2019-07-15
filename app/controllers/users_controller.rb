@@ -32,6 +32,9 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find(session[:user_id])
+    # binding.pry
+
+    @user = User.find(session[:user_id]) if session[:user_id]
+    @user = User.find(params[:id]) if @user.nil?
   end
 end

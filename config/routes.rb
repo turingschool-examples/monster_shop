@@ -22,7 +22,10 @@ Rails.application.routes.draw do
   resources :orders, only: [:new, :create, :show]
 
   get '/register', to: 'users#new', as: :register
+
   post '/users', to: 'users#create', as: :users
+  get '/users/:id', to: 'users#show', as: :user
+  
   get '/profile', to: 'users#show', as: :profile
 
   get '/login', to: 'sessions#new'
