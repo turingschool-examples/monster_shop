@@ -16,6 +16,12 @@ RSpec.describe 'Site Navigation' do
       end
 
       expect(current_path).to eq('/merchants')
+
+      within 'nav' do
+        click_link 'Login'
+      end
+
+      expect(current_path).to eq('/login')
     end
 
     it 'I see a cart indicator in my nav bar' do
