@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'New User Creation' do
   describe 'As a Visitor' do
     it 'I can link to register from the nav bar' do
-      click_on 'Register'
+      click_link 'Register'
 
       expect(current_path).to eq('/users/new')
     end
@@ -26,7 +26,7 @@ RSpec.describe 'New User Creation' do
       fill_in 'Zip', with: zip
       fill_in 'Email', with: email
       fill_in 'Password', with: password
-      fill_in 'Password_conf', with: password
+      fill_in :confirm_password, with: password
 
       click_button 'Register'
 
@@ -44,7 +44,7 @@ RSpec.describe 'New User Creation' do
 
       fill_in 'Name', with: name
 
-      click_button 'Create Merchant'
+      click_button 'Register'
 
       expect(page).to have_content("address: [\"can't be blank\"]")
       expect(page).to have_content("city: [\"can't be blank\"]")

@@ -20,4 +20,5 @@ Rails.application.routes.draw do
   resources :orders, only: [:new, :create, :show]
 
   get 'register', to: 'users#new', as: :register
+  post 'users', to: 'users#create', as: :users
 end
