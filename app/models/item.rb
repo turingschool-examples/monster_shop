@@ -17,4 +17,8 @@ class Item < ApplicationRecord
   def average_rating
     reviews.average(:rating)
   end
+
+  def self.all_active
+    where(active: true)
+  end
 end
