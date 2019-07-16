@@ -10,8 +10,10 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       if current_user.regular_user?
         redirect_to profile_path
-      else current_user.merchant?
+      elsif current_user.merchant?
         redirect_to merchant_dashboard_path
+      else current_user.admin?
+        redirect_to admin_dashboard_path
       end
     else
       render :new
