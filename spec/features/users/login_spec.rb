@@ -32,5 +32,17 @@ RSpec.describe 'As a Vistor' do
       expect(current_path).to eq(merchant_dashboard_path)
     end
 
+    it "as an admin I am redirected to my admin dashboard" do
+      visit login_path
+
+      within '#login' do
+        fill_in "Email", with: @admin.email
+        fill_in "Password", with: @admin.password
+        click_on 'Login'
+      end
+
+      expect(current_path).to eq(admin_dashboard_path)
+    end
+
   end
 end
