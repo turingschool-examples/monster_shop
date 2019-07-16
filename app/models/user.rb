@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :orders
+  has_many :order_items, through: :orders
 
   validates :email, uniqueness: true, presence: true
   validates :state, presence: true, length: { is: 2 }
