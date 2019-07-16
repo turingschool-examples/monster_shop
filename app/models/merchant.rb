@@ -19,7 +19,6 @@ class Merchant < ApplicationRecord
   def distinct_cities
     order_items.joins('JOIN orders ON order_items.order_id = orders.id')
                .joins('JOIN users ON orders.user_id = users.id')
-               .user('city_state')
                .distinct
                .pluck("CONCAT_WS(', ', users.city, users.state) AS city_state")
   end

@@ -1,11 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show]
 
   def new
     @user = User.new
-  end
-
-  def show
   end
 
   def create
@@ -25,18 +22,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-    @user = User.find(params[:id])
-    if !@user.update(user_params)
-      flash[:error] = @user.errors.full_messages.join(". ")
-    else
-      @user.update(user_params)
-      flash[:notice] = "Your profile has been updated!"
-    end
-    redirect_to "/users/#{@user.id}"
+  def show
   end
 
   private
@@ -46,7 +32,6 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find(session[:user_id]) if session[:user_id]
-    @user = User.find(params[:id]) if @user.nil?
+    @user = User.find(session[:user_id])
   end
 end
