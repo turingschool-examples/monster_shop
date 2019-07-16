@@ -8,6 +8,10 @@ RSpec.describe 'As a Vistor' do
       @admin = User.create(name: "Admin", address: "789 Admin Dr", city: "Denver", state: "CO", zip: 80211, email: "admin@gmail.com", password: "rabbit_hole", role: 2)
     end
 
+    after :each do
+      expect(page).to have_content("You have logged in.")
+    end
+
     it "as a regular user I am redirected to my profile page" do
       visit login_path
 
