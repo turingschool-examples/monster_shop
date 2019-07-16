@@ -4,4 +4,8 @@ class User < ApplicationRecord
   validates :state, presence: true, length: { is: 2 }
   validates :zip, presence: true, numericality: true, length: { is: 5 }
   validates_presence_of :name, :address, :city
+
+  enum role: %w(default admin)
+
+  has_many :orders
 end
