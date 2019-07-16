@@ -33,19 +33,19 @@ RSpec.describe 'Delete Item' do
       end
 
       describe 'If an item has orders' do
-        it 'I can not see a delete button for items with orders' do
-          order_1 = Order.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
+        before :each do
+          jake = User.create!(name: 'Jake', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'jakeman@gmail.com', password: 'fish' )
+          order_1 = jake.orders.create!
           order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2)
+        end
 
+        it 'I can not see a delete button for items with orders' do
           visit "/items/#{@ogre.id}"
 
           expect(page).to_not have_link('Delete')
         end
 
         it 'I can not delete an item with orders through a direct request' do
-          order_1 = Order.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
-          order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2)
-
           page.driver.submit :delete, item_path(@ogre), {}
 
           expect(page).to have_content("#{@ogre.name} can not be deleted - it has been ordered!")
