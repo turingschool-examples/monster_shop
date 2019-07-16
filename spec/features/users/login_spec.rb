@@ -20,5 +20,17 @@ RSpec.describe 'As a Vistor' do
       expect(current_path).to eq(profile_path)
     end
 
+    it "as a merchant I am redirected to my merchant dashboard" do
+      visit login_path
+
+      within '#login' do
+        fill_in "Email", with: @merchant.email
+        fill_in "Password", with: @merchant.password
+        click_on 'Login'
+      end
+
+      expect(current_path).to eq(merchant_dashboard_path)
+    end
+
   end
 end
