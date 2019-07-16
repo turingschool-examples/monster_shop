@@ -55,7 +55,7 @@ RSpec.describe 'User Navigation' do
       end
 
       within 'nav' do
-        expect(page).to have_content("Logged in as #{user.name}")
+        expect(page).to have_content("Welcome, #{user.name}")
       end
     end
   end
