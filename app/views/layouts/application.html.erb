@@ -28,6 +28,9 @@
         <% if current_user %>
         <span class="navbar-brand mb-0 h1">Welcome, <%= current_user.name %></span>
         <li class="nav-item">
+          <%= link_to 'Profile', profile_path, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
           <%= link_to 'Logout', login_path, method: :delete, class:"nav-link" %>
         </li>
         <% else %>
@@ -44,7 +47,7 @@
     <% flash.each do |type, message| %>
       <p><%= message %></p>
     <% end %>
-    
+
     <%= yield %>
   </body>
 </html>
