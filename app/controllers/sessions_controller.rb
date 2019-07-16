@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
       else current_user.admin?
         redirect_to admin_dashboard_path
       end
+      flash[:success] = "You have logged in."
     else
       render :new
     end
