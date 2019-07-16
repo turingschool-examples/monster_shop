@@ -35,7 +35,7 @@ RSpec.describe 'New User Creation' do
       expect(User.last.name).to eq(name)
       expect(page).to have_content('You are now registered and logged in.')
       expect(page).to_not have_button('Register')
-      expect(page).to have_content('Log Out')
+      expect(page).to have_content('Logout')
     end
 
     it 'I can not create a user with an incomplete form' do
