@@ -25,7 +25,17 @@ RSpec.describe 'User Navigation' do
         expect(page).to_not have_link('Register')
         expect(page).to_not have_link('Login')
       end
+    end
 
+    it 'I can see a link to login or register when I am not logged in' do
+      user = User.create(name: "Test Test", address: "123", city: "Denver", state: "CO", zip: 80209, email: "test@gmail.com", password: "password", role: 0)
+      visit root_path
+
+      within 'nav' do
+        expect(page).to have_link('Register')
+        expect(page).to have_link('Login')
+        expect(page).to_not have_link('Logout')
+      end
     end
   end
 end
