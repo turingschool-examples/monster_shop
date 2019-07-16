@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
   get '/profile', to: 'users#show', as: :profile
   get '/merchant', to: 'merchant/dashboard#show', as: :merchant_dashboard
+  get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
 
 
   get '/login', to: 'sessions#new'
