@@ -8,10 +8,6 @@ RSpec.describe 'As a Vistor' do
       @admin = User.create(name: "Admin", address: "789 Admin Dr", city: "Denver", state: "CO", zip: 80211, email: "admin@gmail.com", password: "rabbit_hole", role: 2)
     end
 
-    after :each do
-      expect(page).to have_content("You have logged in.")
-    end
-
     it "as a regular user I am redirected to my profile page" do
       visit login_path
 
@@ -22,6 +18,12 @@ RSpec.describe 'As a Vistor' do
       end
 
       expect(current_path).to eq(profile_path)
+      expect(page).to have_content("You have logged in.")
+
+      visit login_path
+
+      expect(current_path).to eq(profile_path)
+      expect(page).to have_content("You are already logged in.")
     end
 
     it "as a merchant I am redirected to my merchant dashboard" do
@@ -34,6 +36,12 @@ RSpec.describe 'As a Vistor' do
       end
 
       expect(current_path).to eq(merchant_dashboard_path)
+      expect(page).to have_content("You have logged in.")
+
+      visit login_path
+
+      expect(current_path).to eq(merchant_dashboard_path)
+      expect(page).to have_content("You are already logged in.")
     end
 
     it "as an admin I am redirected to my admin dashboard" do
@@ -46,6 +54,12 @@ RSpec.describe 'As a Vistor' do
       end
 
       expect(current_path).to eq(admin_dashboard_path)
+      expect(page).to have_content("You have logged in.")
+
+      visit login_path
+
+      expect(current_path).to eq(admin_dashboard_path)
+      expect(page).to have_content("You are already logged in.")
     end
 
     it "I cannot login with bad credentials" do
@@ -67,6 +81,7 @@ RSpec.describe 'As a Vistor' do
       end
 
       expect(current_path).to eq(profile_path)
+      expect(page).to have_content("You have logged in.")
     end
   end
 end
