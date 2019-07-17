@@ -4,10 +4,11 @@ RSpec.describe 'Visitor' do
   describe 'I see a form like the registration page' do
     before :each do
       @alex = User.create!(name: "Alex Hennel", address: "123 Straw Lane", city: "Straw City", state: "CO", zip: 12345, email: "straw@gmail.com", password: "fish")
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@alex)
     end
 
     it 'The form is prepopulated with current info except password' do
-      visit "/users/#{@alex.id}"
+      visit profile_path
       click_link "Edit Profile"
 
       fill_in "Name", with: "Alex Hennel"
@@ -18,7 +19,7 @@ RSpec.describe 'Visitor' do
       fill_in "Email", with: "straw@gmail.com"
       click_button "Update Profile"
 
-      expect(current_path).to eq("/users/#{@alex.id}")
+      expect(current_path).to eq(profile_path)
       expect(page).to have_content(@alex.name)
       expect(page).to have_content(@alex.address)
       expect(page).to have_content(@alex.city)
