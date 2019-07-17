@@ -26,11 +26,18 @@ describe User, type: :model do
         expect(user.admin?).to be_truthy
       end
 
+      it 'can be created as a merchant user' do
+        user = User.create(email: 'joe', password: 'combat', role: 1)
+
+        expect(user.role).to eq('merchant')
+        expect(user.merchant?).to be_truthy
+      end 
+
       it 'can be created as a default user' do
         user = User.create(email: 'sammy', password: 'pass')
 
-        expect(user.role).to eq('default')
-        expect(user.default?).to be_truthy
+        expect(user.role).to eq('user')
+        expect(user.user?).to be_truthy
       end
     end
   end
