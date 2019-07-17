@@ -55,5 +55,26 @@ RSpec.describe 'Visitor' do
 
       expect(page).to have_content("email: [\"has already been taken\"]")
     end
+
+    it 'I can edit my password and see a flash message that i have done so' do
+      visit profile_path
+      click_link 'Change Password'
+
+      fill_in "Password", with: "newpassword"
+      fill_in "Confirm Password", with: "newpassword"
+
+      click_button 'Change Password'
+      expect(page).to have_content("Your password has been updated")
+      within 'nav' do
+        click_link 'Logout'
+        click_link 'Login'
+
+        fill_in "Email", with: "blah@gmail.com"
+        fill_in "Password", with: "newpassword"
+      end
+
+      expect(current_path).to eq(profile_path)
+      expect(page).to have_content("You have logged in.")
+    end
   end
 end
