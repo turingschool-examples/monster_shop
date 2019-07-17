@@ -31,5 +31,19 @@ RSpec.describe 'As a User' do
       end
     end
 
+    it "as a merchant I see a message that I have logged out" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
+
+      visit root_path
+      click_on 'Logout'
+    end
+
+    it "as a admin I see a message that I have logged out" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+
+      visit root_path
+      click_on 'Logout'
+    end
+
   end
 end
