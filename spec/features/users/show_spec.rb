@@ -1,29 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Visitor' do
-  describe 'I visit my profile page' do
-    before :each do
-      @alex = User.create!(name: "Alex Hennel", address: "123 Straw Lane", city: "Straw City", state: "CO", zip: 12345, email: "straw@gmail.com", password: "fish")
-    end
-
-    it 'I see my profile data and a link to edit my profile data except password' do
-      visit "/users/#{@alex.id}"
-
-      expect(page).to have_content(@alex.name)
-      expect(page).to have_content(@alex.address)
-      expect(page).to have_content(@alex.city)
-      expect(page).to have_content(@alex.state)
-      expect(page).to have_content(@alex.zip)
-      expect(page).to have_content(@alex.email)
-      expect(page).to have_link('Edit Profile')
-    end
-  end
-end
-
 RSpec.describe 'As a registered user' do
-  describe 'when I visit my  profile page' do
+  describe 'when I visit my own profile page' do
     before do
-      @user = User.create!(email: 'gijoe@icloud.com', password: 'combat', role: 0, name: 'Joe Camo', address: '543 Bootcamp Way', city: 'Fort Bragg', state: 'NC', zip: 28303)
+      @user = User.create!(email: 'gijoe.icloud.com', password: 'combat', role: 0, name: 'Joe', address: '123 Military Circle', city: 'Fort Bragg', state: 'NC', zip: 30210)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     end
@@ -31,11 +11,31 @@ RSpec.describe 'As a registered user' do
     it 'loads a page' do
       visit profile_path
 
-      expect(current_path).to eq(profile_path)
+      expect(page.status_code).to eq(200)
+      expect(current_path).to eq(profile_path) 
     end
 
-    describe 'shows any orders placed' do
-      it "has link 'My Orders'" do
+    it 'shows me all data except password' do
+      visit profile_path
+
+      within("#user-#{@user.id}-info") do
+        expect(page).to have_content("Name: #{@user.name}")
+        expect(page).to have_content("Email: #{@user.email}")
+        expect(page).to have_content("Address: #{@user.address}")
+        expect(page).to have_content("City: #{@user.city}")
+        expect(page).to have_content("State: #{@user.state}")
+        expect(page).to have_content("Zip: #{@user.zip}")
+      end
+    end
+
+    it 'shows a link to edit profile data' do
+      visit profile_path
+
+      expect(page).to have_link('Edit Profile')
+    end
+
+    describe 'when I have orders placed in the system' do
+      it "I see a link on my profile page called 'My Orders'" do
         visit profile_path
 
         expect(page).to have_link('My Orders')
@@ -59,7 +59,7 @@ RSpec.describe 'As an unregistered user' do
     expect(current_path).to eq(profile_path)
     expect(page.status_code).to eq(404)
     expect(page).to_not have_content('Name: ')
-    expect(page).to_not have_content('E-Mail: ')
+    expect(page).to_not have_content('Email: ')
     expect(page).to_not have_content('Address: ')
     expect(page).to_not have_content('City: ')
     expect(page).to_not have_content('State: ')
