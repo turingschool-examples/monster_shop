@@ -1,8 +1,13 @@
+
+
 class UsersController < ApplicationController
+
   before_action :set_user, only: [:edit, :update]
+
 
   def new
     @user = User.new
+    render file: '/public/404', status: 404 unless @user
   end
 
   def create
@@ -22,8 +27,10 @@ class UsersController < ApplicationController
     end
   end
 
+
   def show
     @user = current_user
+    render file: '/public/404', status: 404 unless current_user?
   end
 
   def edit
@@ -46,8 +53,11 @@ class UsersController < ApplicationController
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
   end
 
+
   def set_user
     @user = current_user
     @user = User.find(params[:id]) if @user.nil?
   end
 end
+
+

@@ -21,19 +21,30 @@ Rails.application.routes.draw do
 
   resources :orders, only: [:new, :create, :show]
 
+  resources :users, only: [:create, :show, :edit, :update]
+
   get '/register', to: 'users#new', as: :register
-
-  post '/users', to: 'users#create', as: :users
-  get '/users/:id', to: 'users#show', as: :user
-  get '/users/:id/edit', to: 'users#edit', as: :edit_user
-  patch '/users/:id', to: 'users#update', as: :update_user
-
   get '/profile', to: 'users#show', as: :profile
+  get '/profile/edit', to: 'users#edit', as: :profile_edit
+  patch '/profile/edit', to: 'users#update'
+
+  scope :profile, as: :profile do
+    resources :orders, only: [:index, :show]
+  end
+
   get '/merchant', to: 'merchant/dashboard#show', as: :merchant_dashboard
   get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
 
-
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
+  delete '/login', to: 'sessions#destroy'
+
+  namespace :admin do
+    resources :categories, only: [:index]
+  end
+
+  scope :dashboard, as: :dashboard do
+    resources :orders, only: :show
+  end
 
 end
