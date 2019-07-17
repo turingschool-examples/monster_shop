@@ -41,7 +41,6 @@ describe 'User visits categories index page' do
       expect(page.status_code).to eq(404)
     end
   end
-
   context 'as a visitor' do
     it 'does not allow default user to see admin categories index' do
       visit admin_categories_path
