@@ -6,6 +6,8 @@ class Admin::BaseController < ApplicationController
   private
 
   def require_admin
-    render file: '/public/404', status: 404 unless current_admin?
+    unless current_admin?
+      render file: '/public/404', status: 404, layout: false
+    end
   end
 end
