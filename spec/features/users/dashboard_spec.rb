@@ -18,6 +18,11 @@ describe 'User visits profile or dashboard page' do
 
       expect(page).to have_content("The page you were looking for doesn't exist.")
       expect(page.status_code).to eq(404)
+
+      visit cart_path
+
+      expect(page).to have_content("The page you were looking for doesn't exist.")
+      expect(page.status_code).to eq(404)
     end
   end
 
@@ -36,8 +41,11 @@ describe 'User visits profile or dashboard page' do
 
       visit profile_path
 
-      expect(page).to have_content("The page you were looking for doesn't exist.")
-      expect(page.status_code).to eq(404)
+      expect(current_path).to eq(profile_path)
+
+      visit cart_path
+
+      expect(current_path).to eq(cart_path)
     end
   end
 
@@ -58,6 +66,10 @@ describe 'User visits profile or dashboard page' do
       visit profile_path
 
       expect(current_path).to eq(profile_path)
+
+      visit cart_path
+
+      expect(current_path).to eq(cart_path)
     end
   end
 end
