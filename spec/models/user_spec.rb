@@ -20,7 +20,7 @@ describe User, type: :model do
   describe User do
     describe 'roles' do
       it 'can be created as an admin' do
-        user = User.create(email: 'penelope', password: 'boom', role: 1)
+        user = User.create(email: 'penelope', password: 'boom', role: 2)
 
         expect(user.role).to eq('admin')
         expect(user.admin?).to be_truthy
