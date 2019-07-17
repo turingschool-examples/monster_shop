@@ -8,6 +8,7 @@ describe 'User visits profile or dashboard page' do
       visit admin_dashboard_path
 
       expect(current_path).to eq(admin_dashboard_path)
+      expect(page).to have_content("Admin Dashboard")
 
       visit merchant_dashboard_path
 
@@ -38,14 +39,17 @@ describe 'User visits profile or dashboard page' do
       visit merchant_dashboard_path
 
       expect(current_path).to eq(merchant_dashboard_path)
+      expect(page).to have_content("Merchant Dashboard")
 
       visit profile_path
 
       expect(current_path).to eq(profile_path)
+      expect(page).to have_content("Profile")
 
       visit cart_path
 
       expect(current_path).to eq(cart_path)
+      expect(page).to have_content("My Cart")
     end
   end
 
@@ -66,10 +70,12 @@ describe 'User visits profile or dashboard page' do
       visit profile_path
 
       expect(current_path).to eq(profile_path)
+      expect(page).to have_content("Profile")
 
       visit cart_path
 
       expect(current_path).to eq(cart_path)
+      expect(page).to have_content("My Cart")
     end
   end
 end

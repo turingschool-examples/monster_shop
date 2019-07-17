@@ -39,10 +39,6 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/login', to: 'sessions#destroy'
 
-  namespace :admin do
-    resources :categories, only: [:index]
-  end
-
   scope :dashboard, as: :dashboard do
     resources :orders, only: :show
   end
