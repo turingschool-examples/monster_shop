@@ -18,6 +18,17 @@ RSpec.describe 'As a User' do
       giant = megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+      visit item_path(ogre)
+
+      click_button 'Add to Cart'
+      within 'nav' do
+        expect(page).to have_content("Cart: 1")
+      end
+      visit root_path
+      click_on 'Logout'
+      within 'nav' do
+        expect(page).to have_content("Cart: 0")
+      end
     end
 
   end
