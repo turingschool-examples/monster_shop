@@ -5,7 +5,8 @@ describe 'User visits profile or dashboard page' do
     it 'can only see admin dashboard' do
       admin = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "bear", role: 2)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
-      visit admin_dashboard_path
+      visit root_path
+      click_link "Dashboard"
 
       expect(current_path).to eq(admin_dashboard_path)
       expect(page).to have_content("Admin Dashboard")
@@ -36,7 +37,8 @@ describe 'User visits profile or dashboard page' do
       expect(page).to have_content("The page you were looking for doesn't exist.")
       expect(page.status_code).to eq(404)
 
-      visit merchant_dashboard_path
+      visit root_path
+      click_on 'Dashboard'
 
       expect(current_path).to eq(merchant_dashboard_path)
       expect(page).to have_content("Merchant Dashboard")
@@ -67,12 +69,13 @@ describe 'User visits profile or dashboard page' do
       expect(page).to have_content("The page you were looking for doesn't exist.")
       expect(page.status_code).to eq(404)
 
-      visit profile_path
+      visit root_path
+      click_link "Profile"
 
       expect(current_path).to eq(profile_path)
       expect(page).to have_content("Profile")
 
-      visit cart_path
+      click_link "Cart"
 
       expect(current_path).to eq(cart_path)
       expect(page).to have_content("My Cart")

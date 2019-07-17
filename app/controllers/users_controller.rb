@@ -3,7 +3,9 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    render file: '/public/404', status: 404 unless @user
+    unless @user
+      render file: '/public/404', status: 404, layout: false
+    end
   end
 
   def create
@@ -25,7 +27,9 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    render file: '/public/404', status: 404 unless current_user? || current_merchant?
+    unless current_user? || current_merchant?
+      render file: '/public/404', status: 404, layout: false
+    end
   end
 
   def edit
