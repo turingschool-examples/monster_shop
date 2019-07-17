@@ -1,16 +1,13 @@
-# frozen_string_literal: true
+
 
 class UsersController < ApplicationController
-  # before_action :set_user, only: [:show]
+
+  before_action :set_user, only: [:edit, :update]
+
 
   def new
     @user = User.new
     render file: '/public/404', status: 404 unless @user
-  end
-
-  def show
-    @user = current_user
-    render file: '/public/404', status: 404 unless current_user?
   end
 
   def create
@@ -30,13 +27,24 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
+
+  def show
     @user = current_user
+    render file: '/public/404', status: 404 unless current_user?
+  end
+
+  def edit
   end
 
   def update
-    @user = current_user
-    redirect_to profile_path
+    if @user.update_attributes(user_params)
+      session[:user_id] = @user.id
+      flash[:notice] = "Your profile has been updated!"
+      redirect_to profile_path
+    else
+      generate_flash(@user)
+      render :edit
+    end
   end
 
   private
@@ -44,8 +52,12 @@ class UsersController < ApplicationController
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
   end
+
+
+  def set_user
+    @user = current_user
+    @user = User.find(params[:id]) if @user.nil?
+  end
 end
 
-# def set_user
-#   @user = User.find(session[:user_id])
-# end
+
