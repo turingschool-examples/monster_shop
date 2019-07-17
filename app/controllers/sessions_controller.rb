@@ -1,31 +1,23 @@
-class SessionsController < ApplicationController
+# frozen_string_literal: true
 
+class SessionsController < ApplicationController
   def new
-    if current_user
-      flash[:notice] = 'You are already logged in.'
-      case
-      when current_admin?
-        redirect_to admin_dashboard_path
-      when current_merchant?
-        redirect_to merchant_dashboard_path
-      else
-        redirect_to profile_path
-      end
+    unless current_user.nil?
+      flash[:message] = 'You are already logged in.'
+      redirect_to profile_path if current_user.user?
+      redirect_to merchant_dashboard_path if current_user.merchant?
+      redirect_to admin_dashboard_path if current_user.admin?
     end
   end
 
   def create
     user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
+    if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      if current_user.regular_user?
-        redirect_to profile_path
-      elsif current_user.merchant?
-        redirect_to merchant_dashboard_path
-      else current_user.admin?
-        redirect_to admin_dashboard_path
-      end
-      flash[:success] = "You have logged in."
+      redirect_to profile_path if user.user?
+      redirect_to merchant_dashboard_path if current_user.merchant?
+      redirect_to admin_dashboard_path if current_user.admin?
+      flash[:success] = 'You have logged in.'
     else
       flash[:error] = 'Username and password do not match.'
       redirect_to login_path
