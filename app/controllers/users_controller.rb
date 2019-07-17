@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show]
+  before_action :set_user, only: [:edit, :update]
 
   def new
     @user = User.new
@@ -23,6 +23,25 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = current_user
+  end
+
+  def edit
+    @user = current_user
+    @user = User.find(params[:id]) if @user.nil?
+  end
+
+  def update
+    @user = current_user
+    @user = User.find(params[:id]) if @user.nil?
+    if @user.update_attributes(user_params)
+      session[:user_id] = @user.id
+      flash[:notice] = "Your profile has been updated!"
+      redirect_to profile_path
+    else
+      generate_flash(@user)
+      render :edit
+    end
   end
 
   private
@@ -32,6 +51,7 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find(session[:user_id])
+    @user = current_user
+    @user = User.find(params[:id]) if @user.nil?
   end
 end
