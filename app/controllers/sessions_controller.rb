@@ -19,7 +19,8 @@ class SessionsController < ApplicationController
       redirect_to admin_dashboard_path if current_user.admin?
       flash[:success] = 'You have logged in.'
     else
-      render :new
+      flash[:error] = 'Username and password do not match.'
+      redirect_to login_path
     end
   end
 end
