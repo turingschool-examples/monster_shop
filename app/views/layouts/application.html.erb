@@ -20,6 +20,11 @@
         <li class="nav-item">
           <a class="nav-link" href="/merchants">Merchants</a>
         </li>
+        <% if current_admin? %>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/users">Users</a>
+          </li>
+        <% end %>
       </ul>
       <ul class="navbar-nav ml-auto">
         <% unless current_merchant? || current_admin? %>
@@ -33,9 +38,13 @@
             <li class="nav-item">
               <%= link_to 'Profile', profile_path, class:"nav-link" %>
             </li>
-          <% else %>
+          <% elsif current_merchant? %>
             <li class="nav-item">
               <%= link_to 'Dashboard', merchant_dashboard_path, class:"nav-link" %>
+            </li>
+          <% elsif current_admin? %>
+            <li class="nav-item">
+              <%= link_to 'Dashboard', admin_dashboard_path, class:"nav-link" %>
             </li>
           <% end %>
           <li class="nav-item">
