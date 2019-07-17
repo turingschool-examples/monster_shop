@@ -9,12 +9,4 @@ class User < ApplicationRecord
   validates_presence_of :name, :address, :city
 
   enum role: ["user", "merchant", "admin"]
-
-  def self.find_merchants
-    self.where(role: :merchant)
-  end
-
-  def self.find_users
-    self.where(role: :user)
-  end
 end

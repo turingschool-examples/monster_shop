@@ -46,5 +46,4 @@ Rails.application.routes.draw do
   scope :dashboard, as: :dashboard do
     resources :orders, only: :show
   end
-
 end
