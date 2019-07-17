@@ -5,7 +5,7 @@ RSpec.describe 'Visitor' do
     before :each do
       @alex = User.create!(name: "Alex Hennel", address: "123 Straw Lane", city: "Straw City", state: "CO", zip: 12345, email: "straw@gmail.com", password: "fish")
     end
-    
+
     it 'The form is prepopulated with current info except password' do
       visit "/users/#{@alex.id}"
       click_link "Edit Profile"
