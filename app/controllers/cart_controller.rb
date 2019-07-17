@@ -13,10 +13,6 @@ class CartController < ApplicationController
   end
 
   def show
-    @user = 
-    if !current_user
-      flash[:notice] = "You must register or log in to checkout"
-    end
   end
 
   def empty
