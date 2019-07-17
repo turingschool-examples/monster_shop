@@ -48,5 +48,25 @@ RSpec.describe 'As a Vistor' do
       expect(current_path).to eq(admin_dashboard_path)
     end
 
+    it "I cannot login with bad credentials" do
+      visit login_path
+
+      within '#login' do
+        fill_in "Email", with: 'fish@email.com'
+        fill_in "Password", with: 'fish'
+        click_on 'Login'
+      end
+
+      expect(current_path).to eq(login_path)
+      expect(page).to have_content('Username and password do not match.')
+
+      within '#login' do
+        fill_in "Email", with: @user.email
+        fill_in "Password", with: @user.password
+        click_on 'Login'
+      end
+
+      expect(current_path).to eq(profile_path)
+    end
   end
 end
