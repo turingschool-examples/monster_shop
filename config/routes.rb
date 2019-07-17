@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   get '/profile/edit', to: 'users#edit', as: :profile_edit
   patch '/profile/edit', to: 'users#update'
 
-  # => pull up past & current orders for a user 
+  # => pull up past & current orders for a user
   scope :profile, as: :profile do
     resources :orders, only: [:index, :show]
   end
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   # => admin
   get '/merchant', to: 'merchant/dashboard#show', as: :merchant_dashboard
   get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
-  get '/admin', to: 'admin/merchants/:merchant_id', as: :admin_merchant_index
+  get 'admin/merchants/:merchant_id', to: 'merchant/dashboard#show', as: :admin_merchant_index
 
   # => logging in
   get '/login', to: 'sessions#new'
