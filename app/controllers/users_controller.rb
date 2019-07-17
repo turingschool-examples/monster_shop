@@ -1,8 +1,16 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show]
+  # before_action :set_user, only: [:show]
 
   def new
     @user = User.new
+    render file: '/public/404', status: 404 unless @user
+  end
+
+  def show
+    @user = current_user
+    render file: '/public/404', status: 404 unless current_user?
   end
 
   def create
@@ -22,16 +30,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-  end
-
   private
 
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
   end
-
-  def set_user
-    @user = User.find(session[:user_id])
-  end
 end
+
+# def set_user
+#   @user = User.find(session[:user_id])
+# end
