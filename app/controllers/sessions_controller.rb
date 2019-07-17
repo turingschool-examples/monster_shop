@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class SessionsController < ApplicationController
   def new
     unless current_user.nil?
@@ -23,4 +21,13 @@ class SessionsController < ApplicationController
       redirect_to login_path
     end
   end
+
+  def destroy
+    user = User.find_by(email: session[:email])
+    session[:user_id] = nil
+    redirect_to root_path
+    flash[:notice] = "You have logged out."
+    session.delete(:cart)
+  end
+
 end
