@@ -58,4 +58,5 @@ Rails.application.routes.draw do
     resources :orders, only: :show
   end
 
+  get '*path', to: 'welcome#error404'
 end
