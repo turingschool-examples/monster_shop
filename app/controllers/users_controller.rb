@@ -43,6 +43,7 @@ class UsersController < ApplicationController
           redirect_to profile_path
         else
           flash[:notice] = "Passwords do not match."
+          render :edit
         end
       else
         flash[:notice] = "Incorrect Current Password."
