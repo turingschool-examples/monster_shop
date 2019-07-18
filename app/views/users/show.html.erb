@@ -13,3 +13,4 @@
   <% if @user.orders != nil %>
 <%= link_to "My Orders", profile_orders_path %>
 <% end %>
+<%= link_to "Change Password", profile_edit_path(edit: "password") %>
