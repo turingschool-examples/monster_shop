@@ -3,9 +3,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    unless @user
-      render file: '/public/404', status: 404, layout: false
-    end
   end
 
   def create
@@ -38,46 +35,47 @@ class UsersController < ApplicationController
 
   def update
     if params[:commit] == "Change Password"
-      if current_user&.authenticate(params[:current_password])
-        if params[:password] == params[:confirm_password]
-          @user.update_attributes(password: params[:password])
-          session[:user_id] = @user.id
-          flash[:notice] = "Your password has been updated."
-          redirect_to profile_path
-        else
-          flash[:notice] = "Passwords do not match."
-        end
-      else
-        flash[:notice] = "Incorrect Current Password."
-        render :edit
-      end
+      update_password
     else
-      if @user.update_attributes(user_params)
-        session[:user_id] = @user.id
-        flash[:notice] = "Your profile has been updated!"
-        redirect_to profile_path
-      else
-        generate_flash(@user)
-        render :edit
-      end
+      update_profile
     end
   end
-
-  # def update_password
-  #   binding.pry
-  # end
 
   private
 
   def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email)
-  end
-
-  def password
-    params.permit(:password)
+    params.permit(:name, :address, :city, :state, :zip, :email, :password)
   end
 
   def set_user
     @user = current_user
+  end
+
+  def update_password
+    if current_user&.authenticate(params[:current_password])
+      if params[:password] == params[:confirm_password]
+        @user.update_attributes(password: params[:password])
+        session[:user_id] = @user.id
+        flash[:notice] = "Your password has been updated."
+        redirect_to profile_path
+      else
+        flash[:notice] = "Passwords do not match."
+        render :edit
+      end
+    else
+      flash[:notice] = "Incorrect Current Password."
+      render :edit
+    end
+  end
+
+  def update_profile
+    if @user.update_attributes(user_params)
+      session[:user_id] = @user.id
+      flash[:notice] = "Your profile has been updated!"
+      redirect_to profile_path
+    else
+      generate_flash(@user)
+      render :edit
+    end
   end
 end

@@ -46,5 +46,11 @@ RSpec.describe 'Site Navigation' do
       end
       expect(current_path).to eq('/')
     end
+
+    it 'I see a 404 visiting undefined paths' do
+      visit '/apple'
+
+      expect(page.status_code).to eq(404)
+    end
   end
 end
