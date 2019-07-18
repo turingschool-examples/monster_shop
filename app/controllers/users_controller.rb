@@ -27,7 +27,7 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    unless current_user? || current_merchant?
+    unless current_user? || current_merchant? || current_employee?
       render file: '/public/404', status: 404, layout: false
     end
   end
