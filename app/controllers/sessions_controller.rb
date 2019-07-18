@@ -2,9 +2,7 @@ class SessionsController < ApplicationController
   def new
     if current_user
       flash[:message] = 'You are already logged in.'
-      redirect_to profile_path if current_user.user?
-      redirect_to merchant_dashboard_path if current_user.merchant?
-      redirect_to admin_dashboard_path if current_user.admin?
+      redirect_selector
     end
   end
 
@@ -12,9 +10,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to profile_path if user.user?
-      redirect_to merchant_dashboard_path if current_user.merchant?
-      redirect_to admin_dashboard_path if current_user.admin?
+      redirect_selector
       flash[:success] = 'You have logged in.'
     else
       flash[:error] = 'Username and password do not match.'
@@ -27,5 +23,13 @@ class SessionsController < ApplicationController
     session.delete(:cart)
     flash[:notice] = "You have logged out."
     redirect_to root_path
+  end
+
+  private
+
+  def redirect_selector
+    redirect_to profile_path if current_user?
+    redirect_to merchant_dashboard_path if current_merchant? || current_employee?
+    redirect_to admin_dashboard_path if current_admin?
   end
 end

@@ -8,13 +8,5 @@ class User < ApplicationRecord
   validates :zip, presence: true, numericality: true, length: { is: 5 }
   validates_presence_of :name, :address, :city
 
-  enum role: ["user", "merchant", "admin"]
-
-  def self.find_merchants
-    self.where(role: :merchant)
-  end
-
-  def self.find_users
-    self.where(role: :user)
-  end
+  enum role: ["user", "employee", "merchant", "admin"]
 end
