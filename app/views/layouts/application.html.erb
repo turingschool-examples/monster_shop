@@ -4,61 +4,16 @@
     <title>MonsterShop</title>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
-     <%= stylesheet_link_tag "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" %>
+    <%= stylesheet_link_tag "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" %>
   </head>
 
   <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
       <a class="navbar-brand mb-0 h1" href="/">MonsterShop</a>
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/items">Items</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/merchants">Merchants</a>
-        </li>
-        <% if current_admin? %>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/users">Users</a>
-          </li>
-        <% end %>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <% unless current_admin? %>
-          <li class="nav-item">
-            <a class="nav-link" href="/cart">Cart: <%= cart.count %></a>
-          </li>
-        <% end %>
-        <% if current_user %>
-          <span class="navbar-brand mb-0 h1">Welcome, <%= current_user.name %></span>
-          <% if current_user? %>
-            <li class="nav-item">
-              <%= link_to 'Profile', profile_path, class:"nav-link" %>
-            </li>
-          <% elsif current_merchant? || current_employee? %>
-            <li class="nav-item">
-              <%= link_to 'Dashboard', merchant_dashboard_path, class:"nav-link" %>
-            </li>
-          <% elsif current_admin? %>
-            <li class="nav-item">
-              <%= link_to 'Dashboard', admin_dashboard_path, class:"nav-link" %>
-            </li>
-          <% end %>
-          <li class="nav-item">
-            <%= link_to 'Logout', login_path, method: :delete, class:"nav-link" %>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
-          </li>
-        <% end %>
-      </ul>
+      <%= render '/layouts/nav_left' %>
+      <%= render '/layouts/nav_right' %>
     </nav>
 
     <% flash.each do |type, message| %>
