@@ -27,30 +27,54 @@ class UsersController < ApplicationController
     end
   end
 
-
   def show
     @user = current_user
     render file: '/public/404', status: 404 unless current_user?
   end
 
   def edit
+    @password = params[:edit] == "password"
   end
 
   def update
-    if @user.update_attributes(user_params)
-      session[:user_id] = @user.id
-      flash[:notice] = "Your profile has been updated!"
-      redirect_to profile_path
+    if params[:commit] == "Change Password"
+      if current_user&.authenticate(params[:current_password])
+        if params[:password] == params[:confirm_password]
+          @user.update_attributes(password: params[:password])
+          session[:user_id] = @user.id
+          flash[:notice] = "Your password has been updated."
+          redirect_to profile_path
+        else
+          flash[:notice] = "Passwords do not match."
+        end
+      else
+        flash[:notice] = "Incorrect Current Password."
+        render :edit
+      end
     else
-      generate_flash(@user)
-      render :edit
+      if @user.update_attributes(user_params)
+        session[:user_id] = @user.id
+        flash[:notice] = "Your profile has been updated!"
+        redirect_to profile_path
+      else
+        generate_flash(@user)
+        render :edit
+      end
     end
   end
+
+  # def update_password
+  #   binding.pry
+  # end
 
   private
 
   def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email, :password)
+    params.permit(:name, :address, :city, :state, :zip, :email)
+  end
+
+  def password
+    params.permit(:password)
   end
 
 
@@ -59,5 +83,3 @@ class UsersController < ApplicationController
     @user = User.find(params[:id]) if @user.nil?
   end
 end
-
-
