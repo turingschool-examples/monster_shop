@@ -91,5 +91,27 @@ RSpec.describe 'Visitor' do
       expect(current_path).to eq(profile_path)
       expect(page).to have_content("You have logged in.")
     end
+
+    it "I can see a message for invalid current password" do
+      click_link 'Change Password'
+
+      fill_in 'Current Password', with: "beans"
+      fill_in "Password", with: "newpassword"
+      fill_in "Confirm Password", with: "newpassword"
+
+      click_button 'Change Password'
+      expect(page).to have_content("Incorrect Current Password.")
+    end
+
+    it "I can see a message for non matching new passwords" do
+      click_link 'Change Password'
+
+      fill_in 'Current Password', with: "fish"
+      fill_in "Password", with: "newpassword"
+      fill_in "Confirm Password", with: "newpasswordd"
+
+      click_button 'Change Password'
+      expect(page).to have_content("Passwords do not match.")
+    end
   end
 end
