@@ -10,6 +10,9 @@ RSpec.describe 'As a User' do
 
     after :each do
       expect(page).to have_content("You have logged out.")
+      expect(page).to_not have_link("Logout")
+      expect(page).to have_link("Login")
+      expect(page).to have_link("Register")
     end
 
     it "as a user I see a message that I have logged out and my cart is cleared" do
@@ -44,6 +47,5 @@ RSpec.describe 'As a User' do
       visit root_path
       click_on 'Logout'
     end
-
   end
 end

@@ -42,7 +42,9 @@ RSpec.describe 'Visitor' do
       fill_in "Email", with: "straw@gmail.com"
       click_button "Update Profile"
 
-      visit "/users/#{@alex2.id}"
+      expect(page).to have_content("email: [\"has already been taken\"]")
+
+      visit profile_path
       click_link "Edit Profile"
 
       fill_in "Name", with: "Alex Hennel"
@@ -50,28 +52,35 @@ RSpec.describe 'Visitor' do
       fill_in "City", with: "Straw City"
       fill_in "State", with: "CO"
       fill_in "Zip", with: 12345
-      fill_in "Email", with: "straw@gmail.com"
+      fill_in "Email", with: "frogs@gmail.com"
       click_button "Update Profile"
 
-      expect(page).to have_content("email: [\"has already been taken\"]")
+      expect(page).to have_content('Your profile has been updated!')
     end
 
-    it 'I can edit my password and see a flash message that i have done so' do
+    it 'I can edit my password and see a flash message that I have done so' do
       visit profile_path
       click_link 'Change Password'
 
+      fill_in 'Current Password', with: "fish"
       fill_in "Password", with: "newpassword"
       fill_in "Confirm Password", with: "newpassword"
 
       click_button 'Change Password'
       expect(page).to have_content("Your password has been updated")
+      expect(@alex2.authenticate('newpassword')).to eq(@alex2)
+      expect(current_path).to eq(profile_path)
       within 'nav' do
         click_link 'Logout'
-        click_link 'Login'
-
-        fill_in "Email", with: "blah@gmail.com"
-        fill_in "Password", with: "newpassword"
       end
+      
+      expect(current_path).to eq(root_path)
+      expect(page).to have_content("Welcome to MonsterShop")
+
+      click_link 'Login'
+
+      fill_in "Email", with: "blah@gmail.com"
+      fill_in "Password", with: "newpassword"
 
       expect(current_path).to eq(profile_path)
       expect(page).to have_content("You have logged in.")
