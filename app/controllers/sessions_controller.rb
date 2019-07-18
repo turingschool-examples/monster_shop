@@ -29,5 +29,4 @@ class SessionsController < ApplicationController
     flash[:notice] = "You have logged out."
     session.delete(:cart)
   end
-
 end

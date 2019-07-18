@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  before_action :deny_admin
+
   def add_item
     item = Item.find(params[:item_id])
     session[:cart] ||= {}
@@ -34,5 +36,13 @@ class CartController < ApplicationController
     end
     session[:cart] = cart.contents
     redirect_to '/cart'
+  end
+
+  private
+
+  def deny_admin
+    if current_admin?
+      render file: '/public/404', status: 404, layout: false
+    end
   end
 end

@@ -30,9 +30,6 @@ Rails.application.routes.draw do
   # => users
   resources :users, only: [:create, :show, :edit, :update]
 
-  # => user registration
-  get '/register', to: 'users#new', as: :register
-
   # => profile
   get '/profile', to: 'users#show', as: :profile
   get '/profile/edit', to: 'users#edit', as: :profile_edit
@@ -48,7 +45,8 @@ Rails.application.routes.draw do
   get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
   get 'admin/merchants/:id', to: 'merchants#show', as: :admin_merchant_show
 
-  # => logging in
+  # => user registration & logging in
+  get '/register', to: 'users#new', as: :register
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/login', to: 'sessions#destroy'
