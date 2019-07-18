@@ -8,4 +8,12 @@ class Admin::MerchantsController < Admin::BaseController
     @merchant = Merchant.find(params[:id])
   end
 
+  def enabled
+
+  end
+
+  def disabled
+
+  end
+  
 end
