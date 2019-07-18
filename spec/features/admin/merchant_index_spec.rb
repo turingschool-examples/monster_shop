@@ -26,7 +26,7 @@ RSpec.describe 'Admin' do
     it "A merchant is enabled by default" do
       visit admin_merchant_show_path(@megan.id)
 
-      within('#enabled') { expect(page).to have_content(true) }
+      # within('#enabled') { expect(page).to have_content(true) }
       expect(page).to have_button('disable')
     end
 

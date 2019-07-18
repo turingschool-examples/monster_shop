@@ -8,12 +8,14 @@ class Admin::MerchantsController < Admin::BaseController
     @merchant = Merchant.find(params[:id])
   end
 
-  def enabled
-
+  def enable
+    @merchant = Merchant.find(params[:id])
+    @merchant.enabled == true
   end
 
-  def disabled
-
+  def disable
+    @merchant = Merchant.find(params[:id])
+    @merchant.enabled == false
   end
-  
+
 end
