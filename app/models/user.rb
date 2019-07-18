@@ -8,5 +8,5 @@ class User < ApplicationRecord
   validates :zip, presence: true, numericality: true, length: { is: 5 }
   validates_presence_of :name, :address, :city
 
-  enum role: ["user", "merchant", "admin"]
+  enum role: ["user", "employee", "merchant", "admin"]
 end
