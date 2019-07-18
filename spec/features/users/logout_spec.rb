@@ -10,6 +10,9 @@ RSpec.describe 'As a User' do
 
     after :each do
       expect(page).to have_content("You have logged out.")
+      expect(page).to_not have_link("Logout")
+      expect(page).to have_link("Login")
+      expect(page).to have_link("Register")
     end
 
     it "as a user I see a message that I have logged out and my cart is cleared" do
@@ -17,33 +20,59 @@ RSpec.describe 'As a User' do
       ogre = megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
       giant = megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
 
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+      visit root_path
+
+      click_on "Login"
+      fill_in "Email", with: @user.email
+      fill_in "Password", with: @user.password
+
+      within '#login' do
+        click_on "Login"
+      end
+
       visit item_path(ogre)
 
       click_button 'Add to Cart'
+
       within 'nav' do
         expect(page).to have_content("Cart: 1")
       end
+
       visit root_path
       click_on 'Logout'
+
       within 'nav' do
         expect(page).to have_content("Cart: 0")
       end
+
     end
 
     it "as a merchant I see a message that I have logged out" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
+      visit root_path
+      click_on "Login"
+      fill_in "Email", with: @merchant.email
+      fill_in "Password", with: @merchant.password
+
+      within '#login' do
+        click_on "Login"
+      end
 
       visit root_path
       click_on 'Logout'
     end
 
     it "as a admin I see a message that I have logged out" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+      visit root_path
+      click_on "Login"
+      fill_in "Email", with: @admin.email
+      fill_in "Password", with: @admin.password
 
+      within '#login' do
+        click_on "Login"
+      end
+      
       visit root_path
       click_on 'Logout'
     end
-
   end
 end

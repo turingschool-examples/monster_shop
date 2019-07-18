@@ -3,9 +3,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    unless @user
-      render file: '/public/404', status: 404, layout: false
-    end
   end
 
   def create
@@ -33,16 +30,14 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @password = params[:edit] == "password"
   end
 
   def update
-    if @user.update_attributes(user_params)
-      session[:user_id] = @user.id
-      flash[:notice] = "Your profile has been updated!"
-      redirect_to profile_path
+    if params[:commit] == "Change Password"
+      update_password
     else
-      generate_flash(@user)
-      render :edit
+      update_profile
     end
   end
 
@@ -54,5 +49,33 @@ class UsersController < ApplicationController
 
   def set_user
     @user = current_user
+  end
+
+  def update_password
+    if current_user&.authenticate(params[:current_password])
+      if params[:password] == params[:confirm_password]
+        @user.update_attributes(password: params[:password])
+        session[:user_id] = @user.id
+        flash[:notice] = "Your password has been updated."
+        redirect_to profile_path
+      else
+        flash[:notice] = "Passwords do not match."
+        redirect_to profile_edit_path(:edit => "password")
+      end
+    else
+      flash[:notice] = "Incorrect Current Password."
+      redirect_to profile_edit_path(:edit => "password")
+    end
+  end
+
+  def update_profile
+    if @user.update_attributes(user_params)
+      session[:user_id] = @user.id
+      flash[:notice] = "Your profile has been updated!"
+      redirect_to profile_path
+    else
+      generate_flash(@user)
+      render :edit
+    end
   end
 end

@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    unless current_user.nil?
+    if current_user
       flash[:message] = 'You are already logged in.'
       redirect_selector
     end
@@ -19,11 +19,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by(email: session[:email])
-    session[:user_id] = nil
-    redirect_to root_path
-    flash[:notice] = "You have logged out."
+    session.delete(:user_id)
     session.delete(:cart)
+    flash[:notice] = "You have logged out."
+    redirect_to root_path
   end
 
   private

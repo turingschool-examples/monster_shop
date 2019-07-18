@@ -31,9 +31,9 @@ RSpec.describe 'New User Creation' do
 
       click_button 'Register'
 
+      expect(page).to have_content('You are now registered and logged in.')
       expect(current_path).to eq(profile_path)
       expect(User.last.name).to eq(name)
-      expect(page).to have_content('You are now registered and logged in.')
       expect(page).to_not have_button('Register')
       expect(page).to have_content('Logout')
     end
@@ -80,6 +80,31 @@ RSpec.describe 'New User Creation' do
       click_button 'Register'
 
       expect(page).to have_content("email: [\"has already been taken\"]")
+    end
+
+    it 'I can not create a user when confirm password doesnt match' do
+      visit register_path
+
+      name = 'Tyler'
+      address = '1234 Main St'
+      city = "Denver"
+      state = "CO"
+      zip = 80218
+      email = 'tyler@gmail.com'
+      password = 'noodles'
+
+      fill_in 'Name', with: name
+      fill_in 'Address', with: address
+      fill_in 'City', with: city
+      fill_in 'State', with: state
+      fill_in 'Zip', with: zip
+      fill_in 'Email', with: email
+      fill_in 'Password', with: password
+      fill_in :confirm_password, with: "noodle"
+
+      click_button 'Register'
+
+      expect(page).to have_content("Password does not match!")
     end
   end
 end
