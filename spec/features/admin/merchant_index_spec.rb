@@ -7,13 +7,21 @@ RSpec.describe 'Admin' do
       @brian = Merchant.create!(name: 'Brians Bagels', address: '125 Main St', city: 'Denver', state: 'CO', zip: 80218)
       @larry = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: "admin")
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
-      visit admin_merchant_index_path 
+      visit admin_merchant_index_path
+      save_and_open_page
+    end
+
+    it "I see merchant name, city, and state displayed on the page" do
+
+      expect(page).to have_link("Megans Marmalades")
+      expect(page).to have_content(@megan.city)
+      expect(page).to have_content(@megan.state)
     end
 
     it "The merchant's name is a link to their merchant dashboard" do
-      click_link "Megan's Marmalades"
+      click_link "Megans Marmalades"
 
-      expect(current_path).to eq(admin_merchant_show)
+      expect(current_path).to eq(admin_merchant_show_path(@megan.id))
     end
 
     it "I see a disable button next to a merchant who is enabled" do
