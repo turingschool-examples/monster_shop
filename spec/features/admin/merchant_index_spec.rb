@@ -12,36 +12,30 @@ RSpec.describe 'Admin' do
 
       @meg = User.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'meg@gmail.com', password: 'fish' )
       @meg2 = User.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'IA', zip: 80218, email: 'meg2@gmail.com', password: 'fish' )
+      @larry = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: 2)
+
       @order_1 = @meg.orders.create!
       @order_2 = @meg2.orders.create!
 
       @order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2)
       @order_2.order_items.create!(item: @giant, price: @hippo.price, quantity: 2)
       @order_2.order_items.create!(item: @ogre, price: @hippo.price, quantity: 2)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
     end
 
-    it 'I can see everything a merchant would' do
-      visit "/merchants/#{@megan.id}"
+    describe 'I can see everything a merchant would' do
+      it 'my path is /admin/merchants/:merchant_id'do
+        visit admin_merchant_show_path(@megan)
 
-      expect(page).to have_content(@megan.name)
+        expect(page).to have_content(@megan.name)
 
-      within '.address' do
-        expect(page).to have_content(@megan.address)
-        expect(page).to have_content("#{@megan.city} #{@megan.state} #{@megan.zip}")
+        within '.address' do
+          expect(page).to have_content(@megan.address)
+          expect(page).to have_content("#{@megan.city} #{@megan.state} #{@megan.zip}")
+        end
+
+        expect(current_path).to eq(admin_merchant_show_path(@megan))
       end
-    end
-
-    it 'my path is /admin/merchants/:merchant_id'do
-      visit "/admin/merchants/#{@megan.id}"
-
-      expect(page).to have_content(@megan.name)
-
-      within '.address' do
-        expect(page).to have_content(@megan.address)
-        expect(page).to have_content("#{@megan.city} #{@megan.state} #{@megan.zip}")
-      end
-
-      expect(current_path).to eq("/admin/merchants/#{@megan.id}")
     end
   end
 end

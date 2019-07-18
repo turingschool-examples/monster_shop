@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   # => admin
   get '/merchant', to: 'merchant/dashboard#show', as: :merchant_dashboard
   get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
-  get 'admin/merchants/:merchant_id', to: 'merchant/dashboard#show', as: :admin_merchant_index
+  get 'admin/merchants/:id', to: 'merchants#show', as: :admin_merchant_show
 
   # => logging in
   get '/login', to: 'sessions#new'
