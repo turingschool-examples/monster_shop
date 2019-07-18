@@ -26,20 +26,20 @@
           <a class="nav-link" href="/cart">Cart: <%= cart.count %></a>
         </li>
         <% if current_user %>
-        <span class="navbar-brand mb-0 h1">Welcome, <%= current_user.name %></span>
-        <li class="nav-item">
-          <%= link_to 'Profile', profile_path, class:"nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Logout', login_path, method: :delete, class:"nav-link" %>
-        </li>
+          <span class="navbar-brand mb-0 h1">Welcome, <%= current_user.name %></span>
+          <li class="nav-item">
+            <%= link_to 'Profile', profile_path, class:"nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Logout', login_path, method: :delete, class:"nav-link" %>
+          </li>
         <% else %>
-        <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/register">Register</a>
-        </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
         <% end %>
       </ul>
     </nav>
