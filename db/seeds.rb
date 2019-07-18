@@ -22,3 +22,4 @@ brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image
 alex = User.create!(name: "Alex Hennel", address: "123 Straw Lane", city: "Straw City", state: "CO", zip: 12345, email: "straw@gmail.com", password: "fish", role: 0)
 berry = User.create!(name: "Berry Blue", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "blue@gmail.com", password: "bear", role: 1)
 larry = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: 2)
+jeff = User.create!(name: "Jeff Casimir", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "jeff@gmail.com", password: "jeff", role: 3)
