@@ -3,9 +3,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    unless @user
-      render file: '/public/404', status: 404, layout: false
-    end
   end
 
   def create
@@ -63,18 +60,10 @@ class UsersController < ApplicationController
     end
   end
 
-  # def update_password
-  #   binding.pry
-  # end
-
   private
 
   def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email)
-  end
-
-  def password
-    params.permit(:password)
+    params.permit(:name, :address, :city, :state, :zip, :email, :password)
   end
 
   def set_user

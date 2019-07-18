@@ -31,9 +31,9 @@ RSpec.describe 'New User Creation' do
 
       click_button 'Register'
 
+      expect(page).to have_content('You are now registered and logged in.')
       expect(current_path).to eq(profile_path)
       expect(User.last.name).to eq(name)
-      expect(page).to have_content('You are now registered and logged in.')
       expect(page).to_not have_button('Register')
       expect(page).to have_content('Logout')
     end
