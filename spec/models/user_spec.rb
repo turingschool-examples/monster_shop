@@ -20,18 +20,25 @@ describe User, type: :model do
   describe User do
     describe 'roles' do
       it 'can be created as an admin' do
-        user = User.create(email: 'penelope', password: 'boom', role: 2)
+        user = User.create(email: 'penelope', password: 'boom', role: 3)
 
         expect(user.role).to eq('admin')
         expect(user.admin?).to be_truthy
       end
 
       it 'can be created as a merchant user' do
-        user = User.create(email: 'joe', password: 'combat', role: 1)
+        user = User.create(email: 'joe', password: 'combat', role: 2)
 
         expect(user.role).to eq('merchant')
         expect(user.merchant?).to be_truthy
-      end 
+      end
+
+      it 'can be created as an employee user' do
+        user = User.create(email: 'joe', password: 'combat', role: 1)
+
+        expect(user.role).to eq('employee')
+        expect(user.employee?).to be_truthy
+      end
 
       it 'can be created as a default user' do
         user = User.create(email: 'sammy', password: 'pass')
