@@ -42,7 +42,7 @@ RSpec.describe 'Show Order' do
       within "#item-#{@ogre.id}" do
         expect(page).to have_content(@ogre.name)
         expect(page).to have_content(@ogre.description)
-        expect(page).to have_content(@ogre.image)
+        expect(page).to have_css("img[src*='#{@ogre.image}']")
         expect(page).to have_content("Quantity: 1")
         expect(page).to have_content("Price: #{number_to_currency(@ogre.price)}")
         expect(page).to have_content("Subtotal: #{number_to_currency(@ogre.price * 1)}")
@@ -51,7 +51,7 @@ RSpec.describe 'Show Order' do
       within "#item-#{@hippo.id}" do
         expect(page).to have_content(@hippo.name)
         expect(page).to have_content(@hippo.description)
-        expect(page).to have_content(@hippo.image)
+        expect(page).to have_css("img[src*='#{@hippo.image}']")
         expect(page).to have_content("Price: #{number_to_currency(@hippo.price)}")
         expect(page).to have_content("Quantity: 2")
         expect(page).to have_content("Subtotal: #{number_to_currency(@hippo.price * 2)}")
