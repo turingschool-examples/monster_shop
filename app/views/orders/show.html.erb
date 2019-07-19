@@ -1,18 +1,21 @@
-<section class = 'shipping-address'>
-  <h3><%= @user.name %></h3>
-  <p><%= @user.address %></p>
-  <p><%= @user.city %> <%= @user.state %> <%= @user.zip %></p>
-</section>
-
-<h3>Total: <%= number_to_currency(@order.grand_total) %></h3>
+<section id=order-<%= @order.id %>>
+<h1>Order #<%= @order.id %></h1>
 <p>Order Created: <%= @order.created_at %></p>
-
-<% @order.order_items.each do |order_item| %>
-  <section id='item-<%= order_item.item_id%>'>
-    <h2><%= link_to order_item.item.name, "/items/#{order_item.item_id}" %></h2>
-    <p>Price: <%= number_to_currency(order_item.price) %></p>
-    <p>Quantity: <%= order_item.quantity %></p>
-    <p>Subtotal: <%= number_to_currency(order_item.subtotal) %></p>
-    <p>Sold by: <%= link_to order_item.item.merchant.name, "/merchants/#{order_item.item.merchant_id}" %></p>
+<p>Order Updated: <%= @order.updated_at %></p>
+<p>Order Status: <%= @order.status %></p>
+</section>
+<% @order.items.each do |item| %>
+  <section id='item-<%= item.id%>'>
+    <h2><%= link_to item.name, "/items/#{item.id}" %></h2>
+    <p>Description: <%= item.description %></p>
+    <%= image_tag(item.image) %>
+    <p>Price: <%= number_to_currency(item.price) %></p>
+    <p>Quantity: <%= @order.count_of(item.id) %></p>
+    <p>Subtotal: <%= number_to_currency(@order.subtotal(item.id)) %></p>
   </section>
 <% end %>
+
+<section id="totals">
+  <h3>Total Items: <%= @order.num_items %></h3>
+  <h3>Grand Total: <%= number_to_currency(@order.grand_total) %></h3>
+</section>
