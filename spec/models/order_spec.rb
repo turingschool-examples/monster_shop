@@ -4,6 +4,7 @@ RSpec.describe Order do
   describe 'relationships' do
     it {should have_many :order_items}
     it {should have_many(:items).through(:order_items)}
+    it {should validate_presence_of :status}
   end
 
   describe 'instance methods' do
