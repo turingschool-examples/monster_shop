@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :new, :create]
   end
 
+  namespace :dashboard do
+    resources :items
+  end
+
   # => items
   resources :items, only: [:index, :show, :edit, :update, :destroy] do
     resources :reviews, only: [:new, :create]
@@ -40,10 +44,15 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show]
   end
 
-  # => admin
+  # => merchant
   get '/merchant', to: 'merchant/dashboard#show', as: :merchant_dashboard
+
+  # => admin
   get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
-  get 'admin/merchants/:id', to: 'merchants#show', as: :admin_merchant_show
+  get '/admin/merchants/:id', to: 'admin/merchants#show', as: :admin_merchant_show
+  get '/admin/merchants', to: 'admin/merchants#index', as: :admin_merchant_index
+  patch '/admin/merchants/:id/enable', to: 'admin/merchants#enable', as: :enable_merchant
+  patch '/admin/merchants/:id/disable', to: 'admin/merchants#disable', as: :disable_merchant
 
   # => user registration & logging in
   get '/register', to: 'users#new', as: :register
