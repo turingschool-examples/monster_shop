@@ -9,4 +9,11 @@ class User < ApplicationRecord
   validates_presence_of :name, :address, :city
 
   enum role: ["user", "employee", "merchant", "admin"]
+
+  validates :merchant_id, presence: true, if: :merchant_type?
+  validates :merchant_id, presence: false, unless: :merchant_type?
+
+  def merchant_type?
+    role == "employee" || role == "merchant"
+  end
 end

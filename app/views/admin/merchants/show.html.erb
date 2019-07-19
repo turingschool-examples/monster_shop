@@ -26,3 +26,9 @@
 
 <%= button_to 'Edit', "/merchants/#{@merchant.id}/edit", method: :get %>
 <%= button_to 'Delete', "/merchants/#{@merchant.id}", method: :delete  if @merchant.order_items.empty? %>
+
+<% if @merchant.enabled == true %>
+  <%= button_to 'Disable Merchant', disable_merchant_path(@merchant), method: :patch %>
+<% else %>
+  <%= button_to 'Enable Merchant', enable_merchant_path(@merchant), method: :patch %>
+<% end %>

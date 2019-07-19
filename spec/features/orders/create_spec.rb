@@ -55,68 +55,26 @@ RSpec.describe 'Create Order' do
       visit item_path(@hippo)
       click_button 'Add to Cart'
 
-      name = 'Megan M'
-      address = '123 Main St'
-      city = 'Denver'
-      state = 'CO'
-      zip = '80218'
+      visit '/cart'
+      click_button 'Check Out'
 
-      visit new_order_path
-      #
-      # fill_in 'Name', with: name
-      # fill_in 'Address', with: address
-      # fill_in 'City', with: city
-      # fill_in 'State', with: state
-      # fill_in 'Zip', with: zip
-      # click_button 'Create Order'
-      #
-      new_order = Order.last
-
-      expect(current_path).to eq(new_order_path)
-      # expect(page).to have_content('Cart: 0')
-      #
-      # within '.shipping-address' do
-      #   expect(page).to have_content(name)
-      #   expect(page).to have_content("#{address}\n#{city} #{state} #{zip}")
-      # end
-      # expect(page).to have_content("Order Created: #{new_order.created_at}")
-      expect(page).to have_content("Total: #{number_to_currency((@ogre.price * 1) + (@hippo.price * 2))}")
-      within "#item-#{@ogre.id}" do
-        expect(page).to have_link(@ogre.name)
-        expect(page).to have_content("Price: #{number_to_currency(@ogre.price)}")
-        expect(page).to have_content("Quantity: 1")
-        expect(page).to have_content("Subtotal: #{number_to_currency(@ogre.price * 1)}")
-        expect(page).to have_content("Sold by: #{@megan.name}")
-        expect(page).to have_link(@megan.name)
-      end
-
-      within "#item-#{@hippo.id}" do
-        expect(page).to have_link(@hippo.name)
-        expect(page).to have_content("Price: #{number_to_currency(@hippo.price)}")
-        expect(page).to have_content("Quantity: 2")
-        expect(page).to have_content("Subtotal: #{number_to_currency(@hippo.price * 2)}")
-        expect(page).to have_content("Sold by: #{@brian.name}")
-        expect(page).to have_link(@brian.name)
-      end
-    end
-
-    it 'I must include all shipping address fields to create an order' do
-      visit item_path(@hippo)
-      click_button 'Add to Cart'
-
-      name = 'Megan M'
-      address = '123 Main St'
-      city = 'Denver'
-      state = 'CO'
-      zip = '80218'
-
-      visit new_order_path
-
-      fill_in 'Name', with: name
-      fill_in 'Address', with: address
       click_button 'Create Order'
 
-      expect(page).to have_content("Please complete address form to create an order.")
+      new_order = Order.last
+
+      expect(current_path).to eq(profile_orders_path)
+      within "#order-#{new_order.id}" do
+        expect(page).to have_content("Total: #{number_to_currency((@ogre.price * 1) + (@hippo.price * 2))}")
+        expect(page).to have_content("Status: #{new_order.status}")
+      end
+
+      expect(page).to have_content("Order ##{new_order.id} has been created")
+
+      within 'nav' do
+        expect(page).to have_content("Cart: 0")
+      end
+
+      expect(new_order.status).to eq("pending")
     end
   end
 end

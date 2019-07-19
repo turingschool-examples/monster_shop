@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :new, :create]
   end
 
+  namespace :dashboard do
+    resources :items
+  end
+
   # => items
   resources :items, only: [:index, :show, :edit, :update, :destroy] do
     resources :reviews, only: [:new, :create]
@@ -25,7 +29,7 @@ Rails.application.routes.draw do
   delete '/cart/:item_id', to: 'cart#remove_item'
 
   # => orders
-  resources :orders, only: [:new, :create, :show]
+  resources :orders, only: [:new]
 
   # => users
   resources :users, only: [:create, :show, :edit, :update]
@@ -37,14 +41,18 @@ Rails.application.routes.draw do
 
   # => pull up past & current orders for a user
   scope :profile, as: :profile do
-    resources :orders, only: [:index, :show]
+    resources :orders, only: [:index, :show, :create]
   end
 
-  # => admin
+  # => merchant
   get '/merchant', to: 'merchant/dashboard#show', as: :merchant_dashboard
+
+  # => admin
   get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
-  get 'admin/merchants/:id', to: 'merchants#show', as: :admin_merchant_show
-  get '/admin/merchants', to: 'merchant/dashboard#index', as: :admin_merchant_index
+  get '/admin/merchants/:id', to: 'admin/merchants#show', as: :admin_merchant_show
+  get '/admin/merchants', to: 'admin/merchants#index', as: :admin_merchant_index
+  patch '/admin/merchants/:id/enable', to: 'admin/merchants#enable', as: :enable_merchant
+  patch '/admin/merchants/:id/disable', to: 'admin/merchants#disable', as: :disable_merchant
 
   # => user registration & logging in
   get '/register', to: 'users#new', as: :register
