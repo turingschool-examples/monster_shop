@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin' do
-  describe 'go to merchant index page click on merchant name' do
+  describe 'I can go to merchant index page click on merchant name' do
     before :each do
       @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
       @ogre = @megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20.25, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
@@ -23,12 +23,14 @@ RSpec.describe 'Admin' do
       visit admin_merchant_show_path(@megan.id)
       click_button 'Disable Merchant'
 
-      expect(page).to have_button('Enable Merchant')
+      expect(page).to have_content("The account for #{@megan.name} is now disabled")
+      expect(current_path).to eq(admin_merchant_index_path)
 
       visit admin_merchant_show_path(@megan.id)
       click_button 'Enable Merchant'
 
       expect(page).to have_button('Disable Merchant')
+      expect(current_path).to eq(admin_merchant_show_path(@megan.id))
     end
   end
 end
