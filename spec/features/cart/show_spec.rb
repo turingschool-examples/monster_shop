@@ -167,6 +167,19 @@ RSpec.describe 'Cart Show Page' do
         expect(page).to_not have_content("#{@hippo.name}")
         expect(page).to have_content("Cart: 0")
       end
+
+      describe 'when I add items to the cart and visit the cart page' do
+        it 'I see a message to me to register or log in to finish checkout' do
+          visit item_path(@hippo)
+          click_button 'Add to Cart'
+
+          visit '/cart'
+
+          expect(page).to have_link('register')
+          expect(page).to have_link('log in')
+          expect(page).to have_no_button("Checkout")
+        end
+      end
     end
   end
 end

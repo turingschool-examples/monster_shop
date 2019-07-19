@@ -3,20 +3,23 @@
   <head>
     <title>MonsterShop</title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" %>
   </head>
 
   <body>
-    <nav>
-      <%= link_to 'Merchants', '/merchants' %>
-      <%= link_to 'Items', '/items' %>
-      <p>Cart: <%= cart.count %></p>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <a class="navbar-brand mb-0 h1" href="/">MonsterShop</a>
+      <%= render '/layouts/nav_left' %>
+      <%= render '/layouts/nav_right' %>
     </nav>
+
     <% flash.each do |type, message| %>
-    <p><%= message %></p>
+      <p><%= message %></p>
     <% end %>
+
     <%= yield %>
   </body>
 </html>
