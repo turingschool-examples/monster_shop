@@ -65,6 +65,7 @@ RSpec.describe 'Create Order' do
       expect(current_path).to eq(profile_orders_path)
       within "#order-#{new_order.id}" do
         expect(page).to have_content("Total: #{number_to_currency((@ogre.price * 1) + (@hippo.price * 2))}")
+        expect(page).to have_content("Status: #{new_order.status}")
       end
 
       expect(page).to have_content("Order ##{new_order.id} has been created")
