@@ -17,11 +17,11 @@ class Merchant < ApplicationRecord
   end
 
   def items_active
-    items.update_all(active: true)
+    items.update(active: true)
   end
 
   def items_inactive
-    items.update_all(active: false)
+    items.update(active: false)
   end
 
   def distinct_cities
