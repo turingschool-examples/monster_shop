@@ -14,23 +14,5 @@ RSpec.describe 'Admin' do
       expect(page).to have_content(@megan.city)
       expect(page).to have_content(@megan.state)
     end
-
-    it "The merchant's name is a link to their merchant dashboard" do
-      click_link "Megans Marmalades"
-
-      expect(current_path).to eq(admin_merchant_show_path(@megan.id))
-    end
-
-    it "I can toggle a button to enable or disable a merchant" do
-      visit admin_merchant_show_path(@megan.id)
-      click_button 'Disable Merchant'
-
-      expect(page).to have_button('Enable Merchant')
-
-      visit admin_merchant_show_path(@megan.id)
-      click_button 'Enable Merchant'
-
-      expect(page).to have_button('Disable Merchant')
-    end
   end
 end
