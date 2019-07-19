@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
   def new; end
 
   def create
-    order = Order.new
+    order = current_user.orders.new
     if order.save
       cart.items.each do |item|
         order.order_items.create(
@@ -23,7 +23,7 @@ class OrdersController < ApplicationController
         )
       end
       session.delete(:cart)
-      redirect_to order_path(order)
+      redirect_to profile_orders_path
     else
       flash[:notice] = 'Please complete address form to create an order.'
       render :new
