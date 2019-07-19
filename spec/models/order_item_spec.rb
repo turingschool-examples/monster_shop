@@ -6,6 +6,11 @@ RSpec.describe OrderItem do
     it {should belong_to :item}
   end
 
+  describe 'Validations' do
+    it {should validate_presence_of :price}
+    it {should validate_presence_of :quantity}
+  end
+
   describe 'instance methods' do
     before :each do
       @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
