@@ -23,6 +23,7 @@ class OrdersController < ApplicationController
         )
       end
       session.delete(:cart)
+      flash[:notice] = "Order ##{order.id} has been created"
       redirect_to profile_orders_path
     else
       flash[:notice] = 'Please complete address form to create an order.'
