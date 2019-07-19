@@ -4,7 +4,7 @@ RSpec.describe 'Admin' do
   describe "I visit the merchant's index page and see their city and state" do
     before :each do
       @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, enabled: true)
-      @larry = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: "admin")
+      @larry = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: "admin", merchant_id: @megan.id)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
       visit admin_merchant_index_path
     end
