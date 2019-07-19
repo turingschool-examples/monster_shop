@@ -4,4 +4,9 @@
   <h4><%= link_to merchant.name, admin_merchant_show_path(merchant.id) %></h4>
   <p>City: <%= merchant.city %></p>
   <p>State: <%= merchant.state %></p>
+  <% if merchant.enabled == true %>
+    <%= button_to 'Disable Merchant', disable_merchant_path(merchant), method: :patch %>
+  <% else %>
+    <%= button_to 'Enable Merchant', enable_merchant_path(merchant), method: :patch %>
+  <% end %>
 <% end %>
