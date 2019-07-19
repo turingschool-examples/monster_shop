@@ -28,5 +28,17 @@ RSpec.describe Order do
       expect(@order_1.grand_total).to eq(190.5)
       expect(@order_2.grand_total).to eq(100)
     end
+
+    it '.subtotal' do
+      expect(@order_1.subtotal(@ogre.id)).to eq(40.5)
+    end
+
+    it '.count_of' do
+      expect(@order_1.count_of(@ogre.id)).to eq(2)
+    end
+
+    it '.num_items' do
+      expect(@order_1.num_items).to eq(5)
+    end
   end
 end
