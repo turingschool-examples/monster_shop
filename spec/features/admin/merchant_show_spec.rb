@@ -18,19 +18,5 @@ RSpec.describe 'Admin' do
         expect(current_path).to eq(admin_merchant_show_path(@megan))
       end
     end
-
-    it "I can toggle a button to enable or disable a merchant" do
-      visit admin_merchant_show_path(@megan.id)
-      click_button 'Disable Merchant'
-
-      expect(page).to have_content("The account for #{@megan.name} is now disabled")
-      expect(current_path).to eq(admin_merchant_index_path)
-
-      visit admin_merchant_show_path(@megan.id)
-      click_button 'Enable Merchant'
-
-      expect(page).to have_content("The account for #{@megan.name} is now enabled")
-      expect(current_path).to eq(admin_merchant_index_path)
-    end
   end
 end
