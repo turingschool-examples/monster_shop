@@ -9,7 +9,7 @@ class Order < ApplicationRecord
   end
 
   def num_items
-    order_items.sum {|order_item| order_item.quantity}
+    order_items.sum(:quantity)
   end
 
   enum status: ["pending", "packaged", "shipped", "canceled"]
