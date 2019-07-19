@@ -73,7 +73,7 @@ RSpec.describe 'Create Order' do
         expect(page).to have_content("Cart: 0")
       end
 
-      expect(new_order.status).to eq(0)
+      expect(new_order.status).to eq("pending")
     end
   end
 end
