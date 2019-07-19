@@ -12,7 +12,7 @@ class Admin::MerchantsController < Admin::BaseController
     merchant = Merchant.find(params[:id])
     merchant.update(enabled: true)
 
-    redirect_to admin_merchant_index_path
+    redirect_to admin_merchant_index_path(merchant)
   end
 
   def disable
