@@ -47,5 +47,20 @@ RSpec.describe Merchant do
     it '.distinct_cities' do
       expect(@megan.distinct_cities).to eq(['Denver, CO', 'Denver, IA'])
     end
+
+    it '.items_active' do
+      expect(@ogre.active).to eq(true)
+      expect(@giant.active).to eq(true)
+
+      @megan.items_inactive
+
+      expect(@ogre.active).to eq(false)
+      expect(@giant.active).to eq(false)
+
+      @megan.items_active
+
+      expect(@ogre.active).to eq(true)
+      expect(@giant.active).to eq(true)
+    end
   end
 end
