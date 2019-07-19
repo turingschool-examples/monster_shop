@@ -11,7 +11,7 @@ RSpec.describe 'Admin' do
 
       @meg = User.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'meg@gmail.com', password: 'fish' )
       @meg2 = User.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'IA', zip: 80218, email: 'meg2@gmail.com', password: 'fish' )
-      @larry = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: 2)
+      @larry = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: 2, merchant_id: @megan.id)
 
       @order_1 = @meg.orders.create!
       @order_2 = @meg2.orders.create!
