@@ -66,6 +66,14 @@ RSpec.describe 'Create Order' do
       within "#order-#{new_order.id}" do
         expect(page).to have_content("Total: #{number_to_currency((@ogre.price * 1) + (@hippo.price * 2))}")
       end
+
+      expect(page).to have_content("Order ##{new_order.id} has been created")
+
+      within 'nav' do
+        expect(page).to have_content("Cart: 0")
+      end
+
+      expect(new_order.status).to eq(0)
     end
   end
 end
