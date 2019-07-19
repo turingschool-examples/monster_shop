@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   delete '/cart/:item_id', to: 'cart#remove_item'
 
   # => orders
-  resources :orders, only: [:new, :create, :show]
+  resources :orders, only: [:new]
 
   # => users
   resources :users, only: [:create, :show, :edit, :update]
@@ -41,7 +41,7 @@ Rails.application.routes.draw do
 
   # => pull up past & current orders for a user
   scope :profile, as: :profile do
-    resources :orders, only: [:index, :show]
+    resources :orders, only: [:index, :show, :create]
   end
 
   # => merchant
