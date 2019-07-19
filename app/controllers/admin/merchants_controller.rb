@@ -10,12 +10,16 @@ class Admin::MerchantsController < Admin::BaseController
 
   def enable
     @merchant = Merchant.find(params[:id])
-    @merchant.enabled == true
+    @merchant.update(enabled: true)
+
+    redirect_to admin_merchant_show_path(@merchant)
   end
 
   def disable
     @merchant = Merchant.find(params[:id])
-    @merchant.enabled == false
+    @merchant.update(enabled: false)
+
+    redirect_to admin_merchant_show_path(@merchant)
   end
 
 end
