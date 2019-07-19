@@ -58,14 +58,12 @@ RSpec.describe 'Create Order' do
       visit '/cart'
       click_button 'Check Out'
 
-
       click_button 'Create Order'
 
       new_order = Order.last
 
       expect(current_path).to eq(profile_orders_path)
-
-      within "order-#{new_order.id}" do
+      within "#order-#{new_order.id}" do
         expect(page).to have_content("Total: #{number_to_currency((@ogre.price * 1) + (@hippo.price * 2))}")
       end
     end
