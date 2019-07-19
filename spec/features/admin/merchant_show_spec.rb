@@ -9,55 +9,26 @@ RSpec.describe 'Admin' do
 
       @meg = User.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'meg@gmail.com', password: 'fish' )
       @larry = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: "admin")
-
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
       visit admin_merchant_show_path(@megan)
     end
 
     describe 'I can see everything a merchant would' do
       it 'my path is /admin/merchants/:merchant_id' do
-        expect(page).to have_content(@megan.name)
-
-        within '.address' do
-          expect(page).to have_content(@megan.address)
-          expect(page).to have_content("#{@megan.city} #{@megan.state} #{@megan.zip}")
-        end
-
         expect(current_path).to eq(admin_merchant_show_path(@megan))
       end
+    end
 
-      it 'I see merchant statistics' do
-        within '.statistics' do
-          expect(page).to have_content("Item Count: #{@megan.item_count}")
-          expect(page).to have_content("Average Item Price: #{number_to_currency(@megan.average_item_price)}")
-          expect(page).to have_content("Cities Served:\nDenver, CO\nDenver, IA")
-        end
-      end
+    it "I can toggle a button to enable or disable a merchant" do
+      visit admin_merchant_show_path(@megan.id)
+      click_button 'Disable Merchant'
 
-      it 'I see stats for merchants with items, but no orders' do
-        within '.statistics' do
-          expect(page).to have_content("Item Count: #{@megan.item_count}")
-          expect(page).to have_content("Average Item Price: #{number_to_currency(@megan.average_item_price)}")
-        end
-      end
+      expect(page).to have_button('Enable Merchant')
 
-      it "I can toggle a button to enable or disable a merchant" do
-        visit admin_merchant_show_path(@megan.id)
-        click_button 'Disable Merchant'
+      visit admin_merchant_show_path(@megan.id)
+      click_button 'Enable Merchant'
 
-        expect(page).to have_button('Enable Merchant')
-
-        visit admin_merchant_show_path(@megan.id)
-        click_button 'Enable Merchant'
-
-        expect(page).to have_button('Disable Merchant')
-      end
-
-      it "The merchant's name is a link to their merchant dashboard" do
-        click_link "Megans Marmalades"
-
-        expect(current_path).to eq(admin_merchant_show_path(@megan.id))
-      end
+      expect(page).to have_button('Disable Merchant')
     end
   end
 end

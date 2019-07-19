@@ -14,5 +14,11 @@ RSpec.describe 'Admin' do
       expect(page).to have_content(@megan.city)
       expect(page).to have_content(@megan.state)
     end
+
+    it "The merchant's name is a link to their merchant dashboard" do
+      click_link "Megans Marmalades"
+
+      expect(current_path).to eq(admin_merchant_show_path(@megan.id))
+    end
   end
 end
