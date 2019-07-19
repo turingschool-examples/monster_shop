@@ -10,9 +10,7 @@ class Admin::MerchantsController < Admin::BaseController
 
   def enable
     merchant = Merchant.find(params[:id])
-    item_status = merchant.items.map do |item|
-      item.update(active: true)
-    end
+    merchant.items_active
     merchant.update(enabled: true)
     flash[:notice] = "The account for #{merchant.name} is now enabled"
 
@@ -21,13 +19,10 @@ class Admin::MerchantsController < Admin::BaseController
 
   def disable
     merchant = Merchant.find(params[:id])
-    item_status = merchant.items.map do |item|
-      item.update(active: false)
-    end
+    merchant.items_inactive
     merchant.update(enabled: false)
     flash[:notice] = "The account for #{merchant.name} is now disabled"
 
     redirect_to admin_merchant_index_path
   end
-
 end
