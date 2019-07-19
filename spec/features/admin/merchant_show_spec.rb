@@ -29,8 +29,9 @@ RSpec.describe 'Admin' do
       visit admin_merchant_show_path(@megan.id)
       click_button 'Enable Merchant'
 
+      expect(page).to have_content("The account for #{@megan.name} is now enabled")
+      expect(current_path).to eq(admin_merchant_index_path)
       expect(page).to have_button('Disable Merchant')
-      expect(current_path).to eq(admin_merchant_show_path(@megan.id))
     end
   end
 end
