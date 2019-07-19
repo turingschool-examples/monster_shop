@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :new, :create]
   end
 
+  namespace :dashboard do
+    resources :items
+  end
+
   # => items
   resources :items, only: [:index, :show, :edit, :update, :destroy] do
     resources :reviews, only: [:new, :create]
