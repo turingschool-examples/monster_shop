@@ -1,6 +1,6 @@
 class Admin::UsersController < Admin::BaseController
   def index
-    @users = User.find_users
+    @users = User.where(role: "user")
   end
 
   def show
