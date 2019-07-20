@@ -30,6 +30,10 @@ RSpec.describe 'Admin' do
       end
     end
 
+    it 'I can see a link to my items' do
+      expect(page).to have_button('Items')
+    end
+
     # it 'I see merchant statistics' do
     #   within '.statistics' do
     #     expect(page).to have_content("Item Count: #{@megan.item_count}")
