@@ -16,19 +16,19 @@ RSpec.describe 'Cancel Order' do
     it 'I can delete an order from its show page' do
       visit dashboard_order_path(@order_1)
 
-      expect(@ogre.inventory).to eq(5)
-      expect(@giant.inventory).to eq(3)
-
       @order_1.order_items.first.update(status: 'fulfilled')
       @order_1.order_items.last.update(status: 'fulfilled')
+
+      expect(@ogre.inventory).to eq(5)
+      expect(@giant.inventory).to eq(3)
 
       click_on "Cancel Order"
 
       expect(@order_1.order_items.first.status).to eq("unfulfilled")
       expect(@order_1.order_items.last.status).to eq("unfulfilled")
       expect(@order_1.reload.status).to eq("canceled")
-      expect(@ogre.inventory).to eq(5)
-      expect(@giant.inventory).to eq(3)
+      expect(@ogre.reload.inventory).to eq(7)
+      expect(@giant.reload.inventory).to eq(4)
       expect(current_path).to eq(profile_path)
       expect(page).to have_content("Order has been canceled.")
     end
