@@ -61,8 +61,6 @@ RSpec.describe 'Show Order' do
         expect(page).to have_content("Total Items: 3")
         expect(page).to have_content("Grand Total: $120")
       end
-
     end
-
   end
 end
