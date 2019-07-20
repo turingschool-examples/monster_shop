@@ -30,7 +30,7 @@ RSpec.describe 'Admin' do
 
       expect(page).to have_content("The account for #{@megan.name} is now disabled.")
       expect(current_path).to eq(admin_merchant_index_path)
-      # binding.pry
+
       expect(@megan.reload.enabled).to eq(false)
       expect(@giant.reload.active).to eq(false)
       expect(@ogre.reload.active).to eq(false)
