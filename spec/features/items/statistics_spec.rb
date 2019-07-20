@@ -11,15 +11,29 @@ RSpec.describe 'Item Index Page' do
       @hippo = @brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: false, inventory: 3 )
     end
 
-    it 'I can see a list of all active items' do
+    it 'I can see item statistics' do
       visit '/items'
 
-      within "#top-five" do
-
+      within "#item-#{@ogre.id}" do
+        expect(page).to have_link(@ogre.name)
+        expect(page).to have_content(@ogre.description)
+        expect(page).to have_content("Price: #{number_to_currency(@ogre.price)}")
+        expect(page).to have_content("Active")
+        expect(page).to have_content("Inventory: #{@ogre.inventory}")
+        expect(page).to have_content("Sold by: #{@megan.name}")
+        expect(page).to have_css("img[src*='#{@ogre.image}']")
+        expect(page).to have_link(@megan.name)
       end
 
-      within "#bottom-five" do
-
+      within "#item-#{@giant.id}" do
+        expect(page).to have_link(@giant.name)
+        expect(page).to have_content(@giant.description)
+        expect(page).to have_content("Price: #{number_to_currency(@giant.price)}")
+        expect(page).to have_content("Active")
+        expect(page).to have_content("Inventory: #{@giant.inventory}")
+        expect(page).to have_content("Sold by: #{@megan.name}")
+        expect(page).to have_css("img[src*='#{@giant.image}']")
+        expect(page).to have_link(@megan.name)
       end
     end
   end
