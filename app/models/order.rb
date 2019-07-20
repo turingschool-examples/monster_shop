@@ -22,11 +22,13 @@ class Order < ApplicationRecord
   end
 
   def cancel_items
-    stock = items.joins(:order_items).select('(items.inventory + order_items.quantity) AS amt, items.*').where('order_items.status = 1')
+    stock = items.joins(:order_items)
+                 .select('(items.inventory + order_items.quantity) AS amt, items.*')
+                 .where(order_items: {status: 1})
     stock.each do |record|
       record.update(inventory: record.amt)
     end
-    order_items.update(status: 'unfulfilled')
+    order_items.update(status: 0)
   end
 
   enum status: ["pending", "packaged", "shipped", "canceled"]

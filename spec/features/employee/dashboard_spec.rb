@@ -33,7 +33,7 @@ RSpec.describe 'Admin' do
     it 'I can see my pending orders' do
       expect(page).to have_content(@megan.name)
 
-      within "#order-#{@order_1}" do
+      within "#order-#{@order_1.id}" do
         expect(page).to have_link("Order ##{@order_1.id}")
         expect(page).to have_content("Ordered On: #{@order_1.created_at}")
         expect(page).to have_content("Number of Items: #{@order_1.num_items}")

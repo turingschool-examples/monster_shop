@@ -33,6 +33,8 @@ class Merchant < ApplicationRecord
   end
 
   def pending_orders
-
+    Order.joins(:items)
+         .where(status: 0)
+         .where(items: {merchant_id: self.id})
   end
 end
