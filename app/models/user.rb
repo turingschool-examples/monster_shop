@@ -6,8 +6,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   validates :state, presence: true, length: { is: 2 }
   validates :zip, presence: true, numericality: true, length: { is: 5 }
-  validates_presence_of :name, :address, :city
-  # validates_presence_of :role
+  validates_presence_of :name, :address, :city, :role
 
   enum role: ["user", "employee", "merchant", "admin"]
 
