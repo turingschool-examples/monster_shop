@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   delete '/cart/:item_id', to: 'cart#remove_item'
 
   # => orders
-  resources :orders, only: [:new]
+  resources :orders, only: [:new, :destroy]
 
   # => users
   resources :users, only: [:create, :show, :edit, :update]
