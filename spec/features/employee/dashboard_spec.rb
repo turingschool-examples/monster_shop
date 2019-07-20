@@ -39,7 +39,6 @@ RSpec.describe 'Admin' do
         expect(page).to have_content("Number of Items: #{@order_1.num_items}")
         expect(page).to have_content("Total: #{@order_1.grand_total}")
       end
-      # model test for restock_items
     end
 
     # it 'I see merchant statistics' do
