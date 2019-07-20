@@ -24,7 +24,7 @@ RSpec.describe 'Admin' do
       click_button 'Disable Merchant'
 
       expect(page).to have_content("The account for #{@megan.name} is now disabled")
-      expect(@megan.enabled).to eq(false)
+      expect(@megan.reload.enabled).to eq(false)
       expect(current_path).to eq(admin_merchant_index_path)
       expect(page).to have_button('Enable Merchant')
 
@@ -32,7 +32,7 @@ RSpec.describe 'Admin' do
       click_button 'Enable Merchant'
 
       expect(page).to have_content("The account for #{@megan.name} is now enabled")
-      expect(@megan.enabled).to eq(true)
+      expect(@megan.reload.enabled).to eq(true)
       expect(current_path).to eq(admin_merchant_index_path)
       expect(page).to have_button('Disable Merchant')
     end
