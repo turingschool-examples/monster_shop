@@ -21,8 +21,9 @@ RSpec.describe 'Admin User Index Page' do
 
       within "#user-#{@user.id}" do
         expect(page).to have_link(@user.name, href: admin_user_show_path(@user.id))
+        expect(page).to have_content(@user.created_at)
+        expect(page).to have_content(@user.role)
       end
-
     end
 
   end
