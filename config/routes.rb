@@ -9,10 +9,6 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :new, :create]
   end
 
-  namespace :dashboard do
-    resources :items
-  end
-
   # => items
   resources :items, only: [:index, :show, :edit, :update, :destroy] do
     resources :reviews, only: [:new, :create]
@@ -60,6 +56,12 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/login', to: 'sessions#destroy'
+
+  namespace :dashboard do
+    resources :items
+    post "/items/deactivate", to: "/dashboard/items#deactivate"
+    post "/items/activate", to: "/dashboard/items#activate"
+  end
 
   # => dashboard
   scope :dashboard, as: :dashboard do
