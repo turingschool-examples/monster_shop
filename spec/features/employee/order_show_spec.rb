@@ -30,14 +30,37 @@ RSpec.describe 'Merchant' do
         expect(page).to have_content("#{@customer.city} #{@customer.state} #{@customer.zip}")
       end
 
+      expect(page).to_not have_content(@giant.name)
+
       within "#item-#{@ogre.id}" do
         expect(page).to have_link(@ogre.name)
         expect(page).to have_css("img[src*='#{@ogre.image}']")
         expect(page).to have_content("Price: $#{@ogre.price}")
         expect(page).to have_content("Quantity: 2")
-        expect(page).to_not have_content(@giant.name)
+        expect(page).to have_link("Fulfill")
       end
+      expect(@ogre.status).to eq("unfulfilled")
 
+      within "#item-#{@hippo.id}" do
+        expect(page).to have_link(@hippo.name)
+        expect(page).to have_css("img[src*='#{@hippo.image}']")
+        expect(page).to have_content("Price: $#{@hippo.price}")
+        expect(page).to have_content("Quantity: 2")
+        expect(page).to have_content("Item Fulfilled")
+      end
+      expect(@hippo.status).to eq("fulfilled")
+
+      click_link "Fulfill"
+
+      expect(@ogre.status).to eq("fulfilled")
+      expect(page).to_not have_content("Fulfill")
+      expect(path).to eq(merchant_orders_path(@order_1))
+      expect(page).to have_content("#{@ogre.name} has been fulfilled.")
+      expect(@ogre.inventory).to eq(3)
+      within "#item-#{@ogre.id}" do
+        expect(page).to have_content("Item Fulfilled")
+        expect(page).to_not have_link("Fulfill")
+      end
     end
   end
 end
