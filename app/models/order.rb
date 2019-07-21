@@ -31,5 +31,9 @@ class Order < ApplicationRecord
     order_items.update(status: 0)
   end
 
+  def get_my_items(user)
+    items.where(items: {merchant_id: user.merchant_id})
+  end
+
   enum status: ["pending", "packaged", "shipped", "canceled"]
 end
