@@ -22,14 +22,16 @@ RSpec.describe 'Merchant' do
     it 'I see the order details' do
       click_link "Order ##{@order_1.id}"
 
-      expect(page).to have_content("Name: #{@customer.name}")
-      expect(page).to have_content("Address: #{@customer.address}")
-      expect(page).to have_content("#{@customer.city} #{@customer.state} #{@customer.zip}")
+      within '#order-header' do
+        expect(page).to have_content("For: #{@customer.name}")
+        expect(page).to have_content("Address: #{@customer.address}")
+        expect(page).to have_content("#{@customer.city} #{@customer.state} #{@customer.zip}")
+      end
 
       expect(page).to have_link(@ogre.name)
-      expect(page).to have_xpath("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw")
-      expect(page).to have_content(@ogre.price)
-      expect(page).to have_content(@ogre.quantity)
+      expect(page).to have_css("img[src*='#{@ogre.image}']")
+      expect(page).to have_content("Price: $#{@ogre.price}")
+      expect(page).to have_content("Quantity: 2")
       expect(page).to_not have_content(@giant.name)
     end
   end
