@@ -55,5 +55,12 @@ RSpec.describe Order do
       meg3 = User.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'meg3@gmail.com', password: 'fish', merchant_id: @megan.id, role: 1)
       expect(@order_1.get_my_items(meg3).first).to eq(@ogre)
     end
+
+    it '.fulfilled?' do
+      expect(@order_1.fulfilled?).to eq(false)
+      @order_1.order_items.last.update(status: 'fulfilled')
+      expect(@order_1.fulfilled?).to eq(true)
+      expect(@order_1.status).to eq("packaged")
+    end
   end
 end
