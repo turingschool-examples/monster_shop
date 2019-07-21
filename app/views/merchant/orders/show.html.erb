@@ -1,0 +1,16 @@
+<section id='order-header'>
+  <h1>Order #<%= @order.id %></h1>
+  <p>Order Status: <%= @order.status %></p>
+  <p>For: <%= @order.user.name %></p>
+  <p>Address: <%= @order.user.address %></p>
+  <p><%= @order.user.city %> <%= @order.user.state %> <%= @order.user.zip %></p>
+</section>
+
+<% @items.each do |item| %>
+  <section id='item-<%= item.id%>'>
+    <h2><%= link_to item.name, "/items/#{item.id}" %></h2>
+    <%= image_tag(item.image) %>
+    <p>Price: <%= number_to_currency(item.price) %></p>
+    <p>Quantity: <%= @order.count_of(item.id) %></p>
+  </section>
+<% end %>
