@@ -39,6 +39,7 @@ RSpec.describe 'Admin' do
         expect(page).to have_content("Number of Items: #{@order_1.num_items}")
         expect(page).to have_content("Total: #{@order_1.grand_total}")
       end
+    end
 
     it 'I can see a link to my items' do
       expect(page).to have_button('Items')
