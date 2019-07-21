@@ -27,5 +27,18 @@ RSpec.describe 'As a merchant' do
       expect(page).to have_content("#{@ogre.name} is no longer avalible for sale.")
       expect(@megan.items.first.active).to be false
     end
+
+    it 'shows a message and returns a page if I enable an item' do
+      visit dashboard_items_path
+
+      within("#item-#{@hippo.id}-info") do
+        click_button('Enable Item')
+      end
+
+      expect(current_path).to eq(dashboard_items_path)
+      expect(page).to have_content("#{@hippo.name} is now avalible for sale.")
+      # expect(@hippo.active).to be true
+      expect(@megan.items.last.active).to eq(true)
+    end
   end
 end
