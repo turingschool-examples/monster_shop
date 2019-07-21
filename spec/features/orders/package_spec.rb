@@ -50,5 +50,32 @@ RSpec.describe 'Package Order' do
       order.reload
       expect(order.status).to eq("packaged")
     end
+
+    it 'an order status is not updated to packaged when all items have not been fulfilled' do
+      @alex.orders.create
+      @alex.orders.last.order_items.create!(item_id: @giant.id, price: @giant.price, quantity: 2)
+      @alex.orders.last.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
+
+      order = Order.last
+      expect(order.status).to eq("pending")
+      visit login_path
+
+      within '#login' do
+        fill_in "Email", with: @tyler.email
+        fill_in "Password", with: @tyler.password
+        click_on 'Login'
+      end
+
+      visit merchant_orders_path(order)
+      click_on 'Fulfill'
+      expect(order.order_items.where(item_id: @giant.id).first.status).to eq("fulfilled")
+
+      within 'nav' do
+        click_on 'Logout'
+      end
+
+      order.reload
+      expect(order.status).to eq("pending")
+    end
   end
 end
