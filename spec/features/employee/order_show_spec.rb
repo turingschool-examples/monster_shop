@@ -46,6 +46,8 @@ RSpec.describe 'Merchant' do
         expect(page).to have_css("img[src*='#{@hippo.image}']")
         expect(page).to have_content("Price: $#{@hippo.price}")
         expect(page).to have_content("Quantity: 2")
+        expect(page).to_not have_link("Fulfill")
+        expect(page).to have_content("Item cannot be fulfilled.")
       end
       expect(@hippo.order_items.first.status).to eq("unfulfilled")
 
