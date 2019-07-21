@@ -28,4 +28,16 @@ class Item < ApplicationRecord
       .order("order_items.quantity #{order}")
       .order(:name).limit(limit)
   end
+
+  def get_order_item(order_id)
+    order_items.where(order_id: order_id).first
+  end
+
+  def fulfilled?(order_id)
+    order_items.where(order_id: order_id).first.status == 'fulfilled'
+  end
+
+  def fulfillable?(qty)
+    inventory >= qty
+  end
 end

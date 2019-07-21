@@ -50,5 +50,10 @@ RSpec.describe Order do
       expect(@ogre.reload.inventory).to eq(7)
       expect(@hippo.reload.inventory).to eq(3)
     end
+
+    it '.get_my_items' do
+      meg3 = User.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'meg3@gmail.com', password: 'fish', merchant_id: @megan.id, role: 1)
+      expect(@order_1.get_my_items(meg3).first).to eq(@ogre)
+    end
   end
 end

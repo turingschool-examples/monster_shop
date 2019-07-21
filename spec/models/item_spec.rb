@@ -50,5 +50,18 @@ RSpec.describe Item do
       expect(Item.popular_items(2,'DESC').pluck(:name)).to eq(['Ogre', 'Giant'])
       expect(Item.popular_items(2,'ASC').pluck(:name)).to eq(['Giant', 'Ogre'])
     end
+
+    it '.get_order_item' do
+      expect(@ogre.get_order_item(@order_1)).to eq(@order_1.order_items.first)
+    end
+
+    it '.fulfillable?' do
+      expect(@ogre.fulfillable?(1)).to eq(true)
+      expect(@ogre.fulfillable?(11)).to eq(false)
+    end
+
+    it '.fulfilled?' do
+      expect(@ogre.fulfilled?(@order_1.id)).to eq(false)
+    end
   end
 end
