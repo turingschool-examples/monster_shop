@@ -26,6 +26,10 @@ RSpec.describe Item do
       @review_3 = @ogre.reviews.create(title: 'EW', description: 'This Ogre is Ew', rating: 1)
       @review_4 = @ogre.reviews.create(title: 'So So', description: 'This Ogre is So so', rating: 2)
       @review_5 = @ogre.reviews.create(title: 'Okay', description: 'This Ogre is Okay', rating: 4)
+      @alex = User.create!(name: "Alex Hennel", address: "123 Straw Lane", city: "Straw City", state: "CO", zip: 12345, email: "straw@gmail.com", password: "fish", role: 0)
+      @order_1 = @alex.orders.create!
+      @order_1.order_items.create(item: @ogre, quantity: 50, price: @ogre.price)
+      @order_1.order_items.create(item: @giant, quantity: 49, price: @giant.price)
     end
 
     it '.sorted_reviews()' do
@@ -40,6 +44,24 @@ RSpec.describe Item do
 
     it ".all_active" do
       expect(Item.all_active.count).to eq(1)
+    end
+
+    it '.popular_items' do
+      expect(Item.popular_items(2,'DESC').pluck(:name)).to eq(['Ogre', 'Giant'])
+      expect(Item.popular_items(2,'ASC').pluck(:name)).to eq(['Giant', 'Ogre'])
+    end
+
+    it '.get_order_item' do
+      expect(@ogre.get_order_item(@order_1)).to eq(@order_1.order_items.first)
+    end
+
+    it '.fulfillable?' do
+      expect(@ogre.fulfillable?(1)).to eq(true)
+      expect(@ogre.fulfillable?(11)).to eq(false)
+    end
+
+    it '.fulfilled?' do
+      expect(@ogre.fulfilled?(@order_1.id)).to eq(false)
     end
   end
 end

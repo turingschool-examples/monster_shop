@@ -30,4 +30,12 @@ class OrdersController < ApplicationController
       render :new
     end
   end
+
+  def destroy
+    order = Order.find(params[:id])
+    order.update(status: 'canceled')
+    order.cancel_items
+    flash[:notice] = "Order has been canceled."
+    redirect_to profile_path
+  end
 end

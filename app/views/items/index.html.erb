@@ -15,3 +15,21 @@
     <p><%= item.active ? "Active" : "Inactive" %></p>
   </section>
 <% end %>
+
+<% unless @merchant %>
+  <section id='top-five'>
+    <h2>Most Popular Items:</h2>
+    <% @top_items.each do |item| %>
+     <h3>Item: <%= item.name %></h3>
+     <h4>Quantity Ordered: <%= item.quantity %></h4>
+    <% end %>
+  </section>
+
+  <section id='bottom-five'>
+    <h2>Least Popular Items:</h2>
+    <% @bottom_items.each do |item| %>
+     <h3>Item: <%= item.name %></h3>
+     <h4>Quantity Ordered: <%= item.quantity %></h4>
+    <% end %>
+  </section>
+<% end %>
