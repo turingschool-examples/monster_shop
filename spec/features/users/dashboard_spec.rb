@@ -11,10 +11,10 @@ describe 'User visits profile or dashboard page' do
       expect(current_path).to eq(admin_dashboard_path)
       expect(page).to have_content("Admin Dashboard")
 
-      visit merchant_dashboard_path
-
-      expect(page).to have_content("The page you were looking for doesn't exist.")
-      expect(page.status_code).to eq(404)
+      # visit merchant_dashboard_path
+      #
+      # expect(page).to have_content("The page you were looking for doesn't exist.")
+      # expect(page.status_code).to eq(404)
 
       visit profile_path
 
