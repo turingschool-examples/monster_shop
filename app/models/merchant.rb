@@ -36,5 +36,6 @@ class Merchant < ApplicationRecord
     Order.joins(:items)
          .where(status: 0)
          .where(items: {merchant_id: self.id})
+         .distinct
   end
 end
