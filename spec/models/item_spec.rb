@@ -52,11 +52,12 @@ RSpec.describe Item do
     end
 
     it '.get_order_item' do
-
+      expect(@ogre.get_order_item(@order_1)).to eq(@order_1.order_items.first)
     end
 
     it '.fulfillable?' do
-
+      expect(@ogre.fulfillable?(1,@order_1.id)).to eq(true)
+      expect(@ogre.fulfillable?(11,@order_1.id)).to eq(false)
     end
   end
 end
