@@ -35,5 +35,15 @@ class Order < ApplicationRecord
     items.where(items: {merchant_id: user.merchant_id})
   end
 
+  def fulfilled?
+    if order_items.select("status").where(status: "unfulfilled").empty?
+      package_order
+    end
+  end
+
+  def package_order
+    update(status: 1)
+  end
+
   enum status: ["pending", "packaged", "shipped", "canceled"]
 end
