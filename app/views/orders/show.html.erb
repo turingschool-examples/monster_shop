@@ -19,3 +19,5 @@
   <h3>Total Items: <%= @order.num_items %></h3>
   <h3>Grand Total: <%= number_to_currency(@order.grand_total) %></h3>
 </section>
+
+<%= link_to "Cancel Order", order_path(@order), method: :delete %>
