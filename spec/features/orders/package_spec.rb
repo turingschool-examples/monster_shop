@@ -47,6 +47,7 @@ RSpec.describe 'Package Order' do
       visit merchant_orders_path(order)
       click_on 'Fulfill'
       expect(order.order_items.where(item_id: @hippo.id).first.status).to eq("fulfilled")
+      order.reload
       expect(order.status).to eq("packaged")
     end
   end
