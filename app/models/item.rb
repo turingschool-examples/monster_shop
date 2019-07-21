@@ -33,7 +33,11 @@ class Item < ApplicationRecord
     order_items.where(order_id: order_id).first
   end
 
-  def fulfillable?(qty, order_id)
-    qty < self.inventory && self.order_items.where(order_id: order_id).first.status == 'unfulfilled'
+  def fulfilled?(order_id)
+    order_items.where(order_id: order_id).first.status == 'fulfilled'
+  end
+
+  def fulfillable?(qty)
+    inventory >= qty
   end
 end

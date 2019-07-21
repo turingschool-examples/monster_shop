@@ -14,10 +14,12 @@
     <%= image_tag(item.image) %>
     <p>Price: <%= number_to_currency(item.price) %></p>
     <p>Quantity: <%= qty %></p>
-    <% if item.fulfillable?(qty, @order.id) %>
+    <% if item.fulfilled?(@order.id) %>
+      <p>Item Fulfilled<p>
+    <% elsif item.fulfillable?(qty) %>
       <h2><%= link_to "Fulfill", fulfill_path(@order,item), method: :patch %></h2>
     <% else %>
-      <p>Item Fulfilled<p>
+      <p>Item cannot be fulfilled.</p>
     <% end %>
   </section>
 <% end %>
