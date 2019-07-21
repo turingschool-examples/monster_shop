@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   # => merchant
   get '/merchant', to: 'merchant/dashboard#show', as: :merchant_dashboard
   get '/merchant/orders/:id', to: 'merchant/orders#show', as: :merchant_orders
+  patch '/merchant/items/:id', to: 'merchant/items#fulfill', as: :fulfill
 
   # => admin
   get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
