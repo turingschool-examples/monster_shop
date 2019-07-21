@@ -8,12 +8,14 @@
 
 <% @items.each do |item| %>
   <section id='item-<%= item.id%>'>
+    <% qty = @order.count_of(item.id) %>
+
     <h2><%= link_to item.name, item_path(item) %></h2>
     <%= image_tag(item.image) %>
     <p>Price: <%= number_to_currency(item.price) %></p>
-    <p>Quantity: <%= @order.count_of(item.id) %></p>
-    <% if item.fulfillable? %>
-      <h2><%= link_to "Fulfill", fulfill(item) %></h2>
+    <p>Quantity: <%= qty %></p>
+    <% if item.fulfillable?(qty, @order.id) %>
+      <h2><%= link_to "Fulfill", fulfill_path(@order,item), method: :patch %></h2>
     <% else %>
       <p>Item Fulfilled<p>
     <% end %>

@@ -51,9 +51,8 @@ RSpec.describe 'Merchant' do
 
       click_link "Fulfill"
 
-      expect(@ogre.order_items.first.status).to eq("fulfilled")
-      expect(page).to_not have_content("Fulfill")
-      expect(path).to eq(merchant_orders_path(@order_1))
+      expect(@ogre.reload.order_items.first.status).to eq("fulfilled")
+      expect(current_path).to eq(merchant_orders_path(@order_1))
       expect(page).to have_content("#{@ogre.name} has been fulfilled.")
       expect(@ogre.inventory).to eq(3)
       within "#item-#{@ogre.id}" do
