@@ -1,6 +1,8 @@
 class Admin::DashboardController < Admin::BaseController
 
   def show_merchant
-    redirect_to merchant_dashboard_path 
+    @user = current_user
+    @merchant = Merchant.find(@user.merchant_id)
+    @orders = @merchant.pending_orders
   end
 end
