@@ -1,6 +1,6 @@
 class Admin::UsersController < Admin::BaseController
   def index
-    @users = User.find_users
+    @users = User.where.not(role: "admin")
   end
 
   def show

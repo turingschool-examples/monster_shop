@@ -52,6 +52,8 @@ Rails.application.routes.draw do
   get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
   get '/admin/merchants/:id', to: 'admin/merchants#show', as: :admin_merchant_show
   get '/admin/merchants', to: 'admin/merchants#index', as: :admin_merchant_index
+  get '/admin/users', to: 'admin/users#index', as: :admin_user_index
+  get '/admin/users/:id', to: 'admin/users#show', as: :admin_user_show
   patch '/admin/merchants/:id/enable', to: 'admin/merchants#enable', as: :enable_merchant
   patch '/admin/merchants/:id/disable', to: 'admin/merchants#disable', as: :disable_merchant
   patch '/admin/merchants/:merchant_id/items/active', to: 'admin/merchants#enable', as: :activate_merchant_items
