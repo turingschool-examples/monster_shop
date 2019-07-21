@@ -56,8 +56,12 @@ RSpec.describe Item do
     end
 
     it '.fulfillable?' do
-      expect(@ogre.fulfillable?(1,@order_1.id)).to eq(true)
-      expect(@ogre.fulfillable?(11,@order_1.id)).to eq(false)
+      expect(@ogre.fulfillable?(1)).to eq(true)
+      expect(@ogre.fulfillable?(11)).to eq(false)
+    end
+
+    it '.fulfilled?' do
+      expect(@ogre.fulfilled?(@order_1.id)).to eq(false)
     end
   end
 end
