@@ -12,18 +12,12 @@ RSpec.describe 'Admin' do
       @meg = User.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'meg@gmail.com', password: 'fish' )
       @larry = User.create!(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: "admin")
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
-      visit admin_merchant_show_path(@megan)
-    end
-
-    describe 'I can see that merchants dashboard' do
-      it 'my path is /admin/merchants/:merchant_id' do
-        expect(current_path).to eq(admin_merchant_show_path(@megan))
-      end
+      visit admin_merchant_index_path
+      click_on @megan.name
+      expect(current_path).to eq(admin_merchant_show_path(@megan))
     end
 
     it 'I see merchant name and address' do
-      visit "admin/merchants/#{@megan.id}"
-
       expect(page).to have_content(@megan.name)
 
       within '.address' do
@@ -33,40 +27,35 @@ RSpec.describe 'Admin' do
     end
 
     it 'I see a link to this merchants items' do
-      visit "admin/merchants/#{@megan.id}"
+      click_button "Items"
 
-      click_link "Items"
-
-      expect(current_path).to eq("admin/items")
+      expect(current_path).to eq(admin_merchant_items_path(@megan))
+      # expect(page).to have_content
     end
 
-    it 'I see merchant statistics' do
-      visit "admin/merchants/#{@megan.id}"
-
-      within '.statistics' do
-        expect(page).to have_content("Item Count: #{@megan.item_count}")
-        expect(page).to have_content("Average Item Price: #{number_to_currency(@megan.average_item_price)}")
-        expect(page).to have_content("Cities Served:\nDenver, CO\nDenver, IA")
-      end
-    end
-
-    it 'I see stats for merchants with items, but no orders' do
-      visit "admin/merchants/#{@brian.id}"
-
-      within '.statistics' do
-        expect(page).to have_content("Item Count: #{@brian.item_count}")
-        expect(page).to have_content("Average Item Price: #{number_to_currency(@brian.average_item_price)}")
-        expect(page).to have_content("This Merchant has no Orders!")
-      end
-    end
-
-    it 'I see stats for merchants with no items or orders' do
-      visit "admin/merchants/#{@sal.id}"
-
-      within '.statistics' do
-        expect(page).to have_content('This Merchant has no Items, or Orders!')
-      end
-    end
+    # it 'I see merchant statistics' do
+    #   within '.statistics' do
+    #     expect(page).to have_content("Item Count: #{@megan.item_count}")
+    #     expect(page).to have_content("Average Item Price: #{number_to_currency(@megan.average_item_price)}")
+    #     expect(page).to have_content("Cities Served:\nDenver, CO\nDenver, IA")
+    #   end
+    # end
+    #
+    # it 'I see stats for merchants with items, but no orders' do
+    #   within '.statistics' do
+    #     expect(page).to have_content("Item Count: #{@brian.item_count}")
+    #     expect(page).to have_content("Average Item Price: #{number_to_currency(@brian.average_item_price)}")
+    #     expect(page).to have_content("This Merchant has no Orders!")
+    #   end
+    # end
+    #
+    # it 'I see stats for merchants with no items or orders' do
+    #   visit "admin/merchants/#{@sal.id}"
+    #
+    #   within '.statistics' do
+    #     expect(page).to have_content('This Merchant has no Items, or Orders!')
+    #   end
+    # end
 
     # it "I can toggle a button to enable or disable a merchant" do
     #   visit admin_merchant_index_path

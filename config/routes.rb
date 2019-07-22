@@ -51,7 +51,8 @@ Rails.application.routes.draw do
 
   # => admin
   get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
-  get '/admin/merchants/show_merchant', to: 'admin/dashboard#show_merchant', as: :admin_merchant_show
+  get '/admin/merchants/:id', to: 'admin/merchants#show', as: :admin_merchant_show
+  get '/admin/merchants/:id/items', to: 'admin/items#index', as: :admin_merchant_items
   get '/admin/merchants', to: 'admin/merchants#index', as: :admin_merchant_index
   get '/admin/users', to: 'admin/users#index', as: :admin_user_index
   get '/admin/users/:id', to: 'admin/users#show', as: :admin_user_show

@@ -16,7 +16,7 @@
   </section>
 <% end %>
 
-<%= button_to 'Items', '/merchant/items' %>
+<%= button_to 'Items', admin_merchant_items_path(@merchant), method: :get %>
 
 
 <%= button_to 'Edit', "/merchants/#{@merchant.id}/edit", method: :get %>

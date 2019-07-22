@@ -5,6 +5,7 @@ class Admin::MerchantsController < Admin::BaseController
 
   def show
     @merchant = Merchant.find(params[:id])
+    @orders = @merchant.pending_orders
   end
 
   def enable
