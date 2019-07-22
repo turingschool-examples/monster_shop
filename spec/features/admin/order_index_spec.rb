@@ -45,8 +45,18 @@ RSpec.describe 'Admin' do
         it 'And the user can no longer "cancel" the order' do
           visit admin_dashboard_path
 
-          expect(page). to have_content("Packaged Orders: ")
+          within "#order-#{@order_1.id}" do
+            expect(page).to_not have_button("Ship Order")
+          end
+
+          within "#order-#{@order_2.id}" do
+            expect(page).to have_button("Ship Order")
+            click_button "Ship Order"
+            @order_2.reload
+            expect(@order_2.status).to eq("shipped")
+          end
         end
       end
     end
+  end
 end

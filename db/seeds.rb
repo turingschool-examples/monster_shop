@@ -17,6 +17,7 @@ jeff = User.create!(name: "Jeff Casimir", address: "345 Blue Lane", city: "Blue 
 order_1 = alex.orders.create!
 order_2 = berry.orders.create!
 order_1.order_items.create!(item: ogre, price: ogre.price, quantity: 2, status: 'fulfilled')
-order_1.order_items.create!(item: hippo, price: hippo.price, quantity: 3, status: 'fulfilled')
-order_2.order_items.create!(item: hippo, price: hippo.price, quantity: 2, status: 'unfulfilled')
+order_1.order_items.create!(item: hippo, price: hippo.price, quantity: 3, status: 'unfulfilled')
 order_2.order_items.create!(item: hippo, price: hippo.price, quantity: 2, status: 'fulfilled')
+order_2.order_items.create!(item: hippo, price: hippo.price, quantity: 2, status: 'fulfilled')
+order_2.update(status: "packaged")

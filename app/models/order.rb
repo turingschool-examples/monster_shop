@@ -40,7 +40,7 @@ class Order < ApplicationRecord
   end
 
   def packaged?
-    binding.pry
+    status == "packaged"
   end
 
   def fulfilled?
