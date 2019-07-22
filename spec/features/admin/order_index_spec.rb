@@ -40,5 +40,13 @@ RSpec.describe 'Admin' do
       expect(@order_2.id.to_s).to appear_before @order_1.id.to_s
     end
 
-  end
+    describe 'I see packaged orders ready to ship with a button to "ship" the order' do
+      describe 'When I click that button, the status of that order changes to "shipped"' do
+        it 'And the user can no longer "cancel" the order' do
+          visit admin_dashboard_path
+
+          expect(page). to have_content("Packaged Orders: ")
+        end
+      end
+    end
 end
