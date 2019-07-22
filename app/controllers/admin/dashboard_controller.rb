@@ -8,6 +8,6 @@ class Admin::DashboardController < Admin::BaseController
     @order = Order.find([:id])
     if @order.packaged?
       @order.status == "shipped"
-    end 
+    end
   end
 end
