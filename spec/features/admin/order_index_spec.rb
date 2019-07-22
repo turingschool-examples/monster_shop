@@ -38,6 +38,7 @@ RSpec.describe 'Admin' do
         expect(page).to have_content("Created: #{@order_1.created_at}")
       end
 
+      expect(@order_2.id.to_s).to appear_before @order_1.id.to_s
     end
 
   end
