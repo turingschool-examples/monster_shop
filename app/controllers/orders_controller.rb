@@ -33,9 +33,13 @@ class OrdersController < ApplicationController
 
   def destroy
     order = Order.find(params[:id])
-    order.update(status: 'canceled')
-    order.cancel_items
-    flash[:notice] = "Order has been canceled."
-    redirect_to profile_path
+    if order.packaged? || order.pending?
+      order.update(status: 'canceled')
+      order.cancel_items
+      flash[:notice] = "Order has been canceled."
+      redirect_to profile_path
+    else
+      flash[:notice] = "This order cannot be canceled!"
+    end
   end
 end
