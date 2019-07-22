@@ -34,7 +34,7 @@ RSpec.describe 'Admin' do
 
       within "#order-#{@order_1.id}" do
         expect(page).to have_link(@reg_user.name, href: admin_user_show_path(@reg_user.id))
-        expect(page).to have_content("Order: #{@order_1.id}")
+        expect(page).to have_content("Order: ##{@order_1.id}")
         expect(page).to have_content("Created: #{@order_1.created_at}")
       end
 
