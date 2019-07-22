@@ -63,5 +63,6 @@ RSpec.describe Order do
       @orders = @orders.sort_by_status
       expect(@orders.first.id).to eq(@order_2.id)
     end
+    
   end
 end

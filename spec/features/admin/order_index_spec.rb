@@ -12,11 +12,11 @@ RSpec.describe 'Admin' do
       @reg_user = User.create!(name: "Alex Hennel", address: "123 Straw Lane", city: "Straw City", state: "CO", zip: 12345, email: "straw@gmail.com", password: "fish", role: 0)
       @employee = User.create!(name: "Tyler", address: "123 Bean Lane", city: "Bean City", state: "CO", zip: 12345, email: "employee@gmail.com", password: "soup", role: 1, merchant_id: @megan.id)
       @order_1 = @reg_user.orders.create
-      @reg_user.orders.last.order_items.create!(item_id: @giant.id, price: @giant.price, quantity: 2)
-      @reg_user.orders.last.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
+      @order_1.order_items.create!(item_id: @giant.id, price: @giant.price, quantity: 2)
+      @order_1.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
       @order_2 = @employee.orders.create
-      @employee.orders.last.order_items.create!(item_id: @ogre.id, price: @ogre.price, quantity: 2)
-      @employee.orders.last.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
+      @order_2.order_items.create!(item_id: @ogre.id, price: @ogre.price, quantity: 2)
+      @order_2.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
       Order.last.update(status: "packaged")
       Order.last.reload
@@ -25,7 +25,6 @@ RSpec.describe 'Admin' do
     it 'I can see all orders in the system sorted by status' do
       visit admin_dashboard_path
 
-      # Order 2 is coming first because it has a higher status (packaged) than order 1 (pending)
       within "#order-#{@order_2.id}" do
         expect(page).to have_link(@employee.name, href: admin_user_show_path(@employee.id))
         expect(page).to have_content("Order: ##{@order_2.id}")
