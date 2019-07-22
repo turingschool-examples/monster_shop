@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   # => items
-  resources :items, only: [:index, :show, :edit, :update, :destroy] do
+  resources :items, only: [:index, :show] do
     resources :reviews, only: [:new, :create]
   end
 
@@ -61,12 +61,12 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/login', to: 'sessions#destroy'
 
-  get '/dashboard/items', to: 'merchant/items#index'
-  get '/dashboard/items', to: 'merchant/items#new', as: :new_dashboard_item
-  get '/dashboard/items', to: 'merchant/items#edit'
+  get '/dashboard/items', to: 'merchant/items#index', as: :dashboard_items
+  get '/dashboard/items/new', to: 'merchant/items#new', as: :new_item
+  get '/dashboard/items/:id/edit', to: 'merchant/items#edit', as: :edit_item
   post '/dashboard/items/deactivate', to: 'merchant/items#deactivate'
   post '/dashboard/items/activate', to: 'merchant/items#activate'
-  delete '/dashboard/items', to: 'merchant/items#destroy'
+  delete '/dashboard/items/:id/delete', to: 'merchant/items#destroy', as: :delete_item
 
   # => dashboard
   scope :dashboard, as: :dashboard do

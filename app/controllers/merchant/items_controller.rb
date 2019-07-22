@@ -9,13 +9,23 @@ class Merchant::ItemsController < Merchant::BaseController
     redirect_to merchant_orders_path(Order.find(params[:order_id]))
   end
 
+  def index
+    @merchant = Merchant.find(current_user.merchant_id)
+    @items = @merchant.items
+  end
+
   def new
     @item = Item.new(params[:merchant_id])
   end
 
-  def index
-    @merchant = User.find(current_user.id)
-    @items = Item.all
+  def destroy
+    item = Item.find(params[:id])
+    if item.orders.empty?
+      item.destroy
+    else
+      flash[:notice] = "#{item.name} can not be deleted - it has been ordered!"
+    end
+    redirect_to dashboard_items_path
   end
 
   def deactivate
