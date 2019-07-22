@@ -42,6 +42,7 @@ class Order < ApplicationRecord
   def fulfilled?
     if order_items.select("status").where(status: "unfulfilled").empty?
       package_order
+    else return false
     end
   end
 

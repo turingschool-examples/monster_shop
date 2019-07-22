@@ -64,5 +64,11 @@ RSpec.describe Order do
       expect(@orders.first.id).to eq(@order_2.id)
     end
     
+    it '.fulfilled?' do
+      expect(@order_1.fulfilled?).to eq(false)
+      @order_1.order_items.last.update(status: 'fulfilled')
+      expect(@order_1.fulfilled?).to eq(true)
+      expect(@order_1.status).to eq("packaged")
+    end
   end
 end
