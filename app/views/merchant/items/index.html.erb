@@ -1,7 +1,7 @@
 <% @items.each do |item| %>
   <ul id="item-<%= item.id %>">
     <li><%= image_tag(item.image, alt: "Picture of #{item.name}") %></li>
-    <li>Name: <%= item.name %></li>
+    <li>Name: <%= link_to "#{item.name}", item_path(item)%></li>
     <li>Description: <%= item.description %></li>
     <li>Price: <%= number_to_currency(item.price) %></li>
     <li>Inventory: <%= item.inventory %></li>
@@ -19,4 +19,4 @@
   </ul>
 <% end %>
 
-<%= button_to "Add new item", new_item_path %>
+<%= button_to "New Item", new_item_path, method: :get %>

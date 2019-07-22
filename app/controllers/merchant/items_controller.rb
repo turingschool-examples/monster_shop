@@ -18,6 +18,17 @@ class Merchant::ItemsController < Merchant::BaseController
     @item = Item.new(params[:merchant_id])
   end
 
+  def create
+    @merchant = Merchant.find(current_user.merchant_id)
+    @item = @merchant.items.new(item_params)
+    if @item.save
+      redirect_to dashboard_items_path
+    else
+      generate_flash(@item)
+      render :new
+    end
+  end
+
   def destroy
     item = Item.find(params[:id])
     if item.orders.empty?
@@ -42,5 +53,11 @@ class Merchant::ItemsController < Merchant::BaseController
     item.update(active: true)
     flash[:message] = "#{item.name} is now avalible for sale."
     redirect_to dashboard_items_path
+  end
+
+  private
+
+  def item_params
+    params.permit(:name, :description, :price, :image, :inventory)
   end
 end
