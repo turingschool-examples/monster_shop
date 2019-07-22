@@ -39,6 +39,14 @@ class Order < ApplicationRecord
     select(:id, :user_id, :created_at, :status, :'users.name').joins(:user).order('status DESC')
   end
 
+  def pending?
+    status == "pending"
+  end
+
+  def packaged?
+    status == "packaged"
+  end
+
   def fulfilled?
     if order_items.select("status").where(status: "unfulfilled").empty?
       package_order

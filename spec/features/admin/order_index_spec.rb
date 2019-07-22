@@ -18,13 +18,12 @@ RSpec.describe 'Admin' do
       @order_2.order_items.create!(item_id: @ogre.id, price: @ogre.price, quantity: 2)
       @order_2.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
-      Order.last.update(status: "packaged")
-      Order.last.reload
+      @order_2.update(status: "packaged")
+      @order_2.reload
+      visit admin_dashboard_path
     end
 
     it 'I can see all orders in the system sorted by status' do
-      visit admin_dashboard_path
-
       within "#order-#{@order_2.id}" do
         expect(page).to have_link(@employee.name, href: admin_user_show_path(@employee.id))
         expect(page).to have_content("Order: ##{@order_2.id}")
@@ -40,5 +39,21 @@ RSpec.describe 'Admin' do
       expect(@order_2.id.to_s).to appear_before @order_1.id.to_s
     end
 
+    describe 'I see packaged orders ready to ship with a button to "ship" the order' do
+      describe 'When I click that button, the status of that order changes to "shipped"' do
+        it 'And the user can no longer "cancel" the order' do
+          within "#order-#{@order_1.id}" do
+            expect(page).to_not have_button("Ship Order")
+          end
+
+          within "#order-#{@order_2.id}" do
+            expect(page).to have_button("Ship Order")
+            click_button "Ship Order"
+            @order_2.reload
+            expect(@order_2.status).to eq("shipped")
+          end
+        end
+      end
+    end
   end
 end
