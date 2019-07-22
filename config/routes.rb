@@ -61,11 +61,12 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/login', to: 'sessions#destroy'
 
-  namespace :dashboard do
-    resources :items
-    post "/items/deactivate", to: "/dashboard/items#deactivate"
-    post "/items/activate", to: "/dashboard/items#activate"
-  end
+  get '/dashboard/items', to: 'merchant/items#index'
+  get '/dashboard/items', to: 'merchant/items#new', as: :new_dashboard_item
+  get '/dashboard/items', to: 'merchant/items#edit'
+  post '/dashboard/items/deactivate', to: 'merchant/items#deactivate'
+  post '/dashboard/items/activate', to: 'merchant/items#activate'
+  delete '/dashboard/items', to: 'merchant/items#destroy'
 
   # => dashboard
   scope :dashboard, as: :dashboard do
