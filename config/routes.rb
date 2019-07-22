@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   patch '/merchant/orders/:order_id/items/:id', to: 'merchant/items#fulfill', as: :fulfill
 
   # => admin
-  get '/admin', to: 'admin/dashboard#show', as: :admin_dashboard
+  get '/admin/dashboard', to: 'admin/dashboard#show', as: :admin_dashboard
   get '/admin/merchants/:id', to: 'admin/merchants#show', as: :admin_merchant_show
   get '/admin/merchants', to: 'admin/merchants#index', as: :admin_merchant_index
   get '/admin/users', to: 'admin/users#index', as: :admin_user_index
