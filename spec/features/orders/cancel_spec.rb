@@ -10,6 +10,9 @@ RSpec.describe 'Cancel Order' do
       @order_1 = @alex.orders.create!
       @order_1.order_items.create(item: @ogre, quantity: 2, price: @ogre.price)
       @order_1.order_items.create(item: @giant, quantity: 1, price: @giant.price)
+      @order_2 = @alex.orders.create!
+      @order_2.order_items.create(item: @ogre, quantity: 2, price: @ogre.price)
+      @order_2.update(status: "shipped")
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@alex)
     end
 
@@ -31,6 +34,14 @@ RSpec.describe 'Cancel Order' do
       expect(@giant.reload.inventory).to eq(4)
       expect(current_path).to eq(profile_path)
       expect(page).to have_content("Order has been canceled.")
+
+      visit dashboard_order_path(@order_1)
+
+      expect(page).to_not have_link("Cancel Order")
+
+      visit dashboard_order_path(@order_2)
+
+      expect(page).to_not have_link("Cancel Order")
     end
   end
 end

@@ -44,20 +44,5 @@ RSpec.describe 'Merchant' do
     it 'I can see a link to my items' do
       expect(page).to have_button('Items')
     end
-
-    # it 'I see merchant statistics' do
-    #   within '.statistics' do
-    #     expect(page).to have_content("Item Count: #{@megan.item_count}")
-    #     expect(page).to have_content("Average Item Price: #{number_to_currency(@megan.average_item_price)}")
-    #     expect(page).to have_content("Cities Served:\nDenver, CO\nDenver, IA")
-    #   end
-    # end
-    #
-    # it 'I see stats for merchants with items, but no orders' do
-    #   within '.statistics' do
-    #     expect(page).to have_content("Item Count: #{@megan.item_count}")
-    #     expect(page).to have_content("Average Item Price: #{number_to_currency(@megan.average_item_price)}")
-    #   end
-    # end
   end
 end
