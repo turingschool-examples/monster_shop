@@ -28,7 +28,7 @@ RSpec.describe 'Admin' do
         click_on "#{@order_1.id}"
       end
 
-      expect(current_path).to eq(admin_user_order_path(@order_1.id))
+      expect(current_path).to eq(admin_user_order_path(@reg_user.id, @order_1.id))
 
       within "#order-#{@order_1.id}" do
         expect(page).to have_content(@order_1.created_at)
