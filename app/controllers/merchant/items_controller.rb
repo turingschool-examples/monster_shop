@@ -57,7 +57,7 @@ class Merchant::ItemsController < Merchant::BaseController
     item = Item.find(params[:item_id])
     item.active == false
     item.update(active: false)
-    flash[:message] = "#{item.name} is no longer avalible for sale."
+    flash[:message] = "#{item.name} is no longer available for sale."
     redirect_to dashboard_items_path
   end
 
@@ -65,7 +65,7 @@ class Merchant::ItemsController < Merchant::BaseController
     item = Item.find(params[:item_id])
     item.active == true
     item.update(active: true)
-    flash[:message] = "#{item.name} is now avalible for sale."
+    flash[:message] = "#{item.name} is now available for sale."
     redirect_to dashboard_items_path
   end
 
