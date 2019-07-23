@@ -1,16 +1,46 @@
 require 'rails_helper'
 
 RSpec.describe 'New Merchant Creation' do
-  describe 'As a Visitor' do
-    it 'I can link to a new merchant page from merchant index' do
-      visit '/merchants'
-      click_link 'New Merchant'
+  describe 'I try to click on a New Merchant button' do
+    before :each do
+      @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
+    end
 
-      expect(current_path).to eq('/merchants/new')
+    it 'A visitor cannot create a new merchant' do
+      visit '/merchants'
+      expect(page).to_not have_link('New Merchant')
+    end
+
+    it 'A regular user cannot create a new merchant' do
+      reg_user = User.create!(name: "Alex Hennel", address: "123 Straw Lane", city: "Straw City", state: "CO", zip: 12345, email: "straw@gmail.com", password: "fish", role: 0)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(reg_user)
+
+      visit '/merchants'
+      expect(page).to_not have_link('New Merchant')
+    end
+
+    it 'A merchant cannot create a new merchant' do
+      employee = User.create!(name: "Tyler", address: "123 Bean Lane", city: "Bean City", state: "CO", zip: 12345, email: "employee@gmail.com", password: "soup", role: 1, merchant_id: @megan.id)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(employee)
+
+      visit '/merchants'
+      expect(page).to_not have_link('New Merchant')
+    end
+
+    it 'A merchant cannot create a new merchant' do
+      merchant = User.create!(name: "Tyler", address: "123 Bean Lane", city: "Bean City", state: "CO", zip: 12345, email: "employee@gmail.com", password: "soup", role: 1, merchant_id: @megan.id)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
+
+      visit '/merchants'
+      expect(page).to_not have_link('New Merchant')
     end
 
     it 'I can use the new merchant form to create a new merchant' do
-      visit '/merchants/new'
+      admin = User.create!(name: "Admin", address: "123 Cheese Lane", city: "Cheese City", state: "CO", zip: 12345, email: "admin@gmail.com", password: "rabbit", role: 3)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit '/merchants'
+      click_link 'New Merchant'
       name = 'Megans Marmalades'
       address = '123 Main St'
       city = "Denver"
@@ -30,6 +60,9 @@ RSpec.describe 'New Merchant Creation' do
     end
 
     it 'I can not create a merchant with an incomplete form' do
+      admin = User.create!(name: "Admin", address: "123 Cheese Lane", city: "Cheese City", state: "CO", zip: 12345, email: "admin@gmail.com", password: "rabbit", role: 3)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
       visit '/merchants/new'
       name = 'Megans Marmalades'
 
