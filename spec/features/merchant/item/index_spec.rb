@@ -14,17 +14,14 @@ RSpec.describe 'As a merchant' do
       @order2 = @larry.orders.create!
       @order2.order_items.create!(item: @giant, price: @giant.price, quantity: 2)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
+      visit dashboard_items_path
     end
 
     it 'shows a link to add a new item' do
-      visit dashboard_items_path
-
       expect(page).to have_button('New Item')
     end
 
     it 'shows merchant items' do
-      visit dashboard_items_path
-
       within "#item-#{@ogre.id}" do
         expect(page).to have_link(@ogre.name)
         expect(page).to have_content(@ogre.description)
@@ -44,8 +41,6 @@ RSpec.describe 'As a merchant' do
     end
 
     it 'shows a button to disable and enable items' do
-      visit dashboard_items_path
-
       within("#item-#{@ogre.id}") do
         expect(page).to have_button('Disable Item')
       end
@@ -55,8 +50,6 @@ RSpec.describe 'As a merchant' do
     end
 
     it 'does not show a button to delete an item if ordered' do
-      visit dashboard_items_path
-
       within("#item-#{@giant.id}") do
         expect(page).to_not have_button('Delete Item')
       end
