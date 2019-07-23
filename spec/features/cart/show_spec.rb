@@ -26,20 +26,20 @@ RSpec.describe 'Cart Show Page' do
 
         within "#item-#{@ogre.id}" do
           expect(page).to have_link(@ogre.name)
-          expect(page).to have_content("Price: #{number_to_currency(@ogre.price)}")
-          expect(page).to have_content("Quantity: 1")
-          expect(page).to have_content("Subtotal: #{number_to_currency(@ogre.price * 1)}")
-          expect(page).to have_content("Sold by: #{@megan.name}")
+          expect(page).to have_content("#{number_to_currency(@ogre.price)}")
+          expect(page).to have_content("1")
+          expect(page).to have_content("#{number_to_currency(@ogre.price * 1)}")
+          expect(page).to have_content("#{@megan.name}")
           expect(page).to have_css("img[src*='#{@ogre.image}']")
           expect(page).to have_link(@megan.name)
         end
 
         within "#item-#{@hippo.id}" do
           expect(page).to have_link(@hippo.name)
-          expect(page).to have_content("Price: #{number_to_currency(@hippo.price)}")
-          expect(page).to have_content("Quantity: 2")
-          expect(page).to have_content("Subtotal: #{number_to_currency(@hippo.price * 2)}")
-          expect(page).to have_content("Sold by: #{@brian.name}")
+          expect(page).to have_content("#{number_to_currency(@hippo.price)}")
+          expect(page).to have_content("2")
+          expect(page).to have_content("#{number_to_currency(@hippo.price * 2)}")
+          expect(page).to have_content("#{@brian.name}")
           expect(page).to have_css("img[src*='#{@hippo.image}']")
           expect(page).to have_link(@brian.name)
         end
@@ -103,12 +103,12 @@ RSpec.describe 'Cart Show Page' do
         visit '/cart'
 
         within "#item-#{@hippo.id}" do
-          click_button('More of This!')
+          click_button('+')
         end
 
         expect(current_path).to eq('/cart')
         within "#item-#{@hippo.id}" do
-          expect(page).to have_content('Quantity: 3')
+          expect(page).to have_content('3')
         end
       end
 
@@ -123,7 +123,7 @@ RSpec.describe 'Cart Show Page' do
         visit '/cart'
 
         within "#item-#{@hippo.id}" do
-          expect(page).to_not have_button('More of This!')
+          expect(page).to_not have_button('+')
         end
 
         visit "/items/#{@hippo.id}"
@@ -144,12 +144,12 @@ RSpec.describe 'Cart Show Page' do
         visit '/cart'
 
         within "#item-#{@hippo.id}" do
-          click_button('Less of This!')
+          click_button('-')
         end
 
         expect(current_path).to eq('/cart')
         within "#item-#{@hippo.id}" do
-          expect(page).to have_content('Quantity: 2')
+          expect(page).to have_content('2')
         end
       end
 
@@ -160,7 +160,7 @@ RSpec.describe 'Cart Show Page' do
         visit '/cart'
 
         within "#item-#{@hippo.id}" do
-          click_button('Less of This!')
+          click_button('-')
         end
 
         expect(current_path).to eq('/cart')
