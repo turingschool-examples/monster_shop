@@ -45,7 +45,6 @@ RSpec.describe 'As a User' do
       within 'nav' do
         expect(page).to have_content("Cart: 0")
       end
-
     end
 
     it "as a merchant I see a message that I have logged out" do
@@ -72,7 +71,6 @@ RSpec.describe 'As a User' do
         click_on "Login"
       end
 
-      visit root_path
       click_on 'Logout'
     end
   end
