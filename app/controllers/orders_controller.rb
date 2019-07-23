@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
       redirect_to profile_path
     else
       flash[:notice] = "This order cannot be canceled!"
-      redirect_to 
+      redirect_to profile_path
     end
   end
 end
