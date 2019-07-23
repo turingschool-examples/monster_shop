@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class OrdersController < ApplicationController
-
   def index
     @user = current_user
   end
@@ -25,9 +24,6 @@ class OrdersController < ApplicationController
       session.delete(:cart)
       flash[:notice] = "Order ##{order.id} has been created"
       redirect_to profile_orders_path
-    else
-      flash[:notice] = 'Please complete address form to create an order.'
-      render :new
     end
   end
 
@@ -40,6 +36,7 @@ class OrdersController < ApplicationController
       redirect_to profile_path
     else
       flash[:notice] = "This order cannot be canceled!"
+      redirect_to profile_path
     end
   end
 end
