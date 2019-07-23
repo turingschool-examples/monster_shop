@@ -41,13 +41,17 @@ RSpec.describe 'New Merchant Creation' do
 
       visit root_path
       click_link 'Merchants'
+
+      expect(page).to have_content('Admin Merchant Index')
+      expect(current_path).to eq(admin_merchant_index_path)
+
       click_link 'New Merchant'
+      expect(current_path).to eq(new_merchant_path)
       name = 'Megans Marmalades'
       address = '123 Main St'
       city = "Denver"
       state = "CO"
       zip = 80218
-
       fill_in 'Name', with: name
       fill_in 'Address', with: address
       fill_in 'City', with: city
@@ -66,11 +70,14 @@ RSpec.describe 'New Merchant Creation' do
 
       visit root_path
       click_link 'Merchants'
+
+      expect(page).to have_content('Admin Merchant Index')
+      expect(current_path).to eq(admin_merchant_index_path)
+
       click_link 'New Merchant'
+      expect(current_path).to eq(new_merchant_path)
       name = 'Megans Marmalades'
-
       fill_in 'Name', with: name
-
       click_button 'Create Merchant'
 
       expect(page).to have_content("address: [\"can't be blank\"]")

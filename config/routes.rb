@@ -4,13 +4,13 @@ Rails.application.routes.draw do
   # => root
   get '/', to: 'welcome#index', as: :root
 
+  get '/merchants/new', to: 'admin/merchants#new', as: :new_merchant
+  post '/merchants', to: 'admin/merchants#create', as: :create_merchant
+
   # => merchants
   resources :merchants, only: [:index, :show, :edit, :update] do
     resources :items, only: [:index]
   end
-
-  get '/merchants/new', to: 'admin/merchants#new', as: :new_merchant
-  post '/merchants', to: 'admin/merchants#create'
 
   # => items
   resources :items, only: [:index, :show] do
