@@ -19,11 +19,11 @@ RSpec.describe 'Merchant Show Page' do
       @order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2)
       @order_2.order_items.create!(item: @giant, price: @hippo.price, quantity: 2)
       @order_2.order_items.create!(item: @ogre, price: @hippo.price, quantity: 2)
-
-      visit "/merchants/#{@sal.id}"
     end
 
     it 'I see merchant name and address' do
+      visit "/merchants/#{@megan.id}"
+
       expect(page).to have_content(@megan.name)
 
       within '.address' do
@@ -33,12 +33,16 @@ RSpec.describe 'Merchant Show Page' do
     end
 
     it 'I see a link to this merchants items' do
+      visit "/merchants/#{@megan.id}"
+
       click_link "Items"
 
       expect(current_path).to eq("/items")
     end
 
     it 'I see merchant statistics' do
+      visit "/merchants/#{@megan.id}"
+
       within '.statistics' do
         expect(page).to have_content("Item Count: #{@megan.item_count}")
         expect(page).to have_content("Average Item Price: #{number_to_currency(@megan.average_item_price)}")
@@ -47,6 +51,8 @@ RSpec.describe 'Merchant Show Page' do
     end
 
     it 'I see stats for merchants with items, but no orders' do
+      visit "/merchants/#{@brian.id}"
+
       within '.statistics' do
         expect(page).to have_content("Item Count: #{@brian.item_count}")
         expect(page).to have_content("Average Item Price: #{number_to_currency(@brian.average_item_price)}")
@@ -55,6 +61,8 @@ RSpec.describe 'Merchant Show Page' do
     end
 
     it 'I see stats for merchants with no items or orders' do
+      visit "/merchants/#{@sal.id}"
+
       within '.statistics' do
         expect(page).to have_content('This Merchant has no Items, or Orders!')
       end
