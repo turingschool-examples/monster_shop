@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/merchants/new', to: 'admin/merchants#new', as: :new_merchant
   post '/merchants', to: 'admin/merchants#create', as: :create_merchant
   delete 'merchants/:id', to: 'admin/merchants#destroy'
-  
+
   # => merchants
   resources :merchants, only: [:index, :show, :edit, :update] do
     resources :items, only: [:index]
@@ -60,7 +60,6 @@ Rails.application.routes.draw do
   get '/admin/users/:user_id/orders/:order_id', to: 'admin/orders#show', as: :admin_user_order
   patch '/admin/merchants/:id/enable', to: 'admin/merchants#enable', as: :enable_merchant
   patch '/admin/merchants/:id/disable', to: 'admin/merchants#disable', as: :disable_merchant
-  patch '/admin/merchants/:merchant_id/items/active', to: 'admin/merchants#enable', as: :activate_merchant_items
 
   # => user registration & logging in
   get '/register', to: 'users#new', as: :register
