@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Merchant' do
   describe 'I visit my dashboard' do
-    before :each do
+    before do
       @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
       @ogre = @megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20.25, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
       @giant = @megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
@@ -19,11 +19,10 @@ RSpec.describe 'Merchant' do
       @order_2.order_items.create!(item: @hippo, price: @hippo.price, quantity: 2)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
       visit merchant_dashboard_path
+      expect(page).to have_content(@megan.name)
     end
 
     it 'I can see my profile data' do
-      expect(page).to have_content(@megan.name)
-
       within '.address' do
         expect(page).to have_content(@megan.address)
         expect(page).to have_content("#{@megan.city} #{@megan.state} #{@megan.zip}")
@@ -31,8 +30,6 @@ RSpec.describe 'Merchant' do
     end
 
     it 'I can see my pending orders' do
-      expect(page).to have_content(@megan.name)
-
       within "#order-#{@order_1.id}" do
         expect(page).to have_link("Order ##{@order_1.id}")
         expect(page).to have_content("Ordered On: #{@order_1.created_at}")
