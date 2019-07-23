@@ -45,9 +45,9 @@ RSpec.describe 'Update Item Page' do
     end
 
     it 'I can not edit the item with an incomplete form' do
-      name = 'Giant'
+      name = 'Ogre'
 
-      visit "/items/#{@ogre.id}/edit"
+      visit edit_item_path(@ogre.id)
 
       fill_in 'Name', with: name
       click_button 'Update Item'
