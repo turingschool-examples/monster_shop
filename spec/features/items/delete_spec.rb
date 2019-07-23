@@ -16,11 +16,10 @@ RSpec.describe 'Delete Item' do
         @order2 = @larry.orders.create!
         @order2.order_items.create!(item: @giant, price: @giant.price, quantity: 2)
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
+        visit dashboard_items_path
       end
 
       it 'I can click a link to delete that item' do
-        visit dashboard_items_path
-
         within "#item-#{@ogre.id}" do
           click_button 'Delete Item'
         end
@@ -32,8 +31,6 @@ RSpec.describe 'Delete Item' do
       end
 
       it 'Deleting an item, deletes its reviews as well' do
-        visit dashboard_items_path
-
         within "#item-#{@ogre.id}" do
           click_button 'Delete Item'
         end
@@ -49,8 +46,6 @@ RSpec.describe 'Delete Item' do
         end
 
         it 'I can not see a delete button for items with orders' do
-          visit dashboard_items_path
-
           expect(page).to_not have_link('Delete')
         end
 

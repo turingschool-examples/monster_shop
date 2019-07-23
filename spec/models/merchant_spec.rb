@@ -65,8 +65,9 @@ RSpec.describe Merchant do
     end
 
     it '.pending_orders' do
-      expect(@megan.pending_orders.first).to eq(@order_1)
-      expect(@megan.pending_orders.last).to eq(@order_2)
+      megans_orders = @megan.pending_orders
+      expect(megans_orders.first).to eq(@order_1)
+      expect(megans_orders.last).to eq(@order_2)
     end
   end
 end

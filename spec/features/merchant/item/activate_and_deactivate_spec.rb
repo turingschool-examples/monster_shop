@@ -14,11 +14,10 @@ RSpec.describe 'As a merchant' do
       @order2 = @larry.orders.create!
       @order2.order_items.create!(item: @giant, price: @giant.price, quantity: 2)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
+      visit dashboard_items_path
     end
 
     it 'shows a message and returns a page if I disable an item' do
-      visit dashboard_items_path
-
       within "#item-#{@ogre.id}" do
         expect(@ogre.active).to eq(true)
         click_button 'Disable Item'
@@ -29,8 +28,6 @@ RSpec.describe 'As a merchant' do
     end
 
     it 'shows a message and returns a page if I enable an item' do
-      visit dashboard_items_path
-
       within "#item-#{@hippo.id}" do
         click_button('Enable Item')
         expect(current_path).to eq(dashboard_items_path)
