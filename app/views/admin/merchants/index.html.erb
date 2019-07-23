@@ -1,5 +1,7 @@
 <h2>Admin Merchant Index</h2>
 
+<%= link_to 'New Merchant', new_merchant_path %>
+
 <% @merchants.each do |merchant| %>
   <section id='merchant-<%= merchant.id %>'>
     <h4><%= link_to merchant.name, admin_merchant_show_path(merchant) %></h4>
