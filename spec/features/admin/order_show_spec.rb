@@ -1,4 +1,5 @@
 require 'rails_helper'
+include ActionView::Helpers::NumberHelper
 
 RSpec.describe 'Admin' do
   describe 'when I visit my dashboard' do
@@ -36,7 +37,7 @@ RSpec.describe 'Admin' do
         expect(page).to have_content(@order_1.status)
       end
 
-      within "#item-#{@ogre.id}" do
+      within "#item-#{@giant.id}" do
         expect(page).to have_content(@giant.name)
         expect(page).to have_content(@giant.description)
         expect(page).to have_css("img[src*='#{@giant.image}']")
