@@ -18,6 +18,20 @@ class Merchant::ItemsController < Merchant::BaseController
     @item = Item.new(params[:merchant_id])
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      redirect_to dashboard_items_path
+    else
+      generate_flash(@item)
+      render :edit
+    end
+  end
+
   def create
     @merchant = Merchant.find(current_user.merchant_id)
     @item = @merchant.items.new(item_params)
