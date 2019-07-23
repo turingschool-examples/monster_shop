@@ -38,7 +38,5 @@ RSpec.describe 'Admin User Index Page' do
         expect(page).to have_content(@merchant_admin.role.capitalize)
       end
     end
-
-
   end
 end
