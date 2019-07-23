@@ -5,4 +5,8 @@ class Admin::OrdersController < Admin::BaseController
 
     redirect_to admin_dashboard_path
   end
+
+  def index
+    @orders = Order.all.sort_by_status
+  end
 end
