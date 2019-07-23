@@ -5,11 +5,10 @@ RSpec.describe 'Merchant Index Page' do
     before :each do
       @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
       @brian = Merchant.create!(name: 'Brians Bagels', address: '125 Main St', city: 'Denver', state: 'CO', zip: 80218)
+      visit '/merchants'
     end
 
     it 'I see a list of all merchants' do
-      visit '/merchants'
-
       within "#merchant-#{@megan.id}" do
         expect(page).to have_link(@megan.name)
       end
@@ -20,8 +19,6 @@ RSpec.describe 'Merchant Index Page' do
     end
 
     it 'I can click a link to get to a merchants show page' do
-      visit '/merchants'
-
       click_link @megan.name
 
       expect(current_path).to eq("/merchants/#{@megan.id}")
