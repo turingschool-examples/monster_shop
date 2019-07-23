@@ -6,11 +6,12 @@
   <% end %>
   <% if current_user %>
     <span class="navbar-brand mb-0 h1">Welcome, <%= current_user.name %></span>
-    <% if current_user? %>
+    <% if current_user? || current_employee? || current_merchant? %>
       <li class="nav-item">
         <%= link_to 'Profile', profile_path, class:"nav-link" %>
       </li>
-    <% elsif current_merchant? || current_employee? %>
+    <% end %>
+    <% if current_merchant? || current_employee? %>
       <li class="nav-item">
         <%= link_to 'Dashboard', merchant_dashboard_path, class:"nav-link" %>
       </li>
