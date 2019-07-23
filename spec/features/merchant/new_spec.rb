@@ -39,7 +39,8 @@ RSpec.describe 'New Merchant Creation' do
       admin = User.create!(name: "Admin", address: "123 Cheese Lane", city: "Cheese City", state: "CO", zip: 12345, email: "admin@gmail.com", password: "rabbit", role: 3)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
-      visit '/merchants'
+      visit root_path
+      click_link 'Merchants'
       click_link 'New Merchant'
       name = 'Megans Marmalades'
       address = '123 Main St'
@@ -63,7 +64,9 @@ RSpec.describe 'New Merchant Creation' do
       admin = User.create!(name: "Admin", address: "123 Cheese Lane", city: "Cheese City", state: "CO", zip: 12345, email: "admin@gmail.com", password: "rabbit", role: 3)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
 
-      visit '/merchants/new'
+      visit root_path
+      click_link 'Merchants'
+      click_link 'New Merchant'
       name = 'Megans Marmalades'
 
       fill_in 'Name', with: name
