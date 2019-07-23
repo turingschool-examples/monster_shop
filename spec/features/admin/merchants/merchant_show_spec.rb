@@ -35,47 +35,5 @@ RSpec.describe 'Admin' do
       expect(page).to have_content(@giant.name)
       expect(page).to have_no_content(@hippo.name)
     end
-
-    # it 'I see merchant statistics' do
-    #   within '.statistics' do
-    #     expect(page).to have_content("Item Count: #{@megan.item_count}")
-    #     expect(page).to have_content("Average Item Price: #{number_to_currency(@megan.average_item_price)}")
-    #     expect(page).to have_content("Cities Served:\nDenver, CO\nDenver, IA")
-    #   end
-    # end
-    #
-    # it 'I see stats for merchants with items, but no orders' do
-    #   within '.statistics' do
-    #     expect(page).to have_content("Item Count: #{@brian.item_count}")
-    #     expect(page).to have_content("Average Item Price: #{number_to_currency(@brian.average_item_price)}")
-    #     expect(page).to have_content("This Merchant has no Orders!")
-    #   end
-    # end
-    #
-    # it 'I see stats for merchants with no items or orders' do
-    #   visit "admin/merchants/#{@sal.id}"
-    #
-    #   within '.statistics' do
-    #     expect(page).to have_content('This Merchant has no Items, or Orders!')
-    #   end
-    # end
-
-    # it "I can toggle a button to enable or disable a merchant" do
-    #   visit admin_merchant_index_path
-    #   click_button 'Disable Merchant'
-    #
-    #   expect(page).to have_content("The account for #{@megan.name} is now disabled")
-    #   expect(@megan.reload.enabled).to eq(false)
-    #   expect(current_path).to eq(admin_merchant_index_path)
-    #   expect(page).to have_button('Enable Merchant')
-    #
-    #   visit admin_merchant_index_path
-    #   click_button 'Enable Merchant'
-    #
-    #   expect(page).to have_content("The account for #{@megan.name} is now enabled")
-    #   expect(@megan.reload.enabled).to eq(true)
-    #   expect(current_path).to eq(admin_merchant_index_path)
-    #   expect(page).to have_button('Disable Merchant')
-    # end
   end
 end
