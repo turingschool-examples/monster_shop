@@ -11,20 +11,17 @@ RSpec.describe 'Create Order' do
       @hippo = @brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
       @alex = User.create!(name: "Alex Hennel", address: "123 Straw Lane", city: "Straw City", state: "CO", zip: 12345, email: "straw@gmail.com", password: "fish", role: 0)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@alex)
-    end
-
-    it 'I can click a link to get to an order creation page' do
       visit item_path(@ogre)
       click_button 'Add to Cart'
       visit item_path(@hippo)
       click_button 'Add to Cart'
       visit item_path(@hippo)
       click_button 'Add to Cart'
-
       visit '/cart'
-
       click_button 'Check Out'
+    end
 
+    it 'I can click a link to get to an order creation page' do
       expect(current_path).to eq(new_order_path)
       expect(page).to have_content("Total: #{number_to_currency((@ogre.price * 1) + (@hippo.price * 2))}")
 
@@ -48,16 +45,6 @@ RSpec.describe 'Create Order' do
     end
 
     it 'I can create an order from the new order page' do
-      visit item_path(@ogre)
-      click_button 'Add to Cart'
-      visit item_path(@hippo)
-      click_button 'Add to Cart'
-      visit item_path(@hippo)
-      click_button 'Add to Cart'
-
-      visit '/cart'
-      click_button 'Check Out'
-
       click_button 'Create Order'
 
       new_order = Order.last
