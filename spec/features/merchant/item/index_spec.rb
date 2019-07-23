@@ -16,51 +16,48 @@ RSpec.describe 'As a merchant' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
     end
 
-    it 'shows a link to add a new item' do 
+    it 'shows a link to add a new item' do
       visit dashboard_items_path
 
-      expect(page).to have_button('Add new item')
+      expect(page).to have_button('New Item')
     end
 
-    it 'shows each item added' do
+    it 'shows merchant items' do
       visit dashboard_items_path
 
-      within("#item-#{@ogre.id}-info") do
-        expect(page).to have_content("Name: #{@ogre.name}")
-        expect(page).to have_content("Description: #{@ogre.description}")
-        expect(page).to have_css("img[src='#{@ogre.image}']")
-        expect(page).to have_content("Price: $#{@ogre.price}")
+      within "#item-#{@ogre.id}" do
+        expect(page).to have_link(@ogre.name)
+        expect(page).to have_content(@ogre.description)
+        expect(page).to have_content("Price: #{number_to_currency(@ogre.price)}")
         expect(page).to have_content("Inventory: #{@ogre.inventory}")
-        expect(page).to have_button('Edit Item')
+        expect(page).to have_css("img[src*='#{@ogre.image}']")
+        expect(page).to have_button('Delete Item')
       end
-      within("#item-#{@giant.id}-info") do
-        expect(page).to have_content("Name: #{@giant.name}")
-        expect(page).to have_content("Description: #{@giant.description}")
-        expect(page).to have_css("img[src='#{@giant.image}']")
-        expect(page).to have_content("Price: $#{@giant.price}")
+
+      within "#item-#{@giant.id}" do
+        expect(page).to have_link(@giant.name)
+        expect(page).to have_content(@giant.description)
+        expect(page).to have_content("Price: #{number_to_currency(@giant.price)}")
         expect(page).to have_content("Inventory: #{@giant.inventory}")
-        expect(page).to have_button('Edit Item')
+        expect(page).to have_css("img[src*='#{@giant.image}']")
       end
     end
 
     it 'shows a button to disable and enable items' do
       visit dashboard_items_path
 
-      within("#item-#{@ogre.id}-info") do
+      within("#item-#{@ogre.id}") do
         expect(page).to have_button('Disable Item')
       end
-      within("#item-#{@giant.id}-info") do
+      within("#item-#{@giant.id}") do
         expect(page).to have_button('Disable Item')
       end
     end
 
-    it 'shows a button to delete an item if unordered' do
+    it 'does not show a button to delete an item if ordered' do
       visit dashboard_items_path
 
-      within("#item-#{@ogre.id}-info") do
-        expect(page).to have_button('Delete Item')
-      end
-      within("#item-#{@giant.id}-info") do
+      within("#item-#{@giant.id}") do
         expect(page).to_not have_button('Delete Item')
       end
     end
