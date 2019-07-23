@@ -55,6 +55,5 @@ RSpec.describe 'Admin' do
         expect(page).to have_content("Subtotal: #{number_to_currency(@hippo.price * 1)}")
       end
     end
-
   end
 end
