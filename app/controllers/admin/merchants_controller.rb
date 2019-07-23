@@ -9,6 +9,7 @@ class Admin::MerchantsController < Admin::BaseController
   end
 
   def new
+    @merchant = Merchant.new
   end
 
   def create
@@ -45,5 +46,11 @@ class Admin::MerchantsController < Admin::BaseController
     merchant.update(enabled: false)
     flash[:notice] = "The account for #{merchant.name} is now disabled."
     redirect_to admin_merchant_index_path
+  end
+
+  private
+
+  def merchant_params
+    params.permit(:name, :address, :city, :state, :zip)
   end
 end
