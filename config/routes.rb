@@ -6,15 +6,11 @@ Rails.application.routes.draw do
 
   # => merchants
   resources :merchants do
-    resources :items, only: [:index, :new, :create]
-  end
-
-  namespace :dashboard do
-    resources :items
+    resources :items, only: [:index]
   end
 
   # => items
-  resources :items, only: [:index, :show, :edit, :update, :destroy] do
+  resources :items, only: [:index, :show] do
     resources :reviews, only: [:new, :create]
   end
 
@@ -66,6 +62,15 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/login', to: 'sessions#destroy'
+
+  get '/dashboard/items', to: 'merchant/items#index', as: :dashboard_items
+  get '/dashboard/items/new', to: 'merchant/items#new', as: :new_item
+  get '/dashboard/items/:id/edit', to: 'merchant/items#edit', as: :edit_item
+  patch '/dashboard/items/:id/edit', to: 'merchant/items#update', as: :update_item
+  post '/dashboard/items', to: 'merchant/items#create', as: :create_item
+  post '/dashboard/items/deactivate', to: 'merchant/items#deactivate'
+  post '/dashboard/items/activate', to: 'merchant/items#activate'
+  delete '/dashboard/items/:id/delete', to: 'merchant/items#destroy', as: :delete_item
 
   # => dashboard
   scope :dashboard, as: :dashboard do
