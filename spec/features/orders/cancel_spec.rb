@@ -45,7 +45,6 @@ RSpec.describe 'Cancel Order' do
 
       page.driver.submit :delete, order_path(@order_2), {}
 
-      visit dashboard_order_path(@order_2)
       expect(page).to have_content("This order cannot be canceled!")
     end
   end
