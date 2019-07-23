@@ -20,11 +20,12 @@ RSpec.describe 'As a merchant' do
       visit dashboard_items_path
 
       within "#item-#{@ogre.id}" do
-        expect(@megan.enabled).to eq(true)
-        click_button('Disable Item')
-        expect(page).to have_content("Ogre is no longer available for sale.")
+        expect(@ogre.active).to eq(true)
+        click_button 'Disable Item'
         expect(current_path).to eq(dashboard_items_path)
+        expect(@ogre.reload.active).to eq(false)
       end
+      expect(page).to have_content("#{@ogre.name} is no longer available for sale.")
     end
 
     it 'shows a message and returns a page if I enable an item' do
@@ -33,8 +34,9 @@ RSpec.describe 'As a merchant' do
       within "#item-#{@hippo.id}" do
         click_button('Enable Item')
         expect(current_path).to eq(dashboard_items_path)
-        expect(page).to have_content("#{@hippo.name} is now available for sale.")
+        expect(@hippo.reload.active).to eq(true)
       end
+      expect(page).to have_content("#{@hippo.name} is now available for sale.")
     end
   end
 end
