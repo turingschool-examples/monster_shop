@@ -12,10 +12,12 @@ RSpec.describe 'Destroy Existing Merchant' do
       @order_1 = @meg.orders.create!
 
       @order_1.order_items.create(item: @ogre, quantity: 3, price: @ogre.price)
+      @admin = User.create!(name: "Admin", address: "123 Cheese Lane", city: "Cheese City", state: "CO", zip: 12345, email: "admin@gmail.com", password: "rabbit", role: 3)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
     end
 
     it 'I can click button to destroy merchant from database' do
-      visit "/merchants/#{@brian.id}"
+      visit merchant_path(@brian)
 
       click_button 'Delete'
 
