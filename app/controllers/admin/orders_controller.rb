@@ -9,4 +9,11 @@ class Admin::OrdersController < Admin::BaseController
   def index
     @orders = Order.all.sort_by_status
   end
+
+  def ship_order
+    @order = Order.find([:id])
+    if @order.packaged?
+      @order.status == "shipped"
+    end
+  end
 end
