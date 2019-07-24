@@ -23,7 +23,7 @@ RSpec.describe 'Visitor' do
       fill_in "Name", with: "Alex Hennel"
       fill_in "Address", with: "123 Straw Lane"
       fill_in "City", with: "Straw City"
-      fill_in "State", with: "CO"
+      select "CO", :from => "State"
       fill_in "Zip", with: 12345
       fill_in "Email", with: "blah@gmail.com"
       click_button "Update Profile"
@@ -43,7 +43,7 @@ RSpec.describe 'Visitor' do
       fill_in "Name", with: "Alex Hennel"
       fill_in "Address", with: "123 Straw Lane"
       fill_in "City", with: "Straw City"
-      fill_in "State", with: "CO"
+      select "CO", :from => "State"
       fill_in "Zip", with: 12345
       fill_in "Email", with: "straw@gmail.com"
       click_button "Update Profile"
@@ -56,7 +56,7 @@ RSpec.describe 'Visitor' do
       fill_in "Name", with: "Alex Hennel"
       fill_in "Address", with: "123 Straw Lane"
       fill_in "City", with: "Straw City"
-      fill_in "State", with: "CO"
+      select "CO", :from => "State"
       fill_in "Zip", with: 12345
       fill_in "Email", with: "frogs@gmail.com"
       click_button "Update Profile"
