@@ -47,15 +47,19 @@ RSpec.describe 'Existing Merchant Update' do
 
       name = 'Megans Marmalades'
 
-      fill_in 'Name', with: name
+      fill_in 'Name', with: ''
+      fill_in 'Address', with: ''
+      fill_in 'City', with: ''
+      fill_in 'State', with: ''
+      fill_in 'Zip', with: ''
 
       click_button 'Update Merchant'
 
+      expect(page).to have_button('Update Merchant')
       expect(page).to have_content("address: [\"can't be blank\"]")
       expect(page).to have_content("city: [\"can't be blank\"]")
       expect(page).to have_content("state: [\"can't be blank\"]")
       expect(page).to have_content("zip: [\"can't be blank\"]")
-      expect(page).to have_button('Update Merchant')
     end
   end
 end

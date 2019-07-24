@@ -12,7 +12,7 @@ class MerchantsController < ApplicationController
   end
 
   def update
-    if @merchant.update(merchant_params)
+    if @merchant.update_attributes(merchant_params)
       redirect_to "/merchants/#{@merchant.id}"
     else
       generate_flash(@merchant)
@@ -23,7 +23,7 @@ class MerchantsController < ApplicationController
   private
 
   def merchant_params
-    params.permit(:name, :address, :city, :state, :zip)
+    params.require(:merchant).permit(:name, :address, :city, :state, :zip)
   end
 
   def set_merchant

@@ -14,11 +14,11 @@ class Admin::MerchantsController < Admin::BaseController
   end
 
   def create
-    merchant = Merchant.new(merchant_params)
-    if merchant.save
+    @merchant = Merchant.new(merchant_params)
+    if @merchant.save
       redirect_to '/merchants'
     else
-      generate_flash(merchant)
+      generate_flash(@merchant)
       render :new
     end
   end
@@ -49,7 +49,7 @@ class Admin::MerchantsController < Admin::BaseController
   private
 
   def merchant_params
-    params.permit(:name, :address, :city, :state, :zip)
+    params.require(:merchant).permit(:name, :address, :city, :state, :zip)
   end
 
   def set_merchant
