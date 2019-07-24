@@ -10,6 +10,6 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def index
-    @orders = Order.all.sort_by_status
+    @orders = Order.sort_by_status
   end
 end
