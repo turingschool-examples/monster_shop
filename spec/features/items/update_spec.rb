@@ -46,12 +46,15 @@ RSpec.describe 'Update Item Page' do
 
     it 'I can not edit the item with an incomplete form' do
       name = 'Ogre'
-
       visit edit_item_path(@ogre.id)
-
-      fill_in 'Name', with: name
+      fill_in 'Name', with: ''
+      fill_in 'Description', with: ''
+      fill_in 'Price', with: ''
+      fill_in 'Image', with: ''
+      fill_in 'Inventory', with: ''
       click_button 'Update Item'
 
+      expect(page).to have_content("name: [\"can't be blank\"]")
       expect(page).to have_content("description: [\"can't be blank\"]")
       expect(page).to have_content("price: [\"can't be blank\"]")
       expect(page).to have_content("image: [\"can't be blank\"]")

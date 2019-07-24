@@ -1,15 +1,15 @@
-# frozen_string_literal: true
-
 class OrdersController < ApplicationController
+  before_action :set_order, only: [:show, :destroy]
+
   def index
     @user = current_user
   end
 
   def show
-    @order = Order.find(params[:id])
   end
 
-  def new; end
+  def new
+  end
 
   def create
     order = current_user.orders.new
@@ -28,15 +28,20 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    order = Order.find(params[:id])
-    if order.packaged? || order.pending?
-      order.update(status: 'canceled')
-      order.cancel_items
+    if @order.packaged? || @order.pending?
+      @order.update(status: 'canceled')
+      @order.cancel_items
       flash[:notice] = "Order has been canceled."
       redirect_to profile_path
     else
       flash[:notice] = "This order cannot be canceled!"
       redirect_to profile_path
     end
+  end
+
+  private
+
+  def set_order
+    @order = Order.find(params[:id])
   end
 end
