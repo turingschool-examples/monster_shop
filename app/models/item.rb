@@ -21,12 +21,13 @@ class Item < ApplicationRecord
   def self.all_active
     where(active: true)
   end
-  
+
   def self.popular_items(limit, order = 'DESC')
     joins(:order_items)
-      .select('items.name, order_items.quantity')
-      .order("order_items.quantity #{order}")
-      .order(:name).limit(limit)
+      .select('items.*, sum(order_items.quantity) AS qty')
+      .group('items.id')
+      .order("qty #{order}")
+      .limit(limit)
   end
 
   def get_order_item(order_id)
