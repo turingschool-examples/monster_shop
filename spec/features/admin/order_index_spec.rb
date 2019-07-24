@@ -56,9 +56,12 @@ RSpec.describe 'Admin' do
         expect(page).to have_content("Created: #{@canceled.created_at}")
       end
 
-      expect(@packaged.id.to_s).to appear_before @pending.id.to_s
-      expect(@pending.id.to_s).to appear_before @shipped.id.to_s
-      expect(@shipped.id.to_s).to appear_before @canceled.id.to_s
+      within '#orders' do
+        expect(page.all('li')[0]).to have_content(@packaged.id)
+        expect(page.all('li')[1]).to have_content(@pending.id)
+        expect(page.all('li')[2]).to have_content(@shipped.id)
+        expect(page.all('li')[3]).to have_content(@canceled.id)
+      end
     end
 
     describe 'I see packaged orders ready to ship with a button to "ship" the order' do
