@@ -21,7 +21,7 @@
     <h2>Most Popular Items:</h2>
     <% @top_items.each do |item| %>
      <h3>Item: <%= item.name %></h3>
-     <h4>Quantity Ordered: <%= item.quantity %></h4>
+     <h4>Quantity Ordered: <%= item.qty %></h4>
     <% end %>
   </section>
 
@@ -29,7 +29,7 @@
     <h2>Least Popular Items:</h2>
     <% @bottom_items.each do |item| %>
      <h3>Item: <%= item.name %></h3>
-     <h4>Quantity Ordered: <%= item.quantity %></h4>
+     <h4>Quantity Ordered: <%= item.qty %></h4>
     <% end %>
   </section>
 <% end %>

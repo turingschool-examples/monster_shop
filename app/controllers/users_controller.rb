@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       @user = User.new
       render :new
     else
-      @user = User.new(strong_params)
+      @user = User.new(user_params)
       if @user.save
         session[:user_id] = @user.id
         flash[:success] = 'You are now registered and logged in.'
@@ -45,10 +45,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email, :password)
-  end
-
-  def strong_params
     params.require(:user).permit(:name, :address, :city, :state, :zip, :email, :password)
   end
 

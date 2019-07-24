@@ -14,7 +14,7 @@ RSpec.describe 'As a registered user' do
     end
 
     it 'shows me all data except password' do
-      within("#user-#{@user.id}-info") do
+      within("#user-#{@user.id}") do
         expect(page).to have_content("Name: #{@user.name}")
         expect(page).to have_content("Email: #{@user.email}")
         expect(page).to have_content("Address: #{@user.address}")
