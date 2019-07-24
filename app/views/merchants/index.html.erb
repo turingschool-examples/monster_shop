@@ -20,7 +20,6 @@
 <section class="details-card">
   <div class="container-fluid">
     <div class="row">
-      <button type="button" class="btn btn-dark btn-lg btn-block"><%= link_to 'New Merchant', new_merchant_path, {:style=>"color:#fff;"} %></button>
       <% @merchants.each do |merchant| %>
         <div class="col-md-4 p-3">
           <div class="card-content" id='merchant-<%= merchant.id %>'>
