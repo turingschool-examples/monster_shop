@@ -8,13 +8,18 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect_selector
-      flash[:success] = 'You have logged in.'
-    else
-      flash[:error] = 'Username and password do not match.'
+    if user.enabled == false
+      flash[:error] = 'You cannot log in because your account has been disabled.'
       redirect_to login_path
+    else
+      if user&.authenticate(params[:password])
+        session[:user_id] = user.id
+        redirect_selector
+        flash[:success] = 'You have logged in.'
+      else
+        flash[:error] = 'Username and password do not match.'
+        redirect_to login_path
+      end
     end
   end
 

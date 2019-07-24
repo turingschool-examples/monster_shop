@@ -5,7 +5,7 @@ RSpec.describe 'Admin User Index Page' do
     before :each do
       @megan = Merchant.create(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
       @larry = User.create(name: "Larry Green", address: "345 Blue Lane", city: "Blue City", state: "CA", zip: 56789, email: "green@gmail.com", password: "frogs", role: "admin")
-      @user = User.create(name: "Tyler", address: "123 Clarkson St", city: "Denver", state: "CO", zip: 80209, email: "user@gmail.com", password: "cheetos", role: "user")
+      @user = User.create(name: "Tyler", address: "123 Clarkson St", city: "Denver", state: "CO", zip: 80209, email: "user@gmail.com", password: "cheetos", role: "user", enabled: true)
       @employee = User.create(name: "Merchant", address: "456 Market St", city: "Denver", state: "CO", zip: 80210, email: "employee@gmail.com", password: "taco_sauce", role: "employee", merchant_id: @megan.id)
       @merchant_admin = User.create(name: "Merchant Admin", address: "456 Market St", city: "Denver", state: "CO", zip: 80210, email: "merchant@gmail.com", password: "taco_sauce", role: "merchant", merchant_id: @megan.id)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@larry)
@@ -67,10 +67,9 @@ RSpec.describe 'Admin User Index Page' do
 
         within "#disable-user-#{@user.id}" do
           click_button 'Disable User'
+          expect(@user.reload.enabled).to eq(false)
+          expect(page).to have_no_link("Log In")
         end
-
-        expect(@user.enabled).to eq(false)
-        expect(page).to have_no_link("Log In")
       end
 
       # it "The users city/state and orders should not be part of any statistics" do

@@ -63,8 +63,8 @@ Rails.application.routes.draw do
   delete '/admin/users/:user_id/orders/:order_id', to: 'admin/orders#destroy', as: :admin_cancels_user_order
   patch '/admin/merchants/:id/enable', to: 'admin/merchants#enable', as: :enable_merchant
   patch '/admin/merchants/:id/disable', to: 'admin/merchants#disable', as: :disable_merchant
-  patch '/admin/users/:id/enable', to: 'admin/users#enable', as: :enable_user
-  patch '/admin/users/:id/disable', to: 'admin/users#disable', as: :disable_user
+  patch '/admin/users/:user_id/enable', to: 'admin/users#enable', as: :enable_user
+  patch '/admin/users/:user_id/disable', to: 'admin/users#disable', as: :disable_user
 
   # => user registration & logging in
   get '/register', to: 'users#new', as: :register
