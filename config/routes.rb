@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   get '/admin/users', to: 'admin/users#index', as: :admin_user_index
   get '/admin/users/:id', to: 'admin/users#show', as: :admin_user_show
   get '/admin/users/:user_id/orders/:order_id', to: 'admin/orders#show', as: :admin_user_order
+  delete '/admin/users/:user_id/orders/:order_id', to: 'admin/orders#destroy', as: :admin_cancels_user_order
   patch '/admin/merchants/:id/enable', to: 'admin/merchants#enable', as: :enable_merchant
   patch '/admin/merchants/:id/disable', to: 'admin/merchants#disable', as: :disable_merchant
 
