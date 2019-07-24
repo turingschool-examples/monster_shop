@@ -20,8 +20,18 @@ RSpec.describe 'Admin' do
         end
       end
 
-      it "I do not see a link to edit their profile" do
-        expect(page). to have_no_content("Edit Profile")
+      it "I see a link to edit their profile" do
+        click_on 'Edit Profile'
+        expect(current_path).to eq(admin_user_edit_path(@user.id))
+
+        fill_in "Name", with: "Roger Rabbit"
+        select "Merchant", :from => "Role"
+
+        click_on "Update Profile"
+
+        @user.reload
+        expect(@user.name).to eq("Roger Rabbit")
+        expect(@user.role).to eq("merchant")
       end
     end
   end
