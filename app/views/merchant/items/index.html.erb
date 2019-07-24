@@ -15,7 +15,6 @@
     <% if item.order_items.empty? %>
       <li><%= button_to "Delete Item", { id: item.id, action: "destroy" }, method: :delete %></li>
     <% end %>
-
   </ul>
 <% end %>
 
