@@ -77,7 +77,7 @@ RSpec.describe 'As a Vistor' do
 
     it "I cannot login with bad credentials" do
       within '#login' do
-        fill_in "Email", with: 'fish@email.com'
+        fill_in "Email", with: @user.email
         fill_in "Password", with: 'fish'
         click_on 'Login'
       end
@@ -93,6 +93,31 @@ RSpec.describe 'As a Vistor' do
 
       expect(current_path).to eq(profile_path)
       expect(page).to have_content("You have logged in.")
+    end
+
+    it "I cannot login if my account has been disabled" do
+      @user.reload.update(enabled: false)
+
+      within '#login' do
+        fill_in "Email", with: @user.email
+        fill_in "Password", with: @user.password
+        click_on 'Login'
+      end
+
+      expect(current_path).to eq(login_path)
+      expect(page).to have_content('You cannot log in because your account has been disabled.')
+    end
+
+    it "I cannot login if the user does not exist" do
+
+      within '#login' do
+        fill_in "Email", with: 'fish'
+        fill_in "Password", with: 'fish'
+        click_on 'Login'
+      end
+
+      expect(current_path).to eq(login_path)
+      expect(page).to have_content('Username and password do not match.')
     end
   end
 end
