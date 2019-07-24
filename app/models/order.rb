@@ -36,7 +36,7 @@ class Order < ApplicationRecord
   end
 
   def self.sort_by_status
-    select(:id, :user_id, :created_at, :status, :'users.name').joins(:user).order('status DESC')
+    select(:id, :user_id, :created_at, :status, :'users.name').joins(:user).order('status')
   end
 
   def pending?
@@ -55,8 +55,8 @@ class Order < ApplicationRecord
   end
 
   def package_order
-    update(status: 1)
+    update(status: 'packaged')
   end
 
-  enum status: ["pending", "packaged", "shipped", "canceled"]
+  enum status: ["packaged", "pending", "shipped", "canceled"]
 end
