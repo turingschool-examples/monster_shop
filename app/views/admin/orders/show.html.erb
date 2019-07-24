@@ -1,5 +1,7 @@
 <%= render 'orders/show' %>
 
-<% if @order.pending? %>
-  <%= link_to "Cancel Order", admin_cancels_user_order_path(@order), method: :delete %>
-<% end %>
+<section id="cancel-order-<%= @order.id %>">
+  <% if @order.pending? %>
+    <%= link_to "Cancel Order", admin_cancels_user_order_path(@order), method: :delete %>
+  <% end %>
+</section>
