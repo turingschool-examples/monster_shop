@@ -94,5 +94,18 @@ RSpec.describe 'As a Vistor' do
       expect(current_path).to eq(profile_path)
       expect(page).to have_content("You have logged in.")
     end
+
+    it "I cannot login if my account has been disabled" do
+      @user.reload.update(enabled: false)
+
+      within '#login' do
+        fill_in "Email", with: @user.email
+        fill_in "Password", with: @user.password
+        click_on 'Login'
+      end
+      
+      expect(current_path).to eq(login_path)
+      expect(page).to have_content('You cannot log in because your account has been disabled.')
+    end
   end
 end
