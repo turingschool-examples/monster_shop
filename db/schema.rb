@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190718210746) do
+ActiveRecord::Schema.define(version: 20190724183357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20190718210746) do
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
     t.bigint "merchant_id"
+    t.boolean "enabled", default: true
     t.index ["merchant_id"], name: "index_users_on_merchant_id"
   end
 

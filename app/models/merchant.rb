@@ -34,9 +34,10 @@ class Merchant < ApplicationRecord
 
   def pending_orders
     Order.joins(:items)
-         .where(status: 'pending')
+         .select('orders.*, sum(order_items.price * order_items.quantity) AS g_total, sum(order_items.quantity) AS n_items')
+         .group('orders.id')
+         .where(orders: {status: 'pending'})
          .where(items: {merchant_id: self.id})
-         .distinct
   end
 
   def self.all_names
