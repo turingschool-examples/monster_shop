@@ -27,6 +27,7 @@ class Item < ApplicationRecord
       .select('items.*, sum(order_items.quantity) AS qty')
       .group('items.id')
       .order("qty #{order}")
+      .order("items.name")
       .limit(limit)
   end
 
