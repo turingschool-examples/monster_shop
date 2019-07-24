@@ -8,7 +8,6 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def enable
-    # binding.pry
     user = User.find(params[:user_id])
     user.update(enabled: true)
     flash[:notice] = "The account for #{user.name} is now enabled."
