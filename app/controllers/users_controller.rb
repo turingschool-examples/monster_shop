@@ -6,17 +6,18 @@ class UsersController < ApplicationController
   end
 
   def create
-    if params[:password] != params[:confirm_password]
+    if params[:user][:password] != params[:user][:confirm_password]
       flash[:error] = 'Password does not match!'
+      @user = User.new
       render :new
     else
-      user = User.new(user_params)
-      if user.save
-        session[:user_id] = user.id
+      @user = User.new(strong_params)
+      if @user.save
+        session[:user_id] = @user.id
         flash[:success] = 'You are now registered and logged in.'
         redirect_to profile_path
       else
-        generate_flash(user)
+        generate_flash(@user)
         render :new
       end
     end
@@ -45,6 +46,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
+  end
+
+  def strong_params
+    params.require(:user).permit(:name, :address, :city, :state, :zip, :email, :password)
   end
 
   def set_user
