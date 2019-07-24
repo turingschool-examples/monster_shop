@@ -1,5 +1,5 @@
 class Admin::MerchantsController < Admin::BaseController
-  before_action :set_merchant, only: [:show, :destroy, :enable, :disable]
+  before_action :set_merchant, only: [:show, :destroy, :enable, :disable, :edit, :update]
 
   def index
     @merchants = Merchant.all
@@ -20,6 +20,18 @@ class Admin::MerchantsController < Admin::BaseController
     else
       generate_flash(@merchant)
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @merchant.update_attributes(merchant_params)
+      redirect_to "/merchants/#{@merchant.id}"
+    else
+      generate_flash(@merchant)
+      render :edit
     end
   end
 
