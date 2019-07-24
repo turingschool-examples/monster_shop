@@ -38,4 +38,8 @@ class Merchant < ApplicationRecord
          .where(items: {merchant_id: self.id})
          .distinct
   end
+
+  def self.all_names
+    pluck(:name)
+  end
 end
