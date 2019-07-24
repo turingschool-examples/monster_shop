@@ -47,8 +47,12 @@ RSpec.describe Item do
     end
 
     it '.popular_items' do
-      expect(Item.popular_items(2,'DESC').pluck(:name)).to eq(['Ogre', 'Giant'])
-      expect(Item.popular_items(2,'ASC').pluck(:name)).to eq(['Giant', 'Ogre'])
+      desc = Item.popular_items(2,'DESC')
+      expect(desc.first.name).to eq('Ogre')
+      expect(desc.last.name).to eq('Giant')
+      asc = Item.popular_items(2,'ASC')
+      expect(asc.first.name).to eq('Giant')
+      expect(asc.last.name).to eq('Ogre')
     end
 
     it '.get_order_item' do
