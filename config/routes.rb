@@ -4,11 +4,14 @@ Rails.application.routes.draw do
   # => root
   get '/', to: 'welcome#index', as: :root
 
-  get '/merchants/new', to: 'admin/merchants#new', as: :new_merchant
+  get '/admin/merchants', to: 'admin/merchants#index', as: :admin_merchant_index
+  get 'admin/merchants/new', to: 'admin/merchants#new', as: :new_merchant
   post '/merchants', to: 'admin/merchants#create', as: :create_merchant
-  get '/merchants/:id', to: 'admin/merchants#edit', as: :edit_merchant
   patch '/merchants/:id', to: 'admin/merchants#update'
   delete 'merchants/:id', to: 'admin/merchants#destroy', as: :delete_merchant
+  get '/merchants/:id/edit', to: 'admin/merchants#edit', as: :edit_merchant
+  get '/admin/merchants/:id/items', to: 'admin/items#index', as: :admin_merchant_items
+  get '/admin/merchants/:id', to: 'admin/merchants#show', as: :admin_merchant_show
 
   # => merchants
   resources :merchants, only: [:index, :show] do
@@ -54,9 +57,6 @@ Rails.application.routes.draw do
   # => admin
   get '/admin/dashboard', to: 'admin/orders#index', as: :admin_dashboard
   patch '/admin/order/:id', to: 'admin/orders#update', as: :admin_ships_order
-  get '/admin/merchants/:id', to: 'admin/merchants#show', as: :admin_merchant_show
-  get '/admin/merchants/:id/items', to: 'admin/items#index', as: :admin_merchant_items
-  get '/admin/merchants', to: 'admin/merchants#index', as: :admin_merchant_index
   get '/admin/users', to: 'admin/users#index', as: :admin_user_index
   get '/admin/users/:id', to: 'admin/users#show', as: :admin_user_show
   get '/admin/users/:user_id/orders/:order_id', to: 'admin/orders#show', as: :admin_user_order
