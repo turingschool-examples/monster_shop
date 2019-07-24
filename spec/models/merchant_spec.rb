@@ -69,5 +69,9 @@ RSpec.describe Merchant do
       expect(megans_orders.last).to eq(@order_2)
       expect(megans_orders.first).to eq(@order_1)
     end
+
+    it '.all_names' do
+      expect(Merchant.all_names).to eq(Merchant.pluck(:name))
+    end
   end
 end
