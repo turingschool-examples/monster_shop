@@ -1,7 +1,7 @@
 <% unless @password %>
   <h2>Edit Profile</h2>
 
-  <%= render 'fields', button: 'Update Profile' %>
+  <%= render 'fields', button: 'Update Profile', path: profile_edit_path %>
 <% else %>
   <%= form_tag "/users/#{@user.id}", method: :patch do %>
 

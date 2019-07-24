@@ -1,4 +1,4 @@
-<%= form_for @user do |f| %>
+<%= form_for @user, url: path do |f| %>
 <div class="form-group">
   <%= f.label :name %>
   <%= f.text_field :name, class:"form-control" %>
@@ -33,6 +33,10 @@
     <%= f.label :confirm_password %>
     <%= f.password_field :confirm_password, class:"form-control" %>
   </div>
+<% end %>
+<% if current_admin? %>
+  <%= f.label :role %>
+  <%= f.collection_select :role, User::ROLES, :to_s, :to_s, class:"form-control" %>
 <% end %>
 
 <%= f.submit button, class:"btn btn-primary" %>
