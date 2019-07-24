@@ -11,46 +11,68 @@ RSpec.describe 'Admin' do
       @admin = User.create!(name: "Admin", address: "123 Cheese Lane", city: "Cheese City", state: "CO", zip: 12345, email: "admin@gmail.com", password: "rabbit", role: 3)
       @reg_user = User.create!(name: "Alex Hennel", address: "123 Straw Lane", city: "Straw City", state: "CO", zip: 12345, email: "straw@gmail.com", password: "fish", role: 0)
       @employee = User.create!(name: "Tyler", address: "123 Bean Lane", city: "Bean City", state: "CO", zip: 12345, email: "employee@gmail.com", password: "soup", role: 1, merchant_id: @megan.id)
-      @order_1 = @reg_user.orders.create
-      @order_1.order_items.create!(item_id: @giant.id, price: @giant.price, quantity: 2)
-      @order_1.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
-      @order_2 = @employee.orders.create
-      @order_2.order_items.create!(item_id: @ogre.id, price: @ogre.price, quantity: 2)
-      @order_2.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
+      @packaged = @reg_user.orders.create
+      @packaged.order_items.create!(item_id: @giant.id, price: @giant.price, quantity: 2)
+      @packaged.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
+      @pending = @employee.orders.create
+      @pending.order_items.create!(item_id: @ogre.id, price: @ogre.price, quantity: 2)
+      @pending.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
+      @shipped = @reg_user.orders.create
+      @shipped.order_items.create!(item_id: @giant.id, price: @giant.price, quantity: 3)
+      @canceled = @employee.orders.create
+      @canceled.order_items.create!(item_id: @hippo.id, price: @hippo.price, quantity: 1)
+      @packaged.update(status: "packaged")
+      @shipped.update(status: "shipped")
+      @canceled.update(status: "canceled")
+      @packaged.reload
+      @shipped.reload
+      @canceled.reload
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
-      @order_2.update(status: "packaged")
-      @order_2.reload
       visit admin_dashboard_path
     end
 
     it 'I can see all orders in the system sorted by status' do
-      within "#order-#{@order_2.id}" do
-        expect(page).to have_link(@employee.name, href: admin_user_show_path(@employee.id))
-        expect(page).to have_content("Order: ##{@order_2.id}")
-        expect(page).to have_content("Created: #{@order_2.created_at}")
-      end
-
-      within "#order-#{@order_1.id}" do
+      within "#order-#{@packaged.id}" do
         expect(page).to have_link(@reg_user.name, href: admin_user_show_path(@reg_user.id))
-        expect(page).to have_content("Order: ##{@order_1.id}")
-        expect(page).to have_content("Created: #{@order_1.created_at}")
+        expect(page).to have_content("Order: ##{@packaged.id}")
+        expect(page).to have_content("Created: #{@packaged.created_at}")
       end
 
-      expect(@order_2.id.to_s).to appear_before @order_1.id.to_s
+      within "#order-#{@pending.id}" do
+        expect(page).to have_link(@employee.name, href: admin_user_show_path(@employee.id))
+        expect(page).to have_content("Order: ##{@pending.id}")
+        expect(page).to have_content("Created: #{@pending.created_at}")
+      end
+
+      within "#order-#{@shipped.id}" do
+        expect(page).to have_link(@reg_user.name, href: admin_user_show_path(@reg_user.id))
+        expect(page).to have_content("Order: ##{@shipped.id}")
+        expect(page).to have_content("Created: #{@shipped.created_at}")
+      end
+
+      within "#order-#{@canceled.id}" do
+        expect(page).to have_link(@employee.name, href: admin_user_show_path(@employee.id))
+        expect(page).to have_content("Order: ##{@canceled.id}")
+        expect(page).to have_content("Created: #{@canceled.created_at}")
+      end
+
+      expect(@packaged.id.to_s).to appear_before @pending.id.to_s
+      expect(@pending.id.to_s).to appear_before @shipped.id.to_s
+      expect(@shipped.id.to_s).to appear_before @canceled.id.to_s
     end
 
     describe 'I see packaged orders ready to ship with a button to "ship" the order' do
       describe 'When I click that button, the status of that order changes to "shipped"' do
         it 'And the user can no longer "cancel" the order' do
-          within "#order-#{@order_1.id}" do
+          within "#order-#{@pending.id}" do
             expect(page).to_not have_button("Ship Order")
           end
 
-          within "#order-#{@order_2.id}" do
+          within "#order-#{@packaged.id}" do
             expect(page).to have_button("Ship Order")
             click_button "Ship Order"
-            @order_2.reload
-            expect(@order_2.status).to eq("shipped")
+            @packaged.reload
+            expect(@packaged.status).to eq("shipped")
           end
         end
       end
