@@ -8,7 +8,6 @@ RSpec.describe 'New User Creation' do
       @name = 'Megan'
       @address = '123 Main St'
       @city = "Denver"
-      @state = "CO"
       @zip = 80218
       @email = 'megan@turing.io'
       @password = 'unicorns'
@@ -20,7 +19,7 @@ RSpec.describe 'New User Creation' do
       fill_in 'user[name]', with: @name
       fill_in 'user[address]', with: @address
       fill_in 'user[city]', with: @city
-      fill_in 'user[state]', with: @state
+      select "CO", :from => "State"
       fill_in 'user[zip]', with: @zip
       fill_in 'user[email]', with: @email
       fill_in 'user[password]', with: @password
@@ -56,7 +55,7 @@ RSpec.describe 'New User Creation' do
       fill_in 'user[name]', with: @name
       fill_in 'user[address]', with: @address
       fill_in 'user[city]', with: @city
-      fill_in 'user[state]', with: @state
+      select "CO", :from => "State"
       fill_in 'user[zip]', with: @zip
       fill_in 'user[email]', with: @email
       fill_in 'user[password]', with: @password
@@ -70,7 +69,7 @@ RSpec.describe 'New User Creation' do
       fill_in 'user[name]', with: @name
       fill_in 'user[address]', with: @address
       fill_in 'user[city]', with: @city
-      fill_in 'user[state]', with: @state
+      select "CO", :from => "State"
       fill_in 'user[zip]', with: @zip
       fill_in 'user[email]', with: @email
       fill_in 'user[password]', with: @password
