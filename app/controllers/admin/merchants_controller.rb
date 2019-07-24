@@ -1,10 +1,11 @@
 class Admin::MerchantsController < Admin::BaseController
+  before_action :set_merchant, only: [:show, :destroy, :enable, :disable]
+
   def index
     @merchants = Merchant.all
   end
 
   def show
-    @merchant = Merchant.find(params[:id])
     @orders = @merchant.pending_orders
   end
 
@@ -23,28 +24,25 @@ class Admin::MerchantsController < Admin::BaseController
   end
 
   def destroy
-    merchant = Merchant.find(params[:id])
-    if merchant.order_items.empty?
-      merchant.destroy
+    if @merchant.order_items.empty?
+      @merchant.destroy
     else
-      flash[:notice] = "#{merchant.name} can not be deleted - they have orders!"
+      flash[:notice] = "#{@merchant.name} can not be deleted - they have orders!"
     end
     redirect_to '/merchants'
   end
 
   def enable
-    merchant = Merchant.find(params[:id])
-    merchant.items_active
-    merchant.update(enabled: true)
-    flash[:notice] = "The account for #{merchant.name} is now enabled."
+    @merchant.items_active
+    @merchant.update(enabled: true)
+    flash[:notice] = "The account for #{@merchant.name} is now enabled."
     redirect_to admin_merchant_index_path
   end
 
   def disable
-    merchant = Merchant.find(params[:id])
-    merchant.items_inactive
-    merchant.update(enabled: false)
-    flash[:notice] = "The account for #{merchant.name} is now disabled."
+    @merchant.items_inactive
+    @merchant.update(enabled: false)
+    flash[:notice] = "The account for #{@merchant.name} is now disabled."
     redirect_to admin_merchant_index_path
   end
 
@@ -52,5 +50,9 @@ class Admin::MerchantsController < Admin::BaseController
 
   def merchant_params
     params.permit(:name, :address, :city, :state, :zip)
+  end
+
+  def set_merchant
+    @merchant = Merchant.find(params[:id])
   end
 end
