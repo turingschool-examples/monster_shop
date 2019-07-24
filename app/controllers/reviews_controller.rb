@@ -3,15 +3,16 @@ class ReviewsController < ApplicationController
 
   def new
     @item = Item.find(params[:item_id])
+    @review = Review.new
   end
 
   def create
     @item = Item.find(params[:item_id])
-    review = @item.reviews.new(review_params)
-    if review.save
+    @review = @item.reviews.new(review_params)
+    if @review.save
       redirect_to item_path(@item)
     else
-      generate_flash(review)
+      generate_flash(@review)
       render :new
     end
   end
@@ -32,7 +33,7 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-    params.permit(:title, :description, :rating)
+    params.require(:review).permit(:title, :description, :rating)
   end
 
   def set_review
