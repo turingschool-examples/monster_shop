@@ -3,5 +3,12 @@
   <section id="user-<%= user.id %>">
     <p><%= link_to user.name, admin_user_show_path(user.id) %>
       Registered: <%= user.created_at %> Role: <%= user.role.capitalize %></p>
+    <section id="disable-user-<%= user.id %>">
+      <% if user.enabled == true %>
+        <%= button_to 'Disable User', disable_user_path(user), method: :patch %>
+      <% else %>
+        <%= button_to 'Enable User', enable_user_path(user), method: :patch %>
+      <% end %>
+    </section>
   </section>
 <% end %>
