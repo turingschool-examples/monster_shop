@@ -20,9 +20,6 @@ class Admin::OrdersController < Admin::BaseController
       @order.cancel_items
       flash[:notice] = "Order has been canceled."
       redirect_to admin_user_order_path(@order)
-    else
-      flash[:notice] = "This order cannot be canceled!"
-      redirect_to admin_user_order_path(@order)
     end
   end
 end
