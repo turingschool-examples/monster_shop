@@ -44,5 +44,21 @@ RSpec.describe 'Admin' do
         expect(@user.role).to eq("employee")
         expect(@user.merchant_id).to eq(@megan.id)
       end
+
+      it "I see a flash when I dont edit the user properly" do
+        click_on 'Edit Profile'
+        expect(current_path).to eq(admin_user_edit_path(@user.id))
+
+        expect(page).to_not have_content("Password")
+        fill_in "Name", with: "Roger Rabbit"
+
+        within "#admin_only" do
+          select "employee", :from => "Role"
+        end
+
+        click_on "Update Profile"
+
+        expect(page).to have_content("merchant_id: [\"can't be blank\"")
+      end
     end
   end
