@@ -38,5 +38,37 @@ RSpec.describe 'Admin User Index Page' do
         expect(page).to have_content(@merchant_admin.role.capitalize)
       end
     end
+
+      it "I can toggle a button to enable or disable a user" do
+        visit admin_user_index_path
+        expect(@user.enabled).to eq(true)
+
+        click_button 'Disable User'
+
+        expect(current_path).to eq(admin_user_index_path)
+        expect(page).to have_content("The account for #{@user.name} is now disabled.")
+
+        expect(@user.reload.enabled).to eq(false)
+
+        click_button 'Enable User'
+
+        expect(current_path).to eq(admin_user_index_path)
+        expect(page).to have_content("The account for #{@user.name} is now enabled.")
+        expect(@user.reload.enabled).to eq(true)
+      end
+
+      it "A disabled user cannot log in" do
+        visit admin_user_index_path
+        expect(@user.enabled).to eq(true)
+
+        click_button 'Disable User'
+
+        expect(page).to have_no_link("Log In")
+      end
+
+      # it "The users city/state and orders should not be part of any statistics" do
+      #
+      # end
+
   end
 end
