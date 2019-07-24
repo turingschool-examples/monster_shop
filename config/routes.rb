@@ -7,11 +7,11 @@ Rails.application.routes.draw do
   get '/merchants/new', to: 'admin/merchants#new', as: :new_merchant
   post '/merchants', to: 'admin/merchants#create', as: :create_merchant
   get '/merchants/:id', to: 'admin/merchants#edit', as: :edit_merchant
-
+  patch '/merchants/:id', to: 'admin/merchants#update'
   delete 'merchants/:id', to: 'admin/merchants#destroy', as: :delete_merchant
 
   # => merchants
-  resources :merchants, only: [:index, :show, :update] do
+  resources :merchants, only: [:index, :show] do
     resources :items, only: [:index]
   end
 
