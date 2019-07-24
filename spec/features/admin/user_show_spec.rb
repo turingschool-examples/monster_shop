@@ -24,11 +24,13 @@ RSpec.describe 'Admin' do
         click_on 'Edit Profile'
         expect(current_path).to eq(admin_user_edit_path(@user.id))
 
+        expect(page).to_not have_content("Password")
         fill_in "Name", with: "Roger Rabbit"
         select "Merchant", :from => "Role"
 
         click_on "Update Profile"
 
+        expect(current_path).to eq(admin_user_show_path(@user))
         @user.reload
         expect(@user.name).to eq("Roger Rabbit")
         expect(@user.role).to eq("merchant")
