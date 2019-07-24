@@ -40,7 +40,7 @@
   <%= f.collection_select :role, User::ROLES, :to_s, :to_s, class:"form-control" %>
 
   <%= f.label :merchant %>
-  <%= f.collection_select :merchant_id, Merchant.all_names, :to_s, :to_s, :prompt => 'Select' %>
+  <%= f.collection_select :merchant_id, Merchant.all_names, :to_s, :to_s, :prompt => 'Select', :include_blank => true %>
 </section>
 <% end %>
 
