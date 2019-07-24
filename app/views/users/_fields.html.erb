@@ -1,4 +1,4 @@
-<%= form_for @user do |f| %>
+<%= form_for @user, url: path do |f| %>
 <div class="form-group">
   <%= f.label :name %>
   <%= f.text_field :name, class:"form-control" %>
@@ -23,15 +23,26 @@
   <%= f.label :email %>
   <%= f.text_field :email, class:"form-control" %>
 </div>
-<div class="form-group">
-  <%= f.label :password %>
-  <%= f.password_field :password, class:"form-control" %>
-</div>
+<% if @user.id == nil %>
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, class:"form-control" %>
+  </div>
 
-<div class="form-group">
-  <%= f.label :confirm_password %>
-  <%= f.password_field :confirm_password, class:"form-control" %>
-</div>
+  <div class="form-group">
+    <%= f.label :confirm_password %>
+    <%= f.password_field :confirm_password, class:"form-control" %>
+  </div>
+<% end %>
+<% if current_admin? %>
+<section id="admin_only">
+  <%= f.label :role %>
+  <%= f.collection_select :role, User::ROLES, :to_s, :to_s, class:"form-control" %>
+
+  <%= f.label :merchant %>
+  <%= f.collection_select :merchant_id, Merchant.all_names, :to_s, :to_s, :prompt => 'Select', :include_blank => true %>
+</section>
+<% end %>
 
 <%= f.submit button, class:"btn btn-primary" %>
 <% end %>

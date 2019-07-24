@@ -11,8 +11,10 @@
 
 <% unless current_admin? %>
   <%= link_to "Edit Profile", profile_edit_path %>
-  <% if @user.orders %>
-    <%= link_to "My Orders", profile_orders_path %>
-  <% end %>
+    <% if @user.orders %>
+      <%= link_to "My Orders", profile_orders_path %>
+    <% end %>
   <%= link_to "Change Password", profile_edit_path(edit: "password") %>
+<% else %>
+  <%= link_to "Edit Profile", admin_user_edit_path(@user.id) %>
 <% end %>

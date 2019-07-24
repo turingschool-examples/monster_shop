@@ -73,5 +73,9 @@ RSpec.describe Merchant do
       expect(megans_orders.last.n_items).to eq(4)
       expect(megans_orders.last.g_total).to eq(140.50)
     end
+
+    it '.all_names' do
+      expect(Merchant.all_names).to eq(Merchant.pluck(:name))
+    end
   end
 end
