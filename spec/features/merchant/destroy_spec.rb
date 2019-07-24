@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Destroy Existing Merchant' do
-  describe 'As a visitor' do
+  describe 'As an admin' do
     before :each do
       @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
       @brian = Merchant.create!(name: 'Brians Bagels', address: '125 Main St', city: 'Denver', state: 'CO', zip: 80218)
@@ -10,8 +10,8 @@ RSpec.describe 'Destroy Existing Merchant' do
 
       @meg = User.create!(name: 'Megan M', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'meg@gmail.com', password: 'fish' )
       @order_1 = @meg.orders.create!
-
       @order_1.order_items.create(item: @ogre, quantity: 3, price: @ogre.price)
+
       @admin = User.create!(name: "Admin", address: "123 Cheese Lane", city: "Cheese City", state: "CO", zip: 12345, email: "admin@gmail.com", password: "rabbit", role: 3)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
     end
@@ -21,7 +21,7 @@ RSpec.describe 'Destroy Existing Merchant' do
 
       click_button 'Delete'
 
-      expect(current_path).to eq('/merchants')
+      expect(current_path).to eq(merchants_path)
       expect(page).to_not have_content(@brian.name)
     end
 
