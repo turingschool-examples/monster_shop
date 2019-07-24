@@ -8,7 +8,8 @@ class OrdersController < ApplicationController
   def show
   end
 
-  def new; end
+  def new
+  end
 
   def create
     order = current_user.orders.new
