@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :reviews, only: [:edit, :update, :destroy]
 
   # => cart
-  get '/cart', to: 'cart#show'
+  get '/cart', to: 'cart#show', as: :cart_path
   post '/cart/:item_id', to: 'cart#add_item'
   delete '/cart', to: 'cart#empty'
   patch '/cart/:change/:item_id', to: 'cart#update_quantity'
