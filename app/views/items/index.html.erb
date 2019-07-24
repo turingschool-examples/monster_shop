@@ -1,8 +1,14 @@
+
 <% if @merchant %>
   <h1>All Items From <%= link_to @merchant.name, merchant_dashboard_path %></h1>
   <%= link_to 'New Item', new_item_path %>
 <% else %>
-  <h1>All Items</h1>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h2 class="deepshd"> ITEMS</h2>
+      <p class="lead"></p>
+    </div>
+  </div>
 <% end %>
 
 <%= render 'items' %>
