@@ -66,6 +66,16 @@ Rails.application.routes.draw do
   patch '/admin/users/:user_id/enable', to: 'admin/users#enable', as: :enable_user
   patch '/admin/users/:user_id/disable', to: 'admin/users#disable', as: :disable_user
 
+  # => admin manipulates a merchants items
+  get 'admin/dashboard/items', to: 'merchant/items#index', as: :admin_dashboard_items
+  get 'admin/dashboard/items/new', to: 'merchant/items#new', as: :admin_new_item
+  get 'admin/dashboard/items/:id/edit', to: 'merchant/items#edit', as: :admin_edit_item
+  patch 'admin/dashboard/items/:id/edit', to: 'merchant/items#update', as: :admin_update_item
+  post 'admin/dashboard/items', to: 'merchant/items#create', as: :admin_create_item
+  post 'admin/dashboard/items/deactivate', to: 'merchant/items#deactivate'
+  post 'admin/dashboard/items/activate', to: 'merchant/items#activate'
+  delete 'admin/dashboard/items/:id/delete', to: 'merchant/items#destroy', as: :admin_delete_item
+
   # => user registration & logging in
   get '/register', to: 'users#new', as: :register
   get '/login', to: 'sessions#new'
