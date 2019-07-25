@@ -1,5 +1,21 @@
+<% @items.each do |item| %>
+  <ul id="item-<%= item.id %>">
+    <li><%= image_tag(item.image, alt: "Picture of #{item.name}") %></li>
+    <li>Name: <%= link_to "#{item.name}", item_path(item)%></li>
+    <li>Description: <%= item.description %></li>
+    <li>Price: <%= number_to_currency(item.price) %></li>
+    <li>Inventory: <%= item.inventory %></li>
 
-<h1>All Items From <%= link_to @merchant.name, admin_dashboard_items_path %></h1>
-<%= link_to 'New Item', "/merchants/#{@merchant.id}/items/new" %>
+    <% if item.active %>
+      <li><%= button_to "Disable Item", admin_disable_item_path(@merchant,item) %></li>
+    <% else %>
+      <li><%= button_to "Enable Item", admin_enable_item_path(@merchant,item) %></li>
+    <% end %>
+    <li><%= button_to "Update Item", edit_item_path(id: item.id), method: :get %></li>
+    <% if item.order_items.empty? %>
+      <li><%= button_to "Delete Item", { id: item.id, action: "destroy" }, method: :delete %></li>
+    <% end %>
+  </ul>
+<% end %>
 
-<%= render 'items/items' %>
+<%= button_to "New Item", admin_new_item_path(@merchant), method: :get %>

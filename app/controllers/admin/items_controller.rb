@@ -1,19 +1,7 @@
 class Admin::ItemsController < Admin::BaseController
   before_action :set_item, only: [:destroy, :edit, :update, :fulfill]
   before_action :set_item_for_toggle, only: [:activate, :deactivate]
-  before_action :set_merchant, only: [:create, :index]
-
-  def index
-    # binding.pry
-    @merchants = Merchant.all
-    @merchant = @merchants.each do |merchant|
-      merchant
-    end
-    # if params[:id]
-      # @merchant = Merchant.find(params[:id])
-      # @items = @merchant.items
-    # end
-  end
+  before_action :set_merchant, only: [:create, :index, :activate, :deactivate]
 
   def fulfill
     order_item = @item.get_order_item(params[:order_id])
@@ -26,6 +14,10 @@ class Admin::ItemsController < Admin::BaseController
     order.fulfilled?
   end
 
+  def index
+    @items = @merchant.items
+  end
+
   def new
     @item = Item.new(params[:merchant_id])
   end
@@ -35,7 +27,7 @@ class Admin::ItemsController < Admin::BaseController
 
   def update
     if @item.update(item_params)
-      redirect_to dashboard_items_path
+      redirect_to admin_merchant_items_path(@merchant)
     else
       generate_flash(@item)
       render :edit
@@ -45,7 +37,7 @@ class Admin::ItemsController < Admin::BaseController
   def create
     @item = @merchant.items.new(item_params)
     if @item.save
-      redirect_to dashboard_items_path
+      redirect_to admin_merchant_items_path(@merchant)
     else
       generate_flash(@item)
       render :new
@@ -58,19 +50,19 @@ class Admin::ItemsController < Admin::BaseController
     else
       flash[:notice] = "#{@item.name} can not be deleted - it has been ordered!"
     end
-    redirect_to dashboard_items_path
+    redirect_to admin_merchant_items_path(@merchant)
   end
 
   def deactivate
     @item.update(active: false)
     flash[:message] = "#{@item.name} is no longer available for sale."
-    redirect_to dashboard_items_path
+    redirect_to admin_merchant_items_path(@merchant)
   end
 
   def activate
     @item.update(active: true)
     flash[:message] = "#{@item.name} is now available for sale."
-    redirect_to dashboard_items_path
+    redirect_to admin_merchant_items_path(@merchant)
   end
 
   private
@@ -84,13 +76,10 @@ class Admin::ItemsController < Admin::BaseController
   end
 
   def set_merchant
-    @merchants = Merchant.all
-    @items = @merchants.each do |merchant|
-      merchant.items
-    end
+    @merchant = Merchant.find(params[:merchant_id])
   end
 
   def set_item_for_toggle
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
   end
 end

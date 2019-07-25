@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'As a merchant' do
+RSpec.describe 'As an Admin' do
   describe 'when I visit my items page' do
     before :each do
       @megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80_218)
@@ -15,14 +15,14 @@ RSpec.describe 'As a merchant' do
       @order2 = @larry.orders.create!
       @order2.order_items.create!(item: @giant, price: @giant.price, quantity: 2)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
-      visit admin_dashboard_items_path
+      visit admin_merchant_items_path(@megan)
     end
 
     it 'shows a message and returns a page if I disable an item' do
       within "#item-#{@ogre.id}" do
         expect(@ogre.active).to eq(true)
         click_button 'Disable Item'
-        expect(current_path).to eq(admin_dashboard_items_path)
+        expect(current_path).to eq(admin_merchant_items_path(@megan))
         expect(@ogre.reload.active).to eq(false)
       end
       expect(page).to have_content("#{@ogre.name} is no longer available for sale.")
@@ -31,7 +31,7 @@ RSpec.describe 'As a merchant' do
     it 'shows a message and returns a page if I enable an item' do
       within "#item-#{@hippo.id}" do
         click_button('Enable Item')
-        expect(current_path).to eq(admin_dashboard_items_path)
+        expect(current_path).to eq(admin_merchant_items_path(@megan))
         expect(@hippo.reload.active).to eq(true)
       end
       expect(page).to have_content("#{@hippo.name} is now available for sale.")
