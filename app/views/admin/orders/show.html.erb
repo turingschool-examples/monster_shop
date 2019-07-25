@@ -1,7 +1,37 @@
-<%= render 'orders/show' %>
+<section id='order-header'>
+  <h1>Order #<%= @order.id %></h1>
+  <p>Order Created: <%= @order.created_at %></p>
+  <p>Order Updated: <%= @order.updated_at %></p>
+  <p>Order Status: <%= @order.status %></p>
+</section>
+
+<% @items.each do |item| %>
+  <section id='item-<%= item.id %>'>
+    <% qty = @order.count_of(item.id) %>
+
+    <h2><%= link_to item.name, "/items/#{item.id}" %></h2>
+    <p>Description: <%= item.description %></p>
+    <%= image_tag(item.image) %>
+    <p>Price: <%= number_to_currency(item.price) %></p>
+    <p>Quantity: <%= @order.count_of(item.id) %></p>
+    <p>Subtotal: <%= number_to_currency(@order.subtotal(item.id)) %></p>
+    <% if item.fulfilled?(@order.id) %>
+      <p>Item Fulfilled<p>
+    <% elsif item.fulfillable?(qty) %>
+      <h2><%= link_to "Fulfill", admin_fulfill_path(@order,item), method: :patch %></h2>
+    <% else %>
+      <p>Item cannot be fulfilled.</p>
+    <% end %>
+  </section>
+<% end %>
+
+<section id="totals">
+  <h3>Total Items: <%= @order.num_items %></h3>
+  <h3>Grand Total: <%= number_to_currency(@order.grand_total) %></h3>
+</section>
 
 <section id="cancel-order-<%= @order.id %>">
-  <% if @order.pending? %>
+  <% if @order.packaged? || @order.pending? %>
     <%= link_to "Cancel Order", admin_cancels_user_order_path(@order), method: :delete %>
   <% end %>
 </section>
