@@ -18,7 +18,7 @@ class Admin::OrdersController < Admin::BaseController
     if @order.pending?
       @order.update(status: 'canceled')
       @order.cancel_items
-      flash[:notice] = "Order has been canceled."
+      flash[:success] = "Order has been canceled."
       redirect_to admin_user_order_path(@order)
     end
   end

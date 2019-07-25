@@ -9,7 +9,7 @@ class CartController < ApplicationController
     else
       cart.add_item(item.id.to_s)
       session[:cart] = cart.contents
-      flash[:notice] = "#{item.name} has been added to your cart!"
+      flash[:success] = "#{item.name} has been added to your cart!"
     end
     redirect_to items_path
   end
