@@ -33,10 +33,8 @@ RSpec.describe 'Existing Merchant Update' do
       expect(page).to have_content(name)
       expect(page).to_not have_content(@megan.name)
 
-      within '.address' do
-        expect(page).to have_content(address)
-        expect(page).to have_content("#{city} #{state} #{zip}")
-      end
+      expect(page).to have_content(address)
+      expect(page).to have_content("#{city} #{state} #{zip}")      
     end
 
     it 'I can not edit a merchant with an incomplete form' do

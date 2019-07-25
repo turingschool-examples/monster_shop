@@ -25,10 +25,10 @@
     </li>
   <% else %>
     <li class="nav-item">
-      <a class="nav-link" href="/login">Login</a>
+      <%= link_to 'Login', login_path, method: :post, class:"nav-link" %>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/register">Register</a>
+      <%= link_to 'Register', register_path, class:"nav-link" %>
     </li>
   <% end %>
 </ul>
