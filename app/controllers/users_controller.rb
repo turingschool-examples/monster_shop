@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def create
     if params[:user][:password] != params[:user][:confirm_password]
-      flash[:error] = 'Password does not match!'
+      flash[:alert] = 'Password does not match!'
       @user = User.new
       render :new
     else
@@ -57,14 +57,14 @@ class UsersController < ApplicationController
       if params[:password] == params[:confirm_password]
         @user.update_attributes(password: params[:password])
         session[:user_id] = @user.id
-        flash[:notice] = "Your password has been updated."
+        flash[:success] = "Your password has been updated."
         redirect_to profile_path
       else
-        flash[:notice] = "Passwords do not match."
+        flash[:alert] = "Passwords do not match."
         redirect_to profile_edit_path(:edit => "password")
       end
     else
-      flash[:notice] = "Incorrect Current Password."
+      flash[:alert] = "Incorrect Current Password."
       redirect_to profile_edit_path(:edit => "password")
     end
   end
@@ -72,7 +72,7 @@ class UsersController < ApplicationController
   def update_profile
     if @user.update_attributes(user_params)
       session[:user_id] = @user.id
-      flash[:notice] = "Your profile has been updated!"
+      flash[:success] = "Your profile has been updated!"
       redirect_to profile_path
     else
       generate_flash(@user)

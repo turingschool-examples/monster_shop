@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
         )
       end
       session.delete(:cart)
-      flash[:notice] = "Order ##{order.id} has been created"
+      flash[:success] = "Order ##{order.id} has been created"
       redirect_to profile_orders_path
     end
   end
@@ -31,10 +31,10 @@ class OrdersController < ApplicationController
     if @order.packaged? || @order.pending?
       @order.update(status: 'canceled')
       @order.cancel_items
-      flash[:notice] = "Order has been canceled."
+      flash[:success] = "Order has been canceled."
       redirect_to profile_path
     else
-      flash[:notice] = "This order cannot be canceled!"
+      flash[:alert] = "This order cannot be canceled!"
       redirect_to profile_path
     end
   end

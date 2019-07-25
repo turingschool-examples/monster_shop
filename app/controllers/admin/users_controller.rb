@@ -18,7 +18,7 @@ class Admin::UsersController < Admin::BaseController
       params[:user][:merchant_id] = Merchant.find_by(name: params[:user][:merchant_id]).id
     end
     if @user.update_attributes(user_params)
-      flash[:notice] = "This user has been updated"
+      flash[:success] = "This user has been updated"
       redirect_to admin_user_show_path(@user)
     else
       generate_flash(@user)
@@ -29,14 +29,14 @@ class Admin::UsersController < Admin::BaseController
   def enable
     user = User.find(params[:user_id])
     user.update(enabled: true)
-    flash[:notice] = "The account for #{user.name} is now enabled."
+    flash[:success] = "The account for #{user.name} is now enabled."
     redirect_to admin_user_index_path
   end
 
   def disable
     user = User.find(params[:user_id])
     user.update(enabled: false)
-    flash[:notice] = "The account for #{user.name} is now disabled."
+    flash[:success] = "The account for #{user.name} is now disabled."
     redirect_to admin_user_index_path
   end
   
