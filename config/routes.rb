@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   post 'admin/merchants/:merchant_id/items/:id/deactivate', to: 'admin/items#deactivate', as: :admin_disable_item
   post 'admin/merchants/:merchant_id/items/:id/activate', to: 'admin/items#activate', as: :admin_enable_item
   delete 'admin/merchants/:merchant_id/items/:id/delete', to: 'admin/items#destroy', as: :admin_delete_item
+  patch '/admin/orders/:order_id/items/:id', to: 'admin/items#fulfill', as: :admin_fulfill
 
   # => merchants
   resources :merchants, only: [:index, :show] do

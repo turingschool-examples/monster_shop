@@ -25,13 +25,11 @@ RSpec.describe 'Admin' do
     end
 
     it "each order ID is a link to the admin only view of the order" do
-      within "#order-#{@order_1.id}" do
-        click_on "#{@order_1.id}"
-      end
+      click_on "#{@order_1.id}"
 
       expect(current_path).to eq(admin_user_order_path(@reg_user.id, @order_1.id))
 
-      within "#order-#{@order_1.id}" do
+      within "#order-header" do
         expect(page).to have_content(@order_1.created_at)
         expect(page).to have_content(@order_1.updated_at)
         expect(page).to have_content(@order_1.status)
