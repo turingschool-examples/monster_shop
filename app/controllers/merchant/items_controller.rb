@@ -8,9 +8,9 @@ class Merchant::ItemsController < Merchant::BaseController
     amt = @item.inventory - order_item.quantity
     @item.update(inventory: amt)
     flash[:success] = "#{@item.name} has been fulfilled."
-    redirect_to merchant_orders_path(Order.find(params[:order_id]))
     order = Order.find(params[:order_id])
     order.fulfilled?
+    redirect_to merchant_orders_path(order)
   end
 
   def index

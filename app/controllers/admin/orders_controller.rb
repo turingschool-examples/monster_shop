@@ -1,6 +1,7 @@
 class Admin::OrdersController < Admin::BaseController
   def show
     @order = Order.find(params[:order_id])
+    @items = @order.items
   end
 
   def update
