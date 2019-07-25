@@ -21,7 +21,7 @@
                 <p>Inventory:
                   <%= @item.inventory %></p>
               </div>
-                <button type="button" class="btn btn-dark btn-lg btn-block"><%= button_to 'Add to Cart', ("/cart/#{@item.id}"), {:style=>"color:black;"} %></button>
+                <%= button_to('Add to Cart', ("/cart/#{@item.id}"), :class => 'btn btn-dark btn-lg btn-block') %>
             </div>
           </div>
       </div>
