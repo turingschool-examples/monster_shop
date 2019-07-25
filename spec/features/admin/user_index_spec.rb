@@ -39,42 +39,41 @@ RSpec.describe 'Admin User Index Page' do
       end
     end
 
-      it "I can toggle a button to enable or disable a user" do
-        visit admin_user_index_path
-        expect(@user.enabled).to eq(true)
+    it "I can toggle a button to enable or disable a user" do
+      visit admin_user_index_path
+      expect(@user.enabled).to eq(true)
 
-        within "#disable-user-#{@user.id}" do
-          click_button 'Disable User'
-        end
+      within "#disable-user-#{@user.id}" do
+        click_button 'Disable User'
+      end
 
-        expect(current_path).to eq(admin_user_index_path)
-        expect(page).to have_content("The account for #{@user.name} is now disabled.")
+      expect(current_path).to eq(admin_user_index_path)
+      expect(page).to have_content("The account for #{@user.name} is now disabled.")
 
+      expect(@user.reload.enabled).to eq(false)
+
+      within "#disable-user-#{@user.id}" do
+        click_button 'Enable User'
+      end
+
+      expect(current_path).to eq(admin_user_index_path)
+      expect(page).to have_content("The account for #{@user.name} is now enabled.")
+      expect(@user.reload.enabled).to eq(true)
+    end
+
+    it "A disabled user cannot log in" do
+      visit admin_user_index_path
+      expect(@user.enabled).to eq(true)
+
+      within "#disable-user-#{@user.id}" do
+        click_button 'Disable User'
         expect(@user.reload.enabled).to eq(false)
-
-        within "#disable-user-#{@user.id}" do
-          click_button 'Enable User'
-        end
-
-        expect(current_path).to eq(admin_user_index_path)
-        expect(page).to have_content("The account for #{@user.name} is now enabled.")
-        expect(@user.reload.enabled).to eq(true)
+        expect(page).to have_no_link("Log In")
       end
+    end
 
-      it "A disabled user cannot log in" do
-        visit admin_user_index_path
-        expect(@user.enabled).to eq(true)
-
-        within "#disable-user-#{@user.id}" do
-          click_button 'Disable User'
-          expect(@user.reload.enabled).to eq(false)
-          expect(page).to have_no_link("Log In")
-        end
-      end
-
-      # it "The users city/state and orders should not be part of any statistics" do
-      #
-      # end
-
+    it "The users city/state and orders should not be part of any statistics" do
+      
+    end
   end
 end

@@ -42,4 +42,8 @@ class Merchant < ApplicationRecord
          .where(orders: {status: 'pending'})
          .where(items: {merchant_id: self.id})
   end
+
+  def self.all_names
+    pluck(:name)
+  end
 end

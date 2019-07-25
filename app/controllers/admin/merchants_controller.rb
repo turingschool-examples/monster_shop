@@ -39,7 +39,7 @@ class Admin::MerchantsController < Admin::BaseController
     if @merchant.order_items.empty?
       @merchant.destroy
     else
-      flash[:notice] = "#{@merchant.name} can not be deleted - they have orders!"
+      flash[:alert] = "#{@merchant.name} can not be deleted - they have orders!"
     end
     redirect_to '/merchants'
   end
@@ -47,14 +47,14 @@ class Admin::MerchantsController < Admin::BaseController
   def enable
     @merchant.items_active
     @merchant.update(enabled: true)
-    flash[:notice] = "The account for #{@merchant.name} is now enabled."
+    flash[:success] = "The account for #{@merchant.name} is now enabled."
     redirect_to admin_merchant_index_path
   end
 
   def disable
     @merchant.items_inactive
     @merchant.update(enabled: false)
-    flash[:notice] = "The account for #{@merchant.name} is now disabled."
+    flash[:success] = "The account for #{@merchant.name} is now disabled."
     redirect_to admin_merchant_index_path
   end
 

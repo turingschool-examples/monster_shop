@@ -1,5 +1,6 @@
-<% @items.each do |item| %>
-  <ul id="item-<%= item.id %>">
+
+<% @merchant.items.each do |item| %>
+  <ul id="merchant-item-<%= item.id %>">
     <li><%= image_tag(item.image, alt: "Picture of #{item.name}") %></li>
     <li>Name: <%= link_to "#{item.name}", item_path(item)%></li>
     <li>Description: <%= item.description %></li>
@@ -7,9 +8,9 @@
     <li>Inventory: <%= item.inventory %></li>
 
     <% if item.active %>
-      <li><%= button_to "Disable Item", admin_disable_item_path(@merchant,item) %></li>
+      <li><%= button_to "Disable Item", dashboard_items_deactivate_path(item_id: item.id) %></li>
     <% else %>
-      <li><%= button_to "Enable Item", admin_enable_item_path(@merchant,item) %></li>
+      <li><%= button_to "Enable Item", dashboard_items_activate_path(item_id: item.id) %></li>
     <% end %>
     <li><%= button_to "Update Item", edit_item_path(id: item.id), method: :get %></li>
     <% if item.order_items.empty? %>
@@ -18,4 +19,4 @@
   </ul>
 <% end %>
 
-<%= button_to "New Item", admin_new_item_path(@merchant), method: :get %>
+<%= button_to "New Item", admin_new_item_path, method: :get %>
