@@ -1,6 +1,5 @@
 class Merchant::ItemsController < Merchant::BaseController
-  before_action :set_item, only: [:destroy, :edit, :update, :fulfill]
-  before_action :set_item_for_toggle, only: [:activate, :deactivate]
+  before_action :set_item, only: [:destroy, :edit, :update, :fulfill, :activate, :deactivate]
   before_action :set_merchant, only: [:create, :index]
 
   def fulfill
@@ -77,9 +76,5 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def set_merchant
     @merchant = Merchant.find(current_user.merchant_id)
-  end
-
-  def set_item_for_toggle
-    @item = Item.find(params[:item_id])
   end
 end

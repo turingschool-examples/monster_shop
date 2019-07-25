@@ -10,8 +10,17 @@ Rails.application.routes.draw do
   patch '/merchants/:id', to: 'admin/merchants#update'
   delete 'merchants/:id', to: 'admin/merchants#destroy', as: :delete_merchant
   get '/merchants/:id/edit', to: 'admin/merchants#edit', as: :edit_merchant
-  get '/admin/merchants/:id/items', to: 'admin/items#index', as: :admin_merchant_items
   get '/admin/merchants/:id', to: 'admin/merchants#show', as: :admin_merchant_show
+
+  # => admin manipulates a merchants items
+  get '/admin/merchants/:merchant_id/items', to: 'admin/items#index', as: :admin_merchant_items
+  get 'admin/merchants/:merchant_id/items/new', to: 'admin/items#new', as: :admin_new_item
+  get 'admin/merchants/:merchant_id/items/:id/edit', to: 'admin/items#edit', as: :admin_edit_item
+  patch 'admin/merchants/:merchant_id/items/:id/edit', to: 'admin/items#update', as: :admin_update_item
+  post 'admin/merchants/:merchant_id/items', to: 'admin/items#create', as: :admin_create_item
+  post 'admin/merchants/:merchant_id/items/:id/deactivate', to: 'admin/items#deactivate', as: :admin_disable_item
+  post 'admin/merchants/:merchant_id/items/:id/activate', to: 'admin/items#activate', as: :admin_enable_item
+  delete 'admin/merchants/:merchant_id/items/:id/delete', to: 'admin/items#destroy', as: :admin_delete_item
 
   # => merchants
   resources :merchants, only: [:index, :show] do
@@ -79,8 +88,8 @@ Rails.application.routes.draw do
   get '/dashboard/items/:id/edit', to: 'merchant/items#edit', as: :edit_item
   patch '/dashboard/items/:id/edit', to: 'merchant/items#update', as: :update_item
   post '/dashboard/items', to: 'merchant/items#create', as: :create_item
-  post '/dashboard/items/deactivate', to: 'merchant/items#deactivate'
-  post '/dashboard/items/activate', to: 'merchant/items#activate'
+  post '/dashboard/items/:id/deactivate', to: 'merchant/items#deactivate', as: :disable_item
+  post '/dashboard/items/:id/activate', to: 'merchant/items#activate', as: :enable_item
   delete '/dashboard/items/:id/delete', to: 'merchant/items#destroy', as: :delete_item
 
   # => dashboard
