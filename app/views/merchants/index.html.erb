@@ -9,12 +9,7 @@
 <!-- details card section starts from here -->
 
 <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h2 class="deepshd">
-      MERCHANTS
-    </h2>
-    <p class="lead"></p>
-  </div>
+    <h2 class="deepshd"> MERCHANTS </h2>
 </div>
 
 <section class="details-card">
@@ -23,7 +18,7 @@
       <% @merchants.each do |merchant| %>
         <div class="col-md-4 p-3">
           <div class="card-content" id='merchant-<%= merchant.id %>'>
-            <div class="card-img">
+            <div class="card-img text-center">
               <%= link_to image_tag(merchant.image), merchant_path(merchant) unless merchant.image.blank? %>
               <div class="card-header">
                 <h1 class="card-title text-center"><%= link_to (merchant.name), merchant_path(merchant), {:style=>"color:black;"} %></h1>
