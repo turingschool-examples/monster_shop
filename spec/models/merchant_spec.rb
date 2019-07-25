@@ -47,6 +47,8 @@ RSpec.describe Merchant do
 
     it '.distinct_cities' do
       expect(@megan.distinct_cities).to eq(['Denver, CO', 'Denver, IA'])
+      @meg_2.update(enabled: false)
+      expect(@megan.distinct_cities).to eq(['Denver, CO'])
     end
 
     it '.items_active' do
@@ -66,12 +68,19 @@ RSpec.describe Merchant do
 
     it '.pending_orders' do
       megans_orders = @megan.pending_orders
+
       expect(megans_orders.first).to eq(@order_1)
       expect(megans_orders.last).to eq(@order_2)
       expect(megans_orders.first.n_items).to eq(2)
       expect(megans_orders.first.g_total).to eq(40.50)
       expect(megans_orders.last.n_items).to eq(4)
       expect(megans_orders.last.g_total).to eq(140.50)
+
+      @meg_2.update(enabled: false)
+      megans_orders = @megan.pending_orders
+
+      expect(megans_orders.first).to eq(@order_1)
+      expect(megans_orders.last).to eq(@order_1)
     end
 
     it '.all_names' do

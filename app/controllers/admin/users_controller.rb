@@ -1,4 +1,6 @@
 class Admin::UsersController < Admin::BaseController
+  before_action :set_user, only: [:enable, :disable]
+  
   def index
     @users = User.where.not(role: "admin")
   end
@@ -27,23 +29,24 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def enable
-    user = User.find(params[:user_id])
-    user.update(enabled: true)
+    @user.update(enabled: true)
     flash[:success] = "The account for #{user.name} is now enabled."
     redirect_to admin_user_index_path
   end
 
   def disable
-    user = User.find(params[:user_id])
-    user.update(enabled: false)
+    @user.update(enabled: false)
     flash[:success] = "The account for #{user.name} is now disabled."
     redirect_to admin_user_index_path
   end
   
   private
 
+  def set_user
+    @user = User.find(params[:user_id])
+  end
+
   def user_params
     params.require(:user).permit(:name, :address, :city, :state, :zip, :email, :role, :merchant_id)
   end
-  
 end
