@@ -1,0 +1,16 @@
+<h2>Profile</h2>
+
+<ul id="user-<%= @user.id %>-info">
+  <p> Name: <%= @user.name %> </p>
+  <p> Email: <%= @user.email %> </p>
+  <p> Address: <%= @user.address %> </p>
+  <p> City: <%= @user.city %> </p>
+  <p> State: <%= @user.state %> </p>
+  <p> Zip: <%= @user.zip %> </p>
+</ul>
+
+<%= link_to "Edit Profile", profile_edit_path %>
+  <% if @user.orders != nil %>
+<%= link_to "My Orders", profile_orders_path %>
+<% end %>
+<%= link_to "Change Password", profile_edit_path(edit: "password") %>
