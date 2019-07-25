@@ -1,6 +1,6 @@
 
 <% @merchant.items.each do |item| %>
-  <ul id="item-<%= item.id %>">
+  <ul id="merchant-item-<%= item.id %>">
     <li><%= image_tag(item.image, alt: "Picture of #{item.name}") %></li>
     <li>Name: <%= link_to "#{item.name}", item_path(item)%></li>
     <li>Description: <%= item.description %></li>
@@ -19,4 +19,4 @@
   </ul>
 <% end %>
 
-<%= button_to "New Item", new_item_path, method: :get %>
+<%= button_to "New Item", admin_new_item_path, method: :get %>

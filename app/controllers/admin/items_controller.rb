@@ -4,10 +4,15 @@ class Admin::ItemsController < Admin::BaseController
   before_action :set_merchant, only: [:create, :index]
 
   def index
-    if params[:id]
-      @merchant = Merchant.find(params[:id])
-      @items = @merchant.items
+    # binding.pry
+    @merchants = Merchant.all
+    @merchant = @merchants.each do |merchant|
+      merchant
     end
+    # if params[:id]
+      # @merchant = Merchant.find(params[:id])
+      # @items = @merchant.items
+    # end
   end
 
   def fulfill
@@ -79,7 +84,10 @@ class Admin::ItemsController < Admin::BaseController
   end
 
   def set_merchant
-    @merchant = Merchant.find(current_user.merchant_id)
+    @merchants = Merchant.all
+    @items = @merchants.each do |merchant|
+      merchant.items
+    end
   end
 
   def set_item_for_toggle

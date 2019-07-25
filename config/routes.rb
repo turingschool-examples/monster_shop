@@ -67,14 +67,14 @@ Rails.application.routes.draw do
   patch '/admin/users/:user_id/disable', to: 'admin/users#disable', as: :disable_user
 
   # => admin manipulates a merchants items
-  get 'admin/dashboard/items', to: 'admin/merchant/items#index', as: :admin_dashboard_items
-  get 'admin/dashboard/items/new', to: 'admin/merchant/items#new', as: :admin_new_item
-  get 'admin/dashboard/items/:id/edit', to: 'admin/merchant/items#edit', as: :admin_edit_item
-  patch 'admin/dashboard/items/:id/edit', to: 'admin/merchant/items#update', as: :admin_update_item
-  post 'admin/dashboard/items', to: 'admin/merchant/items#create', as: :admin_create_item
-  post 'admin/dashboard/items/deactivate', to: 'admin/merchant/items#deactivate'
-  post 'admin/dashboard/items/activate', to: 'admin/merchant/items#activate'
-  delete 'admin/dashboard/items/:id/delete', to: 'admin/merchant/items#destroy', as: :admin_delete_item
+  get 'admin/dashboard/items', to: 'admin/items#index', as: :admin_dashboard_items
+  get 'admin/dashboard/items/new', to: 'admin/items#new', as: :admin_new_item
+  get 'admin/dashboard/items/:id/edit', to: 'admin/items#edit', as: :admin_edit_item
+  patch 'admin/dashboard/items/:id/edit', to: 'admin/items#update', as: :admin_update_item
+  post 'admin/dashboard/items', to: 'admin/items#create', as: :admin_create_item
+  post 'admin/dashboard/items/deactivate', to: 'admin/items#deactivate'
+  post 'admin/dashboard/items/activate', to: 'admin/items#activate'
+  delete 'admin/dashboard/items/:id/delete', to: 'admin/items#destroy', as: :admin_delete_item
 
   # => user registration & logging in
   get '/register', to: 'users#new', as: :register
