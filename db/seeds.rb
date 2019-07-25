@@ -89,7 +89,6 @@ order_6 = berry.orders.create!
 order_5.order_items.create!(item: ogre, price: ogre.price, quantity: 2, status: 'fulfilled')
 order_5.order_items.create!(item: eraser, price: eraser.price, quantity: 3, status: 'unfulfilled')
 order_6.order_items.create!(item: hippo, price: hippo.price, quantity: 2, status: 'fulfilled')
-order_b.order_items.create!(item: hippo, price: hippo.price, quantity: 2, status: 'fulfilled')
 order_7 = alex.orders.create!
 order_8 = berry.orders.create!
 order_7.order_items.create!(item: ogre, price: ogre.price, quantity: 2, status: 'fulfilled')
