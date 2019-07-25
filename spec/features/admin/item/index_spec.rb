@@ -18,6 +18,7 @@ RSpec.describe 'As a merchant' do
     end
 
     it 'shows a link to add a new item' do
+
       expect(page).to have_button('New Item')
     end
 
