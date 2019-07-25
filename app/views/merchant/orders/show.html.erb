@@ -1,0 +1,25 @@
+<section id='order-header'>
+  <h1>Order #<%= @order.id %></h1>
+  <p>Order Status: <%= @order.status %></p>
+  <p>For: <%= @order.user.name %></p>
+  <p>Address: <%= @order.user.address %></p>
+  <p><%= @order.user.city %> <%= @order.user.state %> <%= @order.user.zip %></p>
+</section>
+
+<% @items.each do |item| %>
+  <section id='item-<%= item.id%>'>
+    <% qty = @order.count_of(item.id) %>
+
+    <h2><%= link_to item.name, item_path(item) %></h2>
+    <%= image_tag(item.image) %>
+    <p>Price: <%= number_to_currency(item.price) %></p>
+    <p>Quantity: <%= qty %></p>
+    <% if item.fulfilled?(@order.id) %>
+      <p>Item Fulfilled<p>
+    <% elsif item.fulfillable?(qty) %>
+      <h2><%= link_to "Fulfill", fulfill_path(@order,item), method: :patch %></h2>
+    <% else %>
+      <p>Item cannot be fulfilled.</p>
+    <% end %>
+  </section>
+<% end %>

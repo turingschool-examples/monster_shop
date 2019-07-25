@@ -1,0 +1,48 @@
+<%= form_for @user, url: path do |f| %>
+<div class="form-group">
+  <%= f.label :name %>
+  <%= f.text_field :name, class:"form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :address %>
+  <%= f.text_field :address, class:"form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :city %>
+  <%= f.text_field :city, class:"form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :state %>
+  <%= f.collection_select :state, User::STATES, :to_s, :to_s, :include_blank => true, class:"form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :zip %>
+  <%= f.text_field :zip, class:"form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :email %>
+  <%= f.text_field :email, class:"form-control" %>
+</div>
+<% if @user.id == nil %>
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, class:"form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :confirm_password %>
+    <%= f.password_field :confirm_password, class:"form-control" %>
+  </div>
+<% end %>
+<% if current_admin? %>
+<section id="admin_only">
+  <%= f.label :role %>
+  <%= f.collection_select :role, User::ROLES, :to_s, :to_s, class:"form-control" %>
+
+  <%= f.label :merchant %>
+  <%= f.collection_select :merchant_id, Merchant.all_names, :to_s, :to_s, :prompt => 'Select', :include_blank => true %>
+</section>
+<% end %>
+
+<%= f.submit button, class:"btn btn-primary" %>
+<% end %>

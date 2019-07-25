@@ -1,0 +1,19 @@
+<% unless @password %>
+  <h2>Edit Profile</h2>
+
+  <%= render 'fields', button: 'Update Profile', path: profile_edit_path %>
+<% else %>
+  <%= form_tag "/users/#{@user.id}", method: :patch do %>
+
+  <%= label_tag :current_password, 'Current Password' %>
+  <%= password_field_tag :current_password %>
+
+  <%= label_tag :password %>
+  <%= password_field_tag :password %>
+
+  <%= label_tag :confirm_password, 'Confirm Password' %>
+  <%= password_field_tag :confirm_password %>
+
+  <%= submit_tag 'Change Password' %>
+  <% end %>
+<% end %>

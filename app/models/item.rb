@@ -17,4 +17,29 @@ class Item < ApplicationRecord
   def average_rating
     reviews.average(:rating)
   end
+
+  def self.all_active
+    where(active: true)
+  end
+
+  def self.popular_items(limit, order = 'DESC')
+    joins(:order_items)
+      .select('items.*, sum(order_items.quantity) AS qty')
+      .group('items.id')
+      .order("qty #{order}")
+      .order("items.name")
+      .limit(limit)
+  end
+
+  def get_order_item(order_id)
+    order_items.where(order_id: order_id).first
+  end
+
+  def fulfilled?(order_id)
+    order_items.where(order_id: order_id).first.status == 'fulfilled'
+  end
+
+  def fulfillable?(qty)
+    inventory >= qty
+  end
 end

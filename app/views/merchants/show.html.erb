@@ -1,8 +1,22 @@
-<h1><%= @merchant.name %></h1>
-
-<section class='address'>
-  <p><%= @merchant.address %></p>
-  <p><%= @merchant.city %> <%= @merchant.state %> <%= @merchant.zip %></p>
+<section class="details-card">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-4 p-3">
+          <div class="card-content" id= "merchant-<%= @merchant.id %>">
+            <div class="card-img text-center">
+              <img src="<%= @merchant.image %>" alt="">
+              <div class="card-header">
+                <h1 class="card-title text-center" style="color:black" ><%= @merchant.name%></h1>
+              </div>
+            </div>
+            <div class="card-desc card-footer">
+              <p><%= @merchant.address %></p>
+              <p><%= @merchant.city %> <%= @merchant.state %> <%= @merchant.zip %></p>
+              </div>
+                <%= button_to('Items', merchant_items_path(@merchant.id), method: :get, :class => 'btn btn-dark btn-lg btn-block') %>
+            </div>
+          </div>
+      </div>
 </section>
 
 <section class='statistics'>
@@ -24,5 +38,4 @@
   <% end %>
 </section>
 
-<%= button_to 'Edit', "/merchants/#{@merchant.id}/edit", method: :get %>
-<%= button_to 'Delete', "/merchants/#{@merchant.id}", method: :delete  if @merchant.order_items.empty? %>
+<%= button_to 'Items', merchant_items_path(@merchant), method: :get %>

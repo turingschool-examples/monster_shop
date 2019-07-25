@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  before_action :deny_admin
+
   def add_item
     item = Item.find(params[:item_id])
     session[:cart] ||= {}
@@ -7,7 +9,7 @@ class CartController < ApplicationController
     else
       cart.add_item(item.id.to_s)
       session[:cart] = cart.contents
-      flash[:notice] = "#{item.name} has been added to your cart!"
+      flash[:success] = "#{item.name} has been added to your cart!"
     end
     redirect_to items_path
   end
@@ -17,12 +19,12 @@ class CartController < ApplicationController
 
   def empty
     session.delete(:cart)
-    redirect_to '/cart'
+    redirect_to cart_path
   end
 
   def remove_item
     session[:cart].delete(params[:item_id])
-    redirect_to '/cart'
+    redirect_to cart_path
   end
 
   def update_quantity
@@ -33,6 +35,14 @@ class CartController < ApplicationController
       return remove_item if cart.count_of(params[:item_id]) == 0
     end
     session[:cart] = cart.contents
-    redirect_to '/cart'
+    redirect_to cart_path
+  end
+
+  private
+
+  def deny_admin
+    if current_admin?
+      render file: '/public/404', status: 404, layout: false
+    end
   end
 end

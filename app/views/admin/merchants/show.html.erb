@@ -1,0 +1,24 @@
+<h1>Merchant Dashboard</h1>
+
+<h1><%= @merchant.name %></h1>
+
+<section class='address'>
+  <p><%= @merchant.address %></p>
+  <p><%= @merchant.city %> <%= @merchant.state %> <%= @merchant.zip %></p>
+</section>
+
+<% @orders.each do |order| %>
+  <section id='order-<%= order.id %>'>
+    <p>Order <%= order.id %></p>
+    <p>Ordered On: <%= order.created_at %></p>
+    <p>Number of Items: <%= order.n_items %></p>
+    <p>Total: <%= order.g_total %></p>
+  </section>
+<% end %>
+
+<%= button_to 'Items', admin_merchant_items_path(@merchant), method: :get %>
+
+<% if current_admin? %>
+  <%= button_to 'Edit', edit_merchant_path(@merchant), method: :get %>
+  <%= button_to 'Delete', delete_merchant_path(@merchant), method: :delete if @merchant.order_items.empty? %>
+<% end %>

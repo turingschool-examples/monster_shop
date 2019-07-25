@@ -1,0 +1,18 @@
+<ul class="navbar-nav mr-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/items">Items</a>
+  </li>
+
+  <% if current_admin? %>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/users">Users</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/admin/merchants">Merchants</a>
+    </li>
+  <% else %>
+    <li class="nav-item">
+      <a class="nav-link" href="/merchants">Merchants</a>
+    </li>
+  <% end %>
+</ul>
