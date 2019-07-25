@@ -11,8 +11,8 @@
   <section id='order-<%= order.id %>'>
     <p><%= link_to "Order ##{order.id}", merchant_orders_path(order) %></p>
     <p>Ordered On: <%= order.created_at %></p>
-    <p>Number of Items: <%= order.num_items %></p>
-    <p>Total: <%= order.grand_total %></p>
+    <p>Number of Items: <%= order.n_items %></p>
+    <p>Total: <%= number_to_currency(order.g_total) %></p>
   </section>
 <% end %>
 

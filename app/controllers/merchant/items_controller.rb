@@ -1,6 +1,5 @@
 class Merchant::ItemsController < Merchant::BaseController
-  before_action :set_item, only: [:destroy, :edit, :update, :fulfill]
-  before_action :set_item_for_toggle, only: [:activate, :deactivate]
+  before_action :set_item, only: [:destroy, :edit, :update, :fulfill, :activate, :deactivate]
   before_action :set_merchant, only: [:create, :index]
 
   def fulfill
@@ -8,7 +7,7 @@ class Merchant::ItemsController < Merchant::BaseController
     order_item.update(status: 'fulfilled')
     amt = @item.inventory - order_item.quantity
     @item.update(inventory: amt)
-    flash[:notice] = "#{@item.name} has been fulfilled."
+    flash[:success] = "#{@item.name} has been fulfilled."
     redirect_to merchant_orders_path(Order.find(params[:order_id]))
     order = Order.find(params[:order_id])
     order.fulfilled?
@@ -48,20 +47,20 @@ class Merchant::ItemsController < Merchant::BaseController
     if @item.orders.empty?
       @item.destroy
     else
-      flash[:notice] = "#{@item.name} can not be deleted - it has been ordered!"
+      flash[:alert] = "#{@item.name} can not be deleted - it has been ordered!"
     end
     redirect_to dashboard_items_path
   end
 
   def deactivate
     @item.update(active: false)
-    flash[:message] = "#{@item.name} is no longer available for sale."
+    flash[:notice] = "#{@item.name} is no longer available for sale."
     redirect_to dashboard_items_path
   end
 
   def activate
     @item.update(active: true)
-    flash[:message] = "#{@item.name} is now available for sale."
+    flash[:notice] = "#{@item.name} is now available for sale."
     redirect_to dashboard_items_path
   end
 
@@ -77,9 +76,5 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def set_merchant
     @merchant = Merchant.find(current_user.merchant_id)
-  end
-
-  def set_item_for_toggle
-    @item = Item.find(params[:item_id])
   end
 end
