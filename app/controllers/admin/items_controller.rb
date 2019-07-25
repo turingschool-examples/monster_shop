@@ -1,7 +1,6 @@
 class Admin::ItemsController < Admin::BaseController
-  before_action :set_item, only: [:destroy, :edit, :update, :fulfill]
-  before_action :set_item_for_toggle, only: [:activate, :deactivate]
-  before_action :set_merchant, only: [:create, :index, :activate, :deactivate]
+  before_action :set_item, only: [:destroy, :edit, :update, :fulfill, :activate, :deactivate]
+  before_action :set_merchant, only: [:new, :edit, :create, :update, :index, :activate, :deactivate, :destroy]
 
   def fulfill
     order_item = @item.get_order_item(params[:order_id])
@@ -19,7 +18,7 @@ class Admin::ItemsController < Admin::BaseController
   end
 
   def new
-    @item = Item.new(params[:merchant_id])
+    @item = @merchant.items.new
   end
 
   def edit
@@ -77,9 +76,5 @@ class Admin::ItemsController < Admin::BaseController
 
   def set_merchant
     @merchant = Merchant.find(params[:merchant_id])
-  end
-
-  def set_item_for_toggle
-    @item = Item.find(params[:id])
   end
 end

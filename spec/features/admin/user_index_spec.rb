@@ -73,7 +73,7 @@ RSpec.describe 'Admin User Index Page' do
     end
 
     it "The users city/state and orders should not be part of any statistics" do
-      
+
     end
   end
 end

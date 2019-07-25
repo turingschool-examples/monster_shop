@@ -11,7 +11,7 @@
     <% else %>
       <li><%= button_to "Enable Item", admin_enable_item_path(@merchant,item) %></li>
     <% end %>
-    <li><%= button_to "Update Item", edit_item_path(id: item.id), method: :get %></li>
+    <li><%= button_to "Update Item", admin_edit_item_path(@merchant, item), method: :get %></li>
     <% if item.order_items.empty? %>
       <li><%= button_to "Delete Item", { id: item.id, action: "destroy" }, method: :delete %></li>
     <% end %>
