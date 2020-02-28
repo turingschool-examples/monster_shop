@@ -1,0 +1,15 @@
+<h2> <%= @user.name %><h2>
+<hr>
+  <dl class='list-group'>
+    <dd class='list-item'>  User name: <%= @user.user_name %> </dd>
+    <dd class='list-item'> Address: <%= @user.address %> </dd>
+    <dd class='list-item'> City: <%= @user.city %> </dd>
+    <dd class='list-item'> State: <%= @user.state %></dd>
+    <dd class='list-item'> Zip: <%= @user.zip %></dd>
+  </dl>
+ <%= link_to "Edit Profile", edit_user_path(@user) %>
+<%= link_to "Edit Password", edit_password_path(@user) %>
+
+<% if !@user.orders.any? == false %>
+  <h3><%= link_to "My Orders", profile_orders_path %></h3>
+<% end %>

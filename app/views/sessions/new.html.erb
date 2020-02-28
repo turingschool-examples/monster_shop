@@ -1,0 +1,12 @@
+<h1>Login</h1>
+<hr>
+<%= form_tag login_path do %>
+
+<%= label_tag :user_name %>
+<%= text_field_tag :user_name %>
+<br>
+<%= label_tag :password %>
+<%= password_field_tag :password %>
+
+<%= submit_tag "Log In", class: 'button btn-success'%>
+<% end %>

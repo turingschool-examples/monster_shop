@@ -1,0 +1,10 @@
+<h1>My Orders</h1>
+<hr>
+<% @orders.each do |order| %>
+	<h4><%= link_to "Order ID: #{order.id}", profile_order_path(order.id)%></h4>
+	<p>Order Status: <%= order.status %></p>
+	<p>Order Placed:  <%= order.created_at %></p>
+	<p>Last Updated: <%= order.updated_at %></p>
+	<p>Total Quantity of Items: <%= order.total_quantity %></p>
+	<p>Grand Total: <%= number_to_currency(order.grand_total) %></p>
+<% end %>

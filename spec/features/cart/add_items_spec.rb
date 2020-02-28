@@ -14,7 +14,6 @@ RSpec.describe "Add Items to Cart" do
       visit item_path(@ogre)
 
       click_button 'Add to Cart'
-
       expect(current_path).to eq(items_path)
       expect(page).to have_content("#{@ogre.name} has been added to your cart!")
       expect(page).to have_content("Cart: 1")

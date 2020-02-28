@@ -1,0 +1,35 @@
+<h1>Merchant Dashboard</h1>
+<hr>
+<h3><%= @merchant.name %></h3>
+<dl>
+ <dd>Address:<%= @merchant.address %></dd>
+ <dd>City: <%= @merchant.city %></dd>
+ <dd>State:<%= @merchant.state %></dd>
+ <dd>Zip:<%= @merchant.zip %></dd>
+</dl>
+
+<p><%= link_to 'My Items', '/merchant/items' %></p>
+
+ <h3>Pending Orders</h3>
+
+<% @pending_orders.each  do |order| %>
+<table class = "table">
+  <thead>
+    <tr>
+      <th scope="col">Order Id</th>
+      <th scope="col">Order Date</th>
+      <th scope="col">Quantity of my items</th>
+      <th scope="col">Value of My items</th>
+    </tr>
+  </thead>
+  <tbody class = 'table-hover'>
+    <tr>
+      <td> <%= link_to "#{order.order_id}", merchant_admins_order_path(order.order_id)%></td>
+      <td><%="#{order.created_at.to_formatted_s(:short)}"%></td>
+      <td><%="#{order.quantity}"%></td>
+      <td><%=number_to_currency(order.subtotal)%></td>
+    </tr>
+  </tbody>
+</table>
+       </div>
+       <% end %>
