@@ -1,32 +1,45 @@
 class OrdersController < ApplicationController
+	before_action :get_order, only: [:show, :update]
+
+	def index
+		@orders = current_user.orders
+	end
+
   def show
-    @order = Order.find(params[:id])
   end
 
   def new
   end
 
   def create
-    order = Order.new(order_params)
-    if order.save
+    @user = current_user
+    @order = @user.orders.new(order_params)
+    @order.save
       cart.items.each do |item|
-        order.order_items.create({
+        @order.order_items.create({
           item: item,
           quantity: cart.count_of(item.id),
           price: item.price
           })
       end
-      session.delete(:cart)
-      redirect_to order_path(order)
-    else
-      flash[:notice] = "Please complete address form to create an order."
-      render :new
-    end
+    session.delete(:cart)
+		flash[:success] = "Your order was created"
+    redirect_to "/profile/orders"
   end
+
+	def update
+		@order.cancel_order
+		flash[:success] = "That order has been cancelled."
+		redirect_to profile_path
+	end
 
   private
 
   def order_params
-    params.permit(:name, :address, :city, :state, :zip)
+    params.permit(:status, :user_id)
   end
+
+	def get_order
+		@order = Order.find(params[:id])
+	end
 end

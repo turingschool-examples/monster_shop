@@ -1,0 +1,9 @@
+<h1>Users Page</h1>
+<% @users.each do |user| %>
+<dl>
+<dt><%= link_to user.user_name, admin_user_path(user) %></dt>
+  <dd> Date joined: <%= user.created_at.to_formatted_s(:short) %></dd>
+  <dd> Role: <%= user.role  %></dd>
+</dl>
+<hr>
+<% end %>

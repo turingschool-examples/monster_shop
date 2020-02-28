@@ -1,0 +1,23 @@
+<h1>Admin Dashboard</h1>
+
+<h3>Orders</h3>
+<% @users.each do |user| %>
+  <%user.orders.each do |order|%>
+
+	<h2>All Orders</h2>
+	<h3>Pending</h3>
+	<h3>Packaged</h3>
+	<h3>Shipped</h3>
+<dl>
+  <dd>User name: <%= link_to "#{user.user_name}", admin_user_path(user)%></dd>
+  <dd>Order Id: <%= order.id %></dd>
+  <dd>Order Date: <%= order.created_at.to_formatted_s(:short)%></dd>
+    <% if order.status == "pending" %>
+    	<li>Order status: <%= order.status%><%= button_to 'Ship Order', ship_order_path(order), method: :patch  %></li>
+    <%else %>
+  <li>Order status: <%=order.status%></li>
+  <% end  %>
+  <br>
+  <% end  %>
+</dl>
+<% end %>

@@ -1,0 +1,31 @@
+<h1>Merchant Order Page</h1>
+<hr>
+
+<dl><dt><h2>Customer Information<h2/></dt>
+    <dd>Customer Name: <%= @customer.name %></dd>
+    <dd>Customer Address: <%= @customer.address %></dd>
+</dl>
+
+<h3>Fulfill Order Items</h3>
+  <% @items.each do |order_item| %>
+  <section id="item-<%= order_item.item.id %>">
+
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src=<%="#{order_item.item.image}"%>>
+        <div class="card-body">
+          <dl>
+            <dt><h5 class="card-title"><%=link_to order_item.item.name, item_path(order_item.item.id) %></h5></dt>
+            <dd class="card-text">Price: <%="#{number_to_currency(order_item.item.price)}"%></dd>
+            <dd class="card-text">Desired Quantity:  <%="#{order_item.quantity}"%></dd>
+            <% if order_item.quantity <= order_item.item.inventory && order_item.fulfilled == false %>
+              <%= button_to "Fulfill Order", merchant_admins_order_path(order_item.order_id), method: :patch, class: "btn btn-primary" %>
+            <% elsif  order_item.quantity <= order_item.item.inventory && order_item.fulfilled == true%>
+            <p>"You have already fulfilled this order" <p>
+            <% else %>
+            <p>"You do not have a high enough inventory to fulfill the order" <p>
+            <% end %>
+          </dl>
+        </div>
+      </div>
+		</section>
+    <% end %>
